@@ -1,0 +1,10 @@
+{
+  "route": "NEW_TASK",
+  "complexity": "normal",
+  "riskTier": "normal",
+  "requiredCapabilities": ["tests"],
+  "requiredEvidence": ["source"],
+  "acceptanceCoverage": ["search"],
+  "policyBehavior": "bounded",
+  "sourceFingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

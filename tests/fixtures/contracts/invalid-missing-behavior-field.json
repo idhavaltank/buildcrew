@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "hybrid-intake-v1",
+  "taskId": "invalid-missing-behavior",
+  "request": {
+    "rawText": "Fix the sync issue",
+    "normalizedObjective": "Fix sync",
+    "requestType": "bug",
+    "constraints": [],
+    "acceptanceCriteria": ["sync completes"]
+  },
+  "scope": {
+    "project": "demo",
+    "repository": "/repo",
+    "repositoryRef": "main",
+    "domain": "mobile",
+    "sourceFingerprint": "sha-001"
+  },
+  "behavior": {
+    "current": "stuck",
+    "reproduction": "reopen app",
+    "userImpact": "sync unavailable"
+  },
+  "evidence": {},
+  "candidateProjection": null,
+  "reconciliation": {},
+  "execution": {},
+  "verification": {},
+  "learning": {},
+  "state": {}
+}

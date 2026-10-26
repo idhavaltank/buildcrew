@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "canonical-ingestion-review-v1.schema.json",
+  "title": "BuildCrew reviewed canonical memory promotion v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "decision", "approvalId", "reviewer", "taskId",
+    "recordId", "projectId", "repository", "branchOrTree",
+    "candidateRelativePath", "candidateSha256", "sourceHashes"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "canonical-ingestion-review-v1"},
+    "decision": {"const": "APPROVED"},
+    "approvalId": {"type": "string", "minLength": 1},
+    "reviewer": {"type": "string", "minLength": 1},
+    "taskId": {"type": "string", "minLength": 1},
+    "recordId": {"type": "string", "minLength": 1},
+    "projectId": {"type": "string", "minLength": 1},
+    "repository": {"type": "string", "minLength": 1},
+    "branchOrTree": {"type": "string", "minLength": 1},
+    "candidateRelativePath": {"type": "string", "pattern": "^extensions/ad_hoc/notes/[^/]+\\.md$"},
+    "candidateSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "sourceHashes": {
+      "type": "object", "minProperties": 1, "maxProperties": 32,
+      "additionalProperties": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+    }
+  }
+}

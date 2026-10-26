@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "portable-task-packet-v1.schema.json",
+  "title": "BuildCrew portable normalized task packet",
+  "description": "A raw-prompt-free task contract that can move between AI-tool adapters without transferring authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "taskId", "requestType", "objective", "complexity",
+    "acceptanceCriteria", "constraints", "riskSignals", "requiredCapabilities",
+    "requiredEvidence", "allowedActions", "approval", "scope"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "portable-task-packet-v1" },
+    "taskId": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "requestType": { "enum": ["QUESTION", "CONVERSATION", "STATUS", "VALIDATION", "REVIEW", "INVESTIGATION", "IMPLEMENTATION", "MIGRATION", "SECURITY", "DEPLOYMENT"] },
+    "objective": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "complexity": { "enum": ["LIGHTWEIGHT", "NORMAL", "COUPLED"] },
+    "acceptanceCriteria": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1, "maxLength": 500 } },
+    "constraints": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 500 } },
+    "riskSignals": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 500 } },
+    "requiredCapabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["capabilityId", "reason"],
+        "properties": {
+          "capabilityId": { "$ref": "#/$defs/capabilityId" },
+          "reason": { "type": "string", "minLength": 1, "maxLength": 500 }
+        }
+      }
+    },
+    "requiredEvidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "enum": ["source", "test", "review", "runtime", "browser", "device", "deployment", "user"] }
+    },
+    "allowedActions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["read", "write", "execute", "external"],
+      "properties": {
+        "read": { "type": "boolean" },
+        "write": { "type": "boolean" },
+        "execute": { "type": "boolean" },
+        "external": { "type": "boolean" }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "approvalId", "reason"],
+      "properties": {
+        "status": { "enum": ["NOT_REQUIRED", "REQUIRED", "APPROVED", "REJECTED"] },
+        "approvalId": { "type": ["string", "null"], "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 500 }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxRepositories", "maxPaths", "writable", "externalSideEffects"],
+      "properties": {
+        "maxRepositories": { "type": "integer", "minimum": 1 },
+        "maxPaths": { "type": "integer", "minimum": 1 },
+        "writable": { "type": "boolean" },
+        "externalSideEffects": { "type": "boolean" }
+      }
+    },
+    "currentBehavior": { "type": ["string", "null"], "maxLength": 2000 },
+    "expectedBehavior": { "type": ["string", "null"], "maxLength": 2000 },
+    "reproduction": { "type": ["string", "null"], "maxLength": 2000 },
+    "dependencies": { "type": ["string", "null"], "maxLength": 1000 },
+    "missingDecisions": { "type": ["string", "null"], "maxLength": 1000 },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repository": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "sourceFingerprint": { "type": "string", "minLength": 8, "maxLength": 200 },
+        "branch": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "worktree": { "type": "string", "minLength": 1, "maxLength": 500 }
+      }
+    }
+  },
+  "$defs": {
+    "capabilityId": {
+      "enum": ["repo_read", "repo_write", "shell", "tests", "browser", "device", "subagents", "memory", "external_actions", "approval", "persistent_state", "worktree"]
+    }
+  }
+}

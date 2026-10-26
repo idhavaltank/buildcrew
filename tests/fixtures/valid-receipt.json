@@ -1,0 +1,32 @@
+{
+  "receiptVersion": "review-receipt-v2",
+  "receiptId": "receipt-fixture-001",
+  "taskId": "fixture-task",
+  "packetVersion": "packet-1",
+  "planVersion": "plan-1",
+  "waveId": "wave-1",
+  "attempt": 1,
+  "role": "verification",
+  "host": "fixture-host",
+  "writerOwner": null,
+  "scope": {
+    "repository": "/fixture/repo",
+    "sourceFingerprint": "fixture-sha",
+    "lane": "fixture-lane"
+  },
+  "startedAt": "2026-08-18T00:00:00Z",
+  "finishedAt": "2026-08-18T00:01:00Z",
+  "status": "completed",
+  "confidence": "high",
+  "coverage": {
+    "requirements": ["REQ-001"],
+    "files": ["fixture.py"],
+    "flows": ["fixture"]
+  },
+  "findings": [],
+  "commands": ["python3 -m unittest"],
+  "artifacts": [],
+  "blockers": [],
+  "residualRisk": [],
+  "terminal": true
+}

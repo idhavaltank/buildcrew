@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "capability-manifest-v1",
+  "registry": {
+    "registryId": "ae-host-capability-registry",
+    "scope": "host-workspace",
+    "canonical": true,
+    "owner": "general",
+    "version": "1.0.0",
+    "fingerprint": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "enabledByDefault": false
+  },
+  "authority": {
+    "mode": "NON_AUTHORITATIVE",
+    "controller": "AE",
+    "canRoute": false,
+    "canSelectModel": false,
+    "canGrantWrite": false,
+    "canCloseLifecycle": false,
+    "canCreateState": false,
+    "canAccessSecrets": false,
+    "canFetchInstructions": false,
+    "canInvokeCallbacks": false,
+    "canRunArbitraryCode": false
+  },
+  "registries": [
+    {
+      "registryId": "harness-owned-registry"
+    }
+  ],
+  "capabilities": [
+    {
+      "capabilityId": "ci-gates",
+      "provider": "Harness",
+      "owner": "Harness",
+      "version": "1.0.0",
+      "fingerprint": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "availability": "AVAILABLE",
+      "enabledByDefault": false,
+      "status": {
+        "documented": "DOCUMENTED",
+        "installed": "INSTALLED",
+        "runnable": "RUNNABLE",
+        "executed": "NOT_EXECUTED"
+      },
+      "taskCategories": ["ci", "verification"],
+      "readWriteClass": "READ_ONLY",
+      "scope": {
+        "scopeClass": "REPOSITORY",
+        "maxRepositories": 1,
+        "maxPaths": 10,
+        "allowedPathClasses": ["ci", "tests", "evidence"],
+        "requiresAEGrant": true,
+        "externalSideEffects": false
+      },
+      "evidenceRequirements": [
+        {
+          "evidenceType": "catalog-fingerprint",
+          "required": true,
+          "freshness": "source-bound",
+          "description": "A second registry must be rejected before capability selection."
+        }
+      ],
+      "purpose": "A valid-looking entry paired with an unauthorized second registry."
+    }
+  ]
+}

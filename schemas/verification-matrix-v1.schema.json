@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "verification-matrix-v1.schema.json",
+  "title": "Hybrid verification matrix",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "requirements", "staticChecks", "reviewReceipts", "runtimeChecks", "deviceChecks", "activationChecks"],
+  "properties": {
+    "schemaVersion": { "const": "verification-matrix-v1" },
+    "requirements": { "type": "array" },
+    "staticChecks": { "type": "array" },
+    "reviewReceipts": { "type": "array" },
+    "runtimeChecks": { "type": "array" },
+    "deviceChecks": { "type": "array" },
+    "activationChecks": { "type": "array" }
+  }
+}
+

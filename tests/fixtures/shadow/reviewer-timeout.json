@@ -1,0 +1,12 @@
+{
+  "name": "reviewer-timeout",
+  "request": {
+    "rawText": "The reviewer timed out before returning a terminal receipt",
+    "requestType": "review"
+  },
+  "expected": {
+    "route": "REVIEW_ONLY",
+    "complexity": "NORMAL",
+    "riskTier": "LOW"
+  }
+}

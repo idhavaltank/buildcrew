@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "handoff-privacy-receipt-v1.schema.json",
+  "title": "Cross-session handoff privacy receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "receiptId", "receiptDigest", "handoffId", "taskId", "sourceSessionId", "contentDigest", "redactorIdentity", "redactionPolicyVersion", "scannerVersion", "redactionProvenance", "secretScanStatus", "authorityScanStatus", "issuedAt", "terminal"],
+  "properties": {
+    "schemaVersion": {"const": "handoff-privacy-receipt-v1"},
+    "receiptId": {"type": "string", "minLength": 1},
+    "receiptDigest": {"$ref": "#/$defs/fingerprint"},
+    "handoffId": {"type": "string", "minLength": 1},
+    "taskId": {"type": "string", "minLength": 1},
+    "sourceSessionId": {"type": "string", "minLength": 1},
+    "contentDigest": {"$ref": "#/$defs/fingerprint"},
+    "redactorIdentity": {"type": "string", "minLength": 1},
+    "redactionPolicyVersion": {"type": "string", "minLength": 1},
+    "scannerVersion": {"type": "string", "minLength": 1},
+    "redactionProvenance": {"const": "CALLER_REDACTED"},
+    "secretScanStatus": {"const": "PASS"},
+    "authorityScanStatus": {"const": "PASS"},
+    "issuedAt": {"type": "string", "format": "date-time"},
+    "terminal": {"const": true}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

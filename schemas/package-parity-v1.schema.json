@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "package-parity-v1.schema.json",
+  "title": "Standalone source-to-archive parity report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "status", "sourceRootName", "fileCount", "missing", "extra", "mismatched", "errors", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "package-parity-v1" },
+    "status": { "enum": ["PASS", "FAIL"] },
+    "sourceRootName": { "type": "string", "minLength": 1 },
+    "fileCount": { "type": "integer", "minimum": 0 },
+    "missing": { "type": "array", "items": { "type": "string" } },
+    "extra": { "type": "array", "items": { "type": "string" } },
+    "mismatched": { "type": "array", "items": { "type": "string" } },
+    "errors": { "type": "array", "items": { "type": "string" } },
+    "sideEffects": { "const": [] }
+  }
+}

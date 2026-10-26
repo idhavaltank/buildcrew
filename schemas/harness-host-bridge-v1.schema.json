@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "harness-host-bridge-v1.schema.json",
+  "title": "AE read-only Harness host bridge result",
+  "oneOf": [
+    { "$ref": "#/$defs/inspection" },
+    { "$ref": "#/$defs/projection" },
+    { "$ref": "#/$defs/executionStatus" }
+  ],
+  "$defs": {
+    "inspection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "status", "eligible", "manifestFingerprint", "capabilities", "errors"],
+      "properties": {
+        "schemaVersion": { "const": "harness-host-bridge-v1" },
+        "status": { "enum": ["VALID", "INVALID"] },
+        "eligible": { "type": "boolean" },
+        "manifestFingerprint": { "type": ["string", "null"] },
+        "capabilities": { "type": "array", "items": { "$ref": "#/$defs/capabilityStatus" } },
+        "errors": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "capabilityStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityId", "availability", "documented", "installed", "runnable", "executed", "eligible", "errors"],
+      "properties": {
+        "capabilityId": { "type": ["string", "null"] },
+        "availability": { "enum": ["AVAILABLE", "UNAVAILABLE", "DISABLED", "STALE", "DUPLICATE", "INVALID"] },
+        "documented": { "enum": ["DOCUMENTED", "UNAVAILABLE"] },
+        "installed": { "enum": ["INSTALLED", "UNAVAILABLE"] },
+        "runnable": { "enum": ["RUNNABLE", "UNAVAILABLE"] },
+        "executed": { "enum": ["EXECUTED", "NOT_EXECUTED", "UNAVAILABLE"] },
+        "eligible": { "type": "boolean" },
+        "errors": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "status", "taskId", "repository", "sourceFingerprint", "capability", "executionStatus"],
+      "properties": {
+        "schemaVersion": { "const": "harness-host-bridge-v1" },
+        "status": { "const": "PROJECTED" },
+        "taskId": { "type": "string", "minLength": 1 },
+        "repository": { "type": "string", "minLength": 1 },
+        "sourceFingerprint": { "pattern": "^sha256:[0-9a-f]{64}$" },
+        "capability": { "$ref": "#/$defs/projectedCapability" },
+        "executionStatus": { "const": "NOT_EXECUTED" }
+      }
+    },
+    "projectedCapability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityId", "provider", "owner", "version", "fingerprint", "taskCategory", "readWriteClass", "scopeClass", "maxRepositories", "maxPaths"],
+      "properties": {
+        "capabilityId": { "type": "string", "minLength": 1 },
+        "provider": { "const": "Harness" },
+        "owner": { "const": "Harness" },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$" },
+        "fingerprint": { "pattern": "^sha256:[0-9a-f]{64}$" },
+        "taskCategory": { "type": ["string", "null"] },
+        "readWriteClass": { "enum": ["READ_ONLY", "REPOSITORY_DOCUMENTATION_WRITE"] },
+        "scopeClass": { "enum": ["TASK_EVIDENCE", "REPOSITORY"] },
+        "maxRepositories": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "maxPaths": { "type": "integer", "minimum": 0, "maximum": 1000 }
+      }
+    },
+    "executionStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "status", "available", "reason"],
+      "properties": {
+        "schemaVersion": { "const": "harness-host-bridge-v1" },
+        "status": { "enum": ["UNAVAILABLE", "NOT_EXECUTED"] },
+        "available": { "const": false },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

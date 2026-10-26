@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "capability-manifest-v1",
+  "registry": {
+    "registryId": "ae-host-capability-registry",
+    "scope": "host-workspace",
+    "canonical": true,
+    "owner": "general",
+    "version": "1.0.0",
+    "fingerprint": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "enabledByDefault": false
+  },
+  "authority": {
+    "mode": "NON_AUTHORITATIVE",
+    "controller": "AE",
+    "canRoute": false,
+    "canSelectModel": false,
+    "canGrantWrite": false,
+    "canCloseLifecycle": false,
+    "canCreateState": false,
+    "canAccessSecrets": false,
+    "canFetchInstructions": false,
+    "canInvokeCallbacks": false,
+    "canRunArbitraryCode": false
+  },
+  "capabilities": [
+    {
+      "capabilityId": "lint-architecture",
+      "provider": "Harness",
+      "owner": "Harness",
+      "version": "1.0.0",
+      "fingerprint": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "availability": "AVAILABLE",
+      "enabledByDefault": true,
+      "status": {
+        "documented": "DOCUMENTED",
+        "installed": "INSTALLED",
+        "runnable": "RUNNABLE",
+        "executed": "NOT_EXECUTED"
+      },
+      "taskCategories": ["lint", "architecture", "verification"],
+      "readWriteClass": "READ_ONLY",
+      "scope": {
+        "scopeClass": "REPOSITORY",
+        "maxRepositories": 1,
+        "maxPaths": 25,
+        "allowedPathClasses": ["source", "tests", "evidence"],
+        "requiresAEGrant": true,
+        "externalSideEffects": false
+      },
+      "evidenceRequirements": [
+        {
+          "evidenceType": "catalog-fingerprint",
+          "required": true,
+          "freshness": "source-bound",
+          "description": "This entry is invalid because it is enabled by default."
+        }
+      ],
+      "purpose": "A capability that must remain disabled until AE explicitly selects it."
+    }
+  ]
+}

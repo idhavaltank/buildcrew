@@ -1,0 +1,49 @@
+{
+  "taskFacts": {
+    "schemaVersion": "model-selection-task-v1",
+    "route": "NEW_TASK",
+    "taskClass": "normal",
+    "taskId": "task-normal-001",
+    "projectId": "project-demo",
+    "repositoryId": "repo-demo",
+    "tenantId": "tenant-demo",
+    "packetVersion": "packet-v1",
+    "planVersion": "plan-v1",
+    "waveId": "wave-normal-1",
+    "attempt": 1,
+    "sourceFingerprint": "source-normal-001",
+    "hostId": "host-normal",
+    "issuedAt": "2026-08-24T08:00:00Z",
+    "expiresAt": "2026-08-24T09:00:00Z",
+    "needsCoordinator": true,
+    "workerScopes": [
+      {
+        "scopeId": "worker-1",
+        "paths": ["src/feature.py"],
+        "authority": "write"
+      },
+      {
+        "scopeId": "worker-2",
+        "paths": ["tests/test_feature.py"],
+        "authority": "write"
+      }
+    ],
+    "coordinatorScope": {
+      "scopeId": "coordinator-1",
+      "paths": ["src", "tests"],
+      "authority": "read"
+    },
+    "validationTime": "2026-08-24T08:30:00Z"
+  },
+  "hostCatalog": {
+    "schemaVersion": "host-model-catalog-v1",
+    "hostId": "host-normal",
+    "availableModels": {
+      "model-fast": ["max"],
+      "model-balanced": ["high"],
+      "model-advanced": ["max"]
+    },
+    "inheritedModel": null,
+    "inheritedReason": null
+  }
+}

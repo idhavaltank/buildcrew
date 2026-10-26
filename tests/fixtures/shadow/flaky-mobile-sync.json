@@ -1,0 +1,13 @@
+{
+  "name": "flaky-mobile-sync",
+  "request": {
+    "rawText": "Debug flaky mobile sync after the app resumes and queue replay runs",
+    "requestType": "bug",
+    "scopePaths": ["lib/sync/", "lib/mobile/"]
+  },
+  "expected": {
+    "route": "NEW_TASK",
+    "complexity": "COUPLED",
+    "riskTier": "HIGH"
+  }
+}

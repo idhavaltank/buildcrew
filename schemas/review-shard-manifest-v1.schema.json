@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-shard-manifest-v1.schema.json",
+  "title": "Review shard manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "manifestId", "taskId", "projectId", "repositoryId",
+    "tenantId", "acceptanceFingerprint", "sourceFingerprint",
+    "overallDiffFingerprint", "requiredLenses", "shards", "generatedAt"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "review-shard-manifest-v1"},
+    "manifestId": {"type": "string", "minLength": 1},
+    "taskId": {"type": "string", "minLength": 1},
+    "projectId": {"type": "string", "minLength": 1},
+    "repositoryId": {"type": "string", "minLength": 1},
+    "tenantId": {"type": ["string", "null"]},
+    "acceptanceFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "sourceFingerprint": {"type": "string", "minLength": 1},
+    "overallDiffFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "requiredLenses": {
+      "type": "array", "uniqueItems": true,
+      "items": {"$ref": "#/$defs/lens"}
+    },
+    "shards": {
+      "type": "array", "minItems": 1,
+      "items": {"$ref": "#/$defs/shard"}
+    },
+    "generatedAt": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "lens": {"enum": ["work", "architecture", "security", "runtime", "visual"]},
+    "strings": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "shard": {
+      "type": "object",
+      "additionalProperties": false,
+        "required": ["shardId", "lens", "required", "namedReviewRequired", "criteriaIds", "paths", "symbols", "dependencies", "evidenceRefs", "shardFingerprint", "status"],
+      "properties": {
+        "shardId": {"type": "string", "minLength": 1},
+        "lens": {"$ref": "#/$defs/lens"},
+          "required": {"type": "boolean"},
+          "namedReviewRequired": {"type": "boolean"},
+        "criteriaIds": {"$ref": "#/$defs/strings"},
+        "paths": {"$ref": "#/$defs/strings"},
+        "symbols": {"$ref": "#/$defs/strings"},
+        "dependencies": {"$ref": "#/$defs/strings"},
+        "evidenceRefs": {"$ref": "#/$defs/strings"},
+        "shardFingerprint": {"$ref": "#/$defs/fingerprint"},
+        "status": {"enum": ["PENDING", "PASS", "FINDINGS", "MISSING_COVERAGE", "BLOCKED", "NOT_REQUIRED"]}
+      }
+    }
+  }
+}

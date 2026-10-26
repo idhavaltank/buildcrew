@@ -1,0 +1,43 @@
+{
+  "taskFacts": {
+    "schemaVersion": "model-selection-task-v1",
+    "route": "REVIEW_ONLY",
+    "taskClass": "final-audit",
+    "taskId": "task-audit-001",
+    "projectId": "project-demo",
+    "repositoryId": "repo-demo",
+    "tenantId": "tenant-demo",
+    "packetVersion": "packet-v1",
+    "planVersion": "plan-v3",
+    "waveId": "wave-audit-1",
+    "attempt": 1,
+    "sourceFingerprint": "source-audit-001",
+    "hostId": "host-audit",
+    "issuedAt": "2026-08-24T08:00:00Z",
+    "expiresAt": "2026-08-24T09:00:00Z",
+    "needsCoordinator": true,
+    "workerScopes": [
+      {
+        "scopeId": "audit-evidence-1",
+        "paths": ["tests", "schemas"],
+        "authority": "read"
+      }
+    ],
+    "coordinatorScope": {
+      "scopeId": "audit-coordinator-1",
+      "paths": ["."],
+      "authority": "read"
+    },
+    "validationTime": "2026-08-24T08:30:00Z"
+  },
+  "hostCatalog": {
+    "schemaVersion": "host-model-catalog-v1",
+    "hostId": "host-audit",
+    "availableModels": {
+      "model-fast": ["max"],
+      "model-advanced": ["max"]
+    },
+    "inheritedModel": null,
+    "inheritedReason": null
+  }
+}

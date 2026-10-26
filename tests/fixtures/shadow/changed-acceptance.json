@@ -1,0 +1,12 @@
+{
+  "name": "changed-acceptance",
+  "request": {
+    "rawText": "The acceptance criteria changed after implementation; invalidate affected receipts",
+    "requestType": "change"
+  },
+  "expected": {
+    "route": "NEW_TASK",
+    "complexity": "NORMAL",
+    "riskTier": "LOW"
+  }
+}

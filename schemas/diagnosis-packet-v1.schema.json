@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "diagnosis-packet-v1.schema.json",
+  "title": "Bounded diagnosis packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["packetVersion", "taskId", "scope", "sourceFingerprint", "checkpoint", "expectedOutput", "timeoutSeconds", "stopConditions"],
+  "properties": {
+    "packetVersion": { "const": "diagnosis-packet-v1" },
+    "taskId": { "type": "string", "minLength": 1 },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "lane", "files"],
+      "properties": {
+        "repository": { "type": "string", "minLength": 1 },
+        "lane": { "type": "string", "minLength": 1 },
+        "files": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phase", "lastCommand", "nextAction"],
+      "properties": {
+        "phase": { "type": "string", "minLength": 1 },
+        "lastCommand": { "type": "string", "minLength": 1 },
+        "nextAction": { "type": "string", "minLength": 1 }
+      }
+    },
+    "expectedOutput": { "type": "array" },
+    "timeoutSeconds": { "type": "integer", "minimum": 1 },
+    "stopConditions": { "type": "array", "minItems": 1 }
+  }
+}

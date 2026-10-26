@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "context-budget-report-v1.schema.json",
+  "title": "BuildCrew bounded context budget report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "taskId", "baseline", "selected", "reduction", "method", "sourceOnly", "executed", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "context-budget-report-v1" },
+    "taskId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "baseline": { "$ref": "#/$defs/measure" },
+    "selected": { "$ref": "#/$defs/measure" },
+    "reduction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["estimatedPercent", "targetPercent", "targetStatus"],
+      "properties": {
+        "estimatedPercent": { "type": "number", "minimum": 0, "maximum": 100 },
+        "targetPercent": { "type": "number", "minimum": 0, "maximum": 100 },
+        "targetStatus": { "enum": ["MET", "NOT_MET"] }
+      }
+    },
+    "method": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "sourceOnly": { "const": true },
+    "executed": { "const": false },
+    "sideEffects": { "type": "array", "maxItems": 0 }
+  },
+  "$defs": {
+    "measure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["characters", "estimatedTokens"],
+      "properties": {
+        "characters": { "type": "integer", "minimum": 0 },
+        "estimatedTokens": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

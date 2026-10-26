@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "qa-request-v1",
+  "requestId": "qa-request-fixture",
+  "taskId": "task-fixture",
+  "repository": "repository-fixture",
+  "sourceFingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "objective": "Validate source-only QA contracts",
+  "acceptanceCriteria": ["The contract is validated"],
+  "targetPlatforms": ["WEB", "MOBILE", "FLUTTER"],
+  "riskTier": "LOW",
+  "mode": "ADVISORY",
+  "issuedAt": "2026-08-25T10:00:00Z",
+  "expiresAt": "2026-08-25T11:00:00Z"
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "static-compatibility-report-v1.schema.json",
+  "title": "AE static source compatibility report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "comparisonId", "status", "left", "right", "comparedFields", "coverage", "differences", "executed", "sourceOnly", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "static-compatibility-report-v1" },
+    "comparisonId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["COMPATIBLE", "DIFFERENT", "MISSING_COVERAGE", "INVALID"] },
+    "left": { "type": "string", "minLength": 1 },
+    "right": { "type": "string", "minLength": 1 },
+    "comparedFields": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "coverage": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["field", "status"],
+        "properties": {
+          "field": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["COMPARED", "DIFFERENT", "MISSING_COVERAGE"] },
+          "missing": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    },
+    "differences": { "type": "array", "items": { "type": "object" } },
+    "executed": { "const": false },
+    "sourceOnly": { "const": true },
+    "sideEffects": { "const": [] },
+    "errors": { "type": "array", "items": { "type": "string" } },
+    "validation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["valid", "errors"],
+      "properties": {
+        "valid": { "type": "boolean" },
+        "errors": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

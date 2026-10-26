@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qa-finding-v1.schema.json",
+  "title": "Advisory QA finding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "findingId", "packetId", "taskId", "sourceFingerprint", "severity", "status", "title", "observed", "expected", "affectedSteps", "evidenceRefs", "blocking", "createdAt", "residualRisk"],
+  "properties": {
+    "schemaVersion": { "const": "qa-finding-v1" },
+    "findingId": { "type": "string", "minLength": 1 },
+    "packetId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 8 },
+    "severity": { "enum": ["BLOCKER", "CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"] },
+    "status": { "enum": ["OPEN", "CONFIRMED", "NOT_REPRODUCED", "BLOCKED", "RESOLVED"] },
+    "title": { "type": "string", "minLength": 1 },
+    "observed": { "type": "string", "minLength": 1 },
+    "expected": { "type": "string", "minLength": 1 },
+    "affectedSteps": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "evidenceRefs": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "blocking": { "type": "boolean" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "residualRisk": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  }
+}

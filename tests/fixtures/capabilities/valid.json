@@ -1,0 +1,267 @@
+{
+  "schemaVersion": "capability-manifest-v1",
+  "registry": {
+    "registryId": "ae-host-capability-registry",
+    "scope": "host-workspace",
+    "canonical": true,
+    "owner": "general",
+    "version": "1.0.0",
+    "fingerprint": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "enabledByDefault": false
+  },
+  "authority": {
+    "mode": "NON_AUTHORITATIVE",
+    "controller": "AE",
+    "canRoute": false,
+    "canSelectModel": false,
+    "canGrantWrite": false,
+    "canCloseLifecycle": false,
+    "canCreateState": false,
+    "canAccessSecrets": false,
+    "canFetchInstructions": false,
+    "canInvokeCallbacks": false,
+    "canRunArbitraryCode": false
+  },
+  "capabilities": [
+    {
+      "capabilityId": "repository-documentation",
+      "provider": "Harness",
+      "owner": "Harness",
+      "version": "1.0.0",
+      "fingerprint": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "availability": "AVAILABLE",
+      "enabledByDefault": false,
+      "status": {
+        "documented": "DOCUMENTED",
+        "installed": "INSTALLED",
+        "runnable": "RUNNABLE",
+        "executed": "NOT_EXECUTED"
+      },
+      "taskCategories": ["documentation", "verification"],
+      "readWriteClass": "REPOSITORY_DOCUMENTATION_WRITE",
+      "scope": {
+        "scopeClass": "REPOSITORY",
+        "maxRepositories": 1,
+        "maxPaths": 25,
+        "allowedPathClasses": ["documentation"],
+        "requiresAEGrant": true,
+        "externalSideEffects": false
+      },
+      "evidenceRequirements": [
+        {
+          "evidenceType": "catalog-fingerprint",
+          "required": true,
+          "freshness": "source-bound",
+          "description": "Match the declared owner, version, and fingerprint before selection."
+        },
+        {
+          "evidenceType": "source-diff",
+          "required": true,
+          "freshness": "task-bound",
+          "description": "Show only the AE-allowlisted documentation paths changed by the task."
+        }
+      ],
+      "purpose": "Inspect or update repository documentation within an AE-granted documentation scope."
+    },
+    {
+      "capabilityId": "lint-architecture",
+      "provider": "Harness",
+      "owner": "Harness",
+      "version": "1.0.0",
+      "fingerprint": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "availability": "AVAILABLE",
+      "enabledByDefault": false,
+      "status": {
+        "documented": "DOCUMENTED",
+        "installed": "INSTALLED",
+        "runnable": "RUNNABLE",
+        "executed": "NOT_EXECUTED"
+      },
+      "taskCategories": ["lint", "architecture", "verification"],
+      "readWriteClass": "READ_ONLY",
+      "scope": {
+        "scopeClass": "REPOSITORY",
+        "maxRepositories": 1,
+        "maxPaths": 25,
+        "allowedPathClasses": ["source", "tests", "evidence"],
+        "requiresAEGrant": true,
+        "externalSideEffects": false
+      },
+      "evidenceRequirements": [
+        {
+          "evidenceType": "runnable-check-result",
+          "required": true,
+          "freshness": "source-bound",
+          "description": "Prove that the bounded lint or architecture check is runnable for the current source."
+        },
+        {
+          "evidenceType": "executed-check-result",
+          "required": true,
+          "freshness": "task-bound",
+          "description": "Record the focused result and findings without changing repository policy."
+        }
+      ],
+      "purpose": "Run bounded lint and architecture checks and return evidence to AE."
+    },
+    {
+      "capabilityId": "ci-gates",
+      "provider": "Harness",
+      "owner": "Harness",
+      "version": "1.0.0",
+      "fingerprint": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "availability": "AVAILABLE",
+      "enabledByDefault": false,
+      "status": {
+        "documented": "DOCUMENTED",
+        "installed": "INSTALLED",
+        "runnable": "RUNNABLE",
+        "executed": "NOT_EXECUTED"
+      },
+      "taskCategories": ["ci", "verification"],
+      "readWriteClass": "READ_ONLY",
+      "scope": {
+        "scopeClass": "REPOSITORY",
+        "maxRepositories": 1,
+        "maxPaths": 10,
+        "allowedPathClasses": ["ci", "tests", "evidence"],
+        "requiresAEGrant": true,
+        "externalSideEffects": false
+      },
+      "evidenceRequirements": [
+        {
+          "evidenceType": "installed-package-check",
+          "required": true,
+          "freshness": "source-bound",
+          "description": "Prove that the declared CI gate is installed in the host catalog."
+        },
+        {
+          "evidenceType": "executed-check-result",
+          "required": true,
+          "freshness": "task-bound",
+          "description": "Record the executed gate result and confirm no CI or service mutation occurred."
+        }
+      ],
+      "purpose": "Expose bounded CI gate evidence without editing CI or starting services."
+    },
+    {
+      "capabilityId": "observability",
+      "provider": "Harness",
+      "owner": "Harness",
+      "version": "1.0.0",
+      "fingerprint": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+      "availability": "AVAILABLE",
+      "enabledByDefault": false,
+      "status": {
+        "documented": "DOCUMENTED",
+        "installed": "INSTALLED",
+        "runnable": "RUNNABLE",
+        "executed": "NOT_EXECUTED"
+      },
+      "taskCategories": ["observability", "verification"],
+      "readWriteClass": "READ_ONLY",
+      "scope": {
+        "scopeClass": "REPOSITORY",
+        "maxRepositories": 1,
+        "maxPaths": 15,
+        "allowedPathClasses": ["observability", "evidence"],
+        "requiresAEGrant": true,
+        "externalSideEffects": false
+      },
+      "evidenceRequirements": [
+        {
+          "evidenceType": "runtime-observation",
+          "required": true,
+          "freshness": "runtime-bound",
+          "description": "Record a sanitized task-bound observation rather than a static assumption."
+        },
+        {
+          "evidenceType": "review-receipt",
+          "required": true,
+          "freshness": "task-bound",
+          "description": "Confirm privacy filtering and the observed scope before AE reconciliation."
+        }
+      ],
+      "purpose": "Return sanitized observability evidence for a bounded task."
+    },
+    {
+      "capabilityId": "specialist-profiles",
+      "provider": "Harness",
+      "owner": "Harness",
+      "version": "1.0.0",
+      "fingerprint": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+      "availability": "AVAILABLE",
+      "enabledByDefault": false,
+      "status": {
+        "documented": "DOCUMENTED",
+        "installed": "INSTALLED",
+        "runnable": "RUNNABLE",
+        "executed": "NOT_EXECUTED"
+      },
+      "taskCategories": ["specialist-selection"],
+      "readWriteClass": "READ_ONLY",
+      "scope": {
+        "scopeClass": "TASK_EVIDENCE",
+        "maxRepositories": 1,
+        "maxPaths": 1,
+        "allowedPathClasses": ["evidence"],
+        "requiresAEGrant": true,
+        "externalSideEffects": false
+      },
+      "evidenceRequirements": [
+        {
+          "evidenceType": "catalog-fingerprint",
+          "required": true,
+          "freshness": "source-bound",
+          "description": "Bind the profile proposal to its owner, version, and current fingerprint."
+        },
+        {
+          "evidenceType": "review-receipt",
+          "required": true,
+          "freshness": "task-bound",
+          "description": "Show AE reconciliation to one canonical role contract and bounded scope."
+        }
+      ],
+      "purpose": "Provide a non-authoritative specialist profile proposal for AE reconciliation."
+    },
+    {
+      "capabilityId": "quality-technical-debt",
+      "provider": "Harness",
+      "owner": "Harness",
+      "version": "1.0.0",
+      "fingerprint": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+      "availability": "AVAILABLE",
+      "enabledByDefault": false,
+      "status": {
+        "documented": "DOCUMENTED",
+        "installed": "INSTALLED",
+        "runnable": "RUNNABLE",
+        "executed": "NOT_EXECUTED"
+      },
+      "taskCategories": ["quality", "technical-debt", "verification"],
+      "readWriteClass": "READ_ONLY",
+      "scope": {
+        "scopeClass": "REPOSITORY",
+        "maxRepositories": 1,
+        "maxPaths": 20,
+        "allowedPathClasses": ["source", "tests", "quality", "evidence"],
+        "requiresAEGrant": true,
+        "externalSideEffects": false
+      },
+      "evidenceRequirements": [
+        {
+          "evidenceType": "executed-check-result",
+          "required": true,
+          "freshness": "task-bound",
+          "description": "Record the focused quality or debt result for the selected task."
+        },
+        {
+          "evidenceType": "review-receipt",
+          "required": true,
+          "freshness": "source-bound",
+          "description": "Include owner, freshness, disposition, and residual risk for every finding."
+        }
+      ],
+      "purpose": "Return bounded quality and technical-debt evidence without a background workflow."
+    }
+  ]
+}

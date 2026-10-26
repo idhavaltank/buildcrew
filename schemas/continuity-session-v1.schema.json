@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "continuity-session-v1.schema.json",
+  "title": "BuildCrew durable continuity session v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "taskId", "createdAt", "updatedAt", "projectId", "repository", "packet", "taskFingerprint", "status", "contextReferences", "context", "contextBudget", "profile", "sourceRevalidationRequired"],
+  "properties": {
+    "schemaVersion": { "const": "continuity-session-v1" },
+    "taskId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "lastResumedAt": { "type": "string", "format": "date-time" },
+    "closedAt": { "type": "string", "format": "date-time" },
+    "projectId": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "repository": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "packet": { "$ref": "portable-task-packet-v1.schema.json" },
+    "taskFingerprint": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "status": { "enum": ["IN_PROGRESS", "COMPLETED", "BLOCKED", "PAUSED", "PAUSE"] },
+    "lastLookup": { "$ref": "memory-context-lookup-v1.schema.json" },
+    "contextReferences": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selectedPaths", "sources"],
+      "properties": {
+        "selectedPaths": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "fullCharacters", "excerptCharacters", "privacyBlocked"],
+            "properties": {
+              "path": { "type": "string", "minLength": 1 },
+              "sha256": { "type": ["string", "null"] },
+              "fullCharacters": { "type": "integer", "minimum": 0 },
+              "excerptCharacters": { "type": "integer", "minimum": 0 },
+              "privacyBlocked": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "context": { "type": "string", "maxLength": 14000 },
+    "contextBudget": { "$ref": "context-budget-report-v1.schema.json" },
+    "profile": { "enum": ["LIGHTWEIGHT", "NORMAL", "COUPLED"] },
+    "latestSummary": { "type": "string", "maxLength": 2000 },
+    "nextAction": { "type": "string", "maxLength": 1000 },
+    "decisions": { "type": "array", "maxItems": 16, "items": { "type": "string", "minLength": 1, "maxLength": 500 } },
+    "learning": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "outcome": { "type": ["string", "null"] },
+        "recordId": { "type": ["string", "null"] },
+        "storePath": { "type": ["string", "null"] },
+        "moduleFeatureWriteback": { "type": ["object", "null"] }
+      }
+    },
+    "dailyReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "path", "ingestionRequired", "errors"],
+      "properties": {
+        "outcome": { "type": "string" },
+        "path": { "type": ["string", "null"] },
+        "relativePath": { "type": ["string", "null"] },
+        "ingestionRequired": { "type": "boolean" },
+        "errors": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "worklog": { "type": "object" },
+    "sourceRevalidationRequired": { "const": true },
+    "sideEffects": { "type": "array", "items": { "type": "string" } }
+  }
+}

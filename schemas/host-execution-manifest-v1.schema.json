@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "host-execution-manifest-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "adapterId",
+    "hostId",
+    "version",
+    "status",
+    "operation",
+    "executable",
+    "arguments",
+    "workingDirectory",
+    "allowedRoot",
+    "environmentKeys",
+    "executableSha256",
+    "timeoutSeconds",
+    "maxOutputBytes",
+    "sourceBound",
+    "externalSideEffects"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "host-execution-manifest-v1" },
+    "adapterId": { "type": "string", "minLength": 1 },
+    "hostId": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["AVAILABLE", "UNAVAILABLE", "MISCONFIGURED", "NOT_VERIFIED"] },
+    "operation": { "enum": ["native-spawn", "provider-execute"] },
+    "executable": { "type": "string", "minLength": 1 },
+    "arguments": { "type": "array", "maxItems": 32, "items": { "type": "string", "minLength": 1, "maxLength": 512 } },
+    "workingDirectory": { "type": "string", "minLength": 1 },
+    "allowedRoot": { "type": "string", "minLength": 1 },
+    "environmentKeys": { "type": "array", "maxItems": 32, "items": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]{0,127}$" } },
+    "executableSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "timeoutSeconds": { "type": "integer", "minimum": 1, "maximum": 900 },
+    "maxOutputBytes": { "type": "integer", "minimum": 1024, "maximum": 4194304 },
+    "sourceBound": { "const": true },
+    "externalSideEffects": { "const": "HOST_CONTROLLED" }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-invalidation-plan-v1.schema.json",
+  "title": "Trusted review invalidation plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "planId", "planDigest", "taskId", "projectId", "repositoryId", "tenantId", "sourceFingerprint", "currentOverallDiffFingerprint", "manifestDigest", "normalizedChangeSet", "changeSetDigest", "producerIdentity", "producerAuthority", "issuedAt", "expiresAt", "decisionsDigest", "rerunShards", "reusedShards", "decisions", "reuseDecisions", "deltaPackets", "reportOnly", "terminal"],
+  "properties": {
+    "schemaVersion": {"const": "review-invalidation-plan-v1"},
+    "planId": {"type": "string", "minLength": 1},
+    "planDigest": {"$ref": "#/$defs/fingerprint"},
+    "taskId": {"type": "string", "minLength": 1},
+    "projectId": {"type": "string", "minLength": 1},
+    "repositoryId": {"type": "string", "minLength": 1},
+    "tenantId": {"type": ["string", "null"]},
+    "sourceFingerprint": {"type": "string", "minLength": 1},
+    "currentOverallDiffFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "manifestDigest": {"$ref": "#/$defs/fingerprint"},
+    "normalizedChangeSet": {"$ref": "#/$defs/changeSet"},
+    "changeSetDigest": {"$ref": "#/$defs/fingerprint"},
+    "producerIdentity": {"type": "string", "minLength": 1},
+    "producerAuthority": {"enum": ["review-host", "controller"]},
+    "issuedAt": {"type": "string", "format": "date-time"},
+    "expiresAt": {"type": "string", "format": "date-time"},
+    "decisionsDigest": {"$ref": "#/$defs/fingerprint"},
+    "rerunShards": {"$ref": "#/$defs/strings"},
+    "reusedShards": {"$ref": "#/$defs/strings"},
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["shardId", "decision", "reasons"],
+        "properties": {
+          "shardId": {"type": "string", "minLength": 1},
+          "decision": {"enum": ["REUSE", "REVIEW_REQUIRED", "NOT_REQUIRED"]},
+          "reasons": {"$ref": "#/$defs/strings"}
+        }
+      }
+    },
+    "reuseDecisions": {
+      "type": "array",
+      "items": {"$ref": "review-coverage-reuse-decision-v1.schema.json"}
+    },
+    "deltaPackets": {"type": "array", "items": {"type": "object"}},
+    "reportOnly": {"const": true},
+    "terminal": {"const": true}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "strings": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "changeSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["paths", "symbols", "criteriaIds", "boundaries", "findingIds", "acceptanceChanged", "criterionMap"],
+      "properties": {
+        "paths": {"$ref": "#/$defs/strings"},
+        "symbols": {"$ref": "#/$defs/strings"},
+        "criteriaIds": {"$ref": "#/$defs/strings"},
+        "boundaries": {"$ref": "#/$defs/strings"},
+        "findingIds": {"$ref": "#/$defs/strings"},
+        "acceptanceChanged": {"type": "boolean"},
+        "criterionMap": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/$defs/strings"}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-risk-authorization-v1.schema.json",
+  "title": "Trusted review risk authorization v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "authorizationId",
+    "approvalId",
+    "approverIdentity",
+    "approverAuthority",
+    "taskId",
+    "projectId",
+    "repositoryId",
+    "tenantId",
+    "sourceFingerprint",
+    "overallDiffFingerprint",
+    "findingId",
+    "scope",
+    "policyFingerprint",
+    "issuerId",
+    "issuedAt",
+    "expiresAt",
+    "terminal"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "review-risk-authorization-v1"},
+    "authorizationId": {"type": "string", "minLength": 1},
+    "approvalId": {"type": "string", "minLength": 1},
+    "approverIdentity": {"type": "string", "minLength": 1},
+    "approverAuthority": {"type": "string", "minLength": 1},
+    "taskId": {"type": "string", "minLength": 1},
+    "projectId": {"type": "string", "minLength": 1},
+    "repositoryId": {"type": "string", "minLength": 1},
+    "tenantId": {"type": ["string", "null"]},
+    "sourceFingerprint": {"type": "string", "minLength": 1},
+    "overallDiffFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "findingId": {"type": "string", "minLength": 1},
+    "scope": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "policyFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "issuerId": {"type": "string", "minLength": 1},
+    "issuedAt": {"type": "string", "format": "date-time"},
+    "expiresAt": {"type": "string", "format": "date-time"},
+    "terminal": {"const": true}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

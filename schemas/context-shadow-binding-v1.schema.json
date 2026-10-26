@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "context-shadow-binding-v1.schema.json",
+  "title": "Project-context shadow binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "mode", "status", "taskId", "repositoryId", "fingerprints", "canonicalIntake", "sidecars", "policy", "controllerGate", "blockers", "evidence", "sideEffects", "generatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "context-shadow-binding-v1" },
+    "mode": { "const": "SHADOW" },
+    "status": { "enum": ["PASS", "BLOCKED", "MISSING_COVERAGE", "INVALID"] },
+    "taskId": { "type": "string", "minLength": 1 },
+    "repositoryId": { "type": "string", "minLength": 1 },
+    "fingerprints": {
+      "type": "object", "additionalProperties": false,
+      "required": ["sourceFingerprint", "contextFingerprint", "policyFingerprint", "taskScopeFingerprint"],
+      "properties": {
+        "sourceFingerprint": { "type": "string", "minLength": 8 },
+        "contextFingerprint": { "type": "string", "minLength": 8 },
+        "policyFingerprint": { "type": "string", "minLength": 8 },
+        "taskScopeFingerprint": { "type": "string", "minLength": 8 }
+      }
+    },
+    "canonicalIntake": {
+      "type": "object", "additionalProperties": false,
+      "required": ["requestType", "normalizedObjective", "targetPaths", "acceptanceCriteria"],
+      "properties": {
+        "requestType": { "type": "string", "minLength": 1 },
+        "normalizedObjective": { "type": "string" },
+        "targetPaths": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "acceptanceCriteria": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "sidecars": {
+      "type": "object", "additionalProperties": false,
+      "required": ["contextMap", "receipt", "policyBundle"],
+      "properties": {
+        "contextMap": { "enum": ["BOUND", "INVALID", "MISSING"] },
+        "receipt": { "enum": ["BOUND", "INVALID", "MISSING"] },
+        "policyBundle": { "enum": ["BOUND", "INVALID", "MISSING"] }
+      }
+    },
+    "policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["selectedProfiles", "riskTier", "mutationStatus", "requiredCapabilities", "requiredEvidence"],
+      "properties": {
+        "selectedProfiles": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "riskTier": { "enum": ["lightweight", "normal", "coupled", "high"] },
+        "mutationStatus": { "enum": ["READY", "BLOCKED", "REVIEW_REQUIRED"] },
+        "requiredCapabilities": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "requiredEvidence": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "controllerGate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["enforcement", "routeMutation", "agentSelection", "closureAuthority"],
+      "properties": {
+        "enforcement": { "const": "SHADOW_ONLY" },
+        "routeMutation": { "const": "NOT_APPLIED" },
+        "agentSelection": { "const": "NOT_APPLIED" },
+        "closureAuthority": { "const": "AE" }
+      }
+    },
+    "blockers": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["check", "result", "summary"],
+        "properties": {
+          "check": { "type": "string", "minLength": 1 },
+          "result": { "enum": ["PASS", "BLOCKED", "MISSING_COVERAGE", "INVALID"] },
+          "summary": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "sideEffects": { "const": [] },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "validation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["valid", "errors"],
+      "properties": {
+        "valid": { "type": "boolean" },
+        "errors": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

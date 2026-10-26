@@ -1,0 +1,12 @@
+{
+  "name": "stale-rag-conflict",
+  "request": {
+    "rawText": "Review a stale conflicting RAG lesson against the current source and tests",
+    "requestType": "review"
+  },
+  "expected": {
+    "route": "REVIEW_ONLY",
+    "complexity": "NORMAL",
+    "riskTier": "LOW"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hybrid-intake-v1.schema.json",
+  "title": "Hybrid intake packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "taskId",
+    "request",
+    "scope",
+    "behavior",
+    "evidence",
+    "candidateProjection",
+    "reconciliation",
+    "execution",
+    "verification",
+    "learning",
+    "state"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "hybrid-intake-v1" },
+    "taskId": { "type": "string", "minLength": 1 },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rawText", "normalizedObjective", "requestType", "constraints", "acceptanceCriteria"],
+      "properties": {
+        "rawText": { "type": "string", "minLength": 1 },
+        "normalizedObjective": { "type": "string", "minLength": 1 },
+        "requestType": {
+          "enum": ["change", "bug", "review", "question", "research", "operations"]
+        },
+        "constraints": { "type": "array", "items": { "type": "string" } },
+        "acceptanceCriteria": { "type": "array" }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project", "repository", "repositoryRef", "domain", "sourceFingerprint"],
+      "properties": {
+        "project": { "type": ["string", "null"] },
+        "repository": { "type": "string", "minLength": 1 },
+        "repositoryRef": { "type": "string", "minLength": 1 },
+        "domain": { "type": "string", "minLength": 1 },
+        "sourceFingerprint": { "type": "string", "minLength": 1 }
+      }
+    },
+    "behavior": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current", "expected", "reproduction", "userImpact"],
+      "properties": {
+        "current": { "type": ["string", "null"] },
+        "expected": { "type": ["string", "null"] },
+        "reproduction": { "type": ["string", "null"] },
+        "userImpact": { "type": ["string", "null"] }
+      }
+    },
+    "evidence": { "type": "object" },
+    "candidateProjection": { "type": ["object", "null"] },
+    "reconciliation": { "type": "object" },
+    "execution": { "type": "object" },
+    "verification": { "type": "object" },
+    "learning": { "type": "object" },
+    "state": { "type": "object" }
+  }
+}
+

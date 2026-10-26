@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "model-selection-policy-v1.schema.json",
+  "title": "AE model selection policy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "policyId",
+    "policyVersion",
+    "policyFingerprint",
+    "supportedModels",
+    "workerDefault",
+    "workerRules",
+    "coordinatorRules",
+    "fallbackRules",
+    "maximumParallelism",
+    "capabilityAllowlist",
+    "exceptionRequirements",
+    "expirySemantics"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "model-selection-policy-v1" },
+    "policyId": { "type": "string", "minLength": 1 },
+    "policyVersion": { "type": "string", "minLength": 1 },
+    "policyFingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "supportedModels": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "enum": ["model-fast", "model-balanced", "model-advanced"] }
+    },
+    "workerDefault": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "reasoningEffort"],
+      "properties": {
+        "model": { "type": "string", "enum": ["model-fast", "model-balanced", "model-advanced"] },
+        "reasoningEffort": { "enum": ["low", "medium", "high", "max"] }
+      }
+    },
+    "workerRules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["taskClasses", "model", "reasoningEffort"],
+        "properties": {
+          "taskClasses": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "model": { "type": "string", "enum": ["model-fast", "model-balanced", "model-advanced"] },
+          "reasoningEffort": { "enum": ["low", "medium", "high", "max"] }
+        }
+      }
+    },
+    "coordinatorRules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "model", "reasoningEffort", "taskClasses"],
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["normal-coordinator", "high-risk-coordinator", "final-audit"]
+          },
+          "model": {
+            "type": "string",
+            "enum": ["model-balanced", "model-advanced"]
+          },
+          "reasoningEffort": { "enum": ["low", "medium", "high", "max"] },
+          "taskClasses": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "fallbackRules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ruleId",
+          "enabled",
+          "automatic",
+          "fromModel",
+          "toModel",
+          "reasoningEffort",
+          "roles",
+          "taskClasses",
+          "requiredEvidence",
+          "approvalOrigin",
+          "approvalId",
+          "maxScopes",
+          "maxLifetimeSeconds"
+        ],
+        "properties": {
+          "ruleId": { "type": "string", "minLength": 1 },
+          "enabled": { "type": "boolean" },
+          "automatic": { "type": "boolean" },
+          "fromModel": { "type": "string", "enum": ["model-fast", "model-balanced", "model-advanced"] },
+          "toModel": { "enum": ["model-balanced", "model-advanced"] },
+          "reasoningEffort": { "enum": ["low", "medium", "high", "max"] },
+          "roles": {
+            "type": "array",
+            "const": ["worker"]
+          },
+          "taskClasses": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "requiredEvidence": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "approvalOrigin": { "enum": ["explicit_user", "host_policy"] },
+          "approvalId": { "type": "string", "minLength": 1 },
+          "maxScopes": { "const": 1 },
+          "maxLifetimeSeconds": { "type": "integer", "minimum": 1, "maximum": 3600 }
+        }
+      }
+    },
+    "maximumParallelism": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4
+    },
+    "capabilityAllowlist": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "exceptionRequirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowedModels",
+        "trustedOrigins",
+        "requiredEvidence",
+        "maxScopes",
+        "requiresTaskBinding",
+        "requiresApproval",
+        "requiresExpiry"
+      ],
+      "properties": {
+        "allowedModels": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "enum": ["model-balanced", "model-advanced"] }
+        },
+        "trustedOrigins": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "enum": ["explicit_user", "host_policy"] }
+        },
+        "requiredEvidence": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "allowedTaskClasses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "maxScopes": { "const": 1 },
+        "requiresTaskBinding": { "const": true },
+        "requiresApproval": { "const": true },
+        "requiresExpiry": { "const": true }
+      }
+    },
+    "expirySemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "maxLifetimeSeconds", "clock"],
+      "properties": {
+        "required": { "const": true },
+        "maxLifetimeSeconds": { "type": "integer", "minimum": 1 },
+        "clock": { "const": "UTC" }
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "taskFacts": {
+    "schemaVersion": "model-selection-task-v1",
+    "route": "NEW_TASK",
+    "taskClass": "normal",
+    "taskId": "task-inherited-001",
+    "projectId": "project-demo",
+    "repositoryId": "repo-demo",
+    "tenantId": "tenant-demo",
+    "packetVersion": "packet-v1",
+    "planVersion": "plan-v1",
+    "waveId": "wave-inherited-1",
+    "attempt": 1,
+    "sourceFingerprint": "source-inherited-001",
+    "hostId": "host-inherited",
+    "issuedAt": "2026-08-24T08:00:00Z",
+    "expiresAt": "2026-08-24T09:00:00Z",
+    "needsCoordinator": false,
+    "workerScopes": [
+      {
+        "scopeId": "worker-1",
+        "paths": ["src/feature.py"],
+        "authority": "write"
+      }
+    ],
+    "coordinatorScope": null,
+    "validationTime": "2026-08-24T08:30:00Z"
+  },
+  "hostCatalog": {
+    "schemaVersion": "host-model-catalog-v1",
+    "hostId": "host-inherited",
+    "availableModels": {},
+    "inheritedModel": "model-advanced",
+    "inheritedReason": "Host explicitly inherited its configured model after FastModel capability discovery was unavailable."
+  }
+}

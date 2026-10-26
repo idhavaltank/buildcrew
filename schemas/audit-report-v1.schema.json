@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "audit-report-v1.schema.json",
+  "title": "Hybrid release audit report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "terminalStatus",
+    "technicalPass",
+    "sideEffects",
+    "modes",
+    "fixtureChecks",
+    "matrix",
+    "statuses",
+    "findings"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "audit-report-v1" },
+    "terminalStatus": { "enum": ["TECHNICAL_PASS_LIMITED", "TECHNICAL_FAILURE"] },
+    "technicalPass": { "type": "boolean" },
+    "sideEffects": { "const": [] },
+    "modes": { "type": "object" },
+    "fixtureChecks": { "type": "object" },
+    "matrix": {
+      "type": "object",
+      "required": ["schemaVersion", "valid", "requirements", "errors"]
+    },
+    "statuses": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["static", "review", "runtime", "device", "publication", "activation", "learning"],
+      "properties": {
+        "static": { "$ref": "#/$defs/status" },
+        "review": { "$ref": "#/$defs/status" },
+        "runtime": { "$ref": "#/$defs/status" },
+        "device": { "$ref": "#/$defs/status" },
+        "publication": { "$ref": "#/$defs/status" },
+        "activation": { "$ref": "#/$defs/status" },
+        "learning": { "$ref": "#/$defs/status" }
+      }
+    },
+    "findings": { "type": "array", "items": { "type": "string" } }
+  },
+  "$defs": {
+    "status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "required", "evidence"],
+      "properties": {
+        "state": { "enum": ["PASS", "FAIL", "NOT_REQUIRED", "UNAVAILABLE"] },
+        "required": { "type": "boolean" },
+        "evidence": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

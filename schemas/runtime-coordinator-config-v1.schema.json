@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "runtime-coordinator-config-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "runtimeId", "hostId", "nativeAgent", "providers", "sourceBound", "externalSideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "runtime-coordinator-config-v1" },
+    "runtimeId": { "type": "string", "minLength": 1 },
+    "hostId": { "type": "string", "minLength": 1 },
+    "nativeAgent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bridgeManifest", "executionManifest"],
+      "properties": {
+        "bridgeManifest": { "$ref": "native-agent-bridge-manifest-v1.schema.json" },
+        "executionManifest": {
+          "anyOf": [
+            { "$ref": "host-execution-manifest-v1.schema.json" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "providers": {
+      "type": "array",
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["providerManifest", "executionManifest"],
+        "properties": {
+          "providerManifest": { "$ref": "host-model-provider-manifest-v1.schema.json" },
+          "executionManifest": {
+            "anyOf": [
+              { "$ref": "host-execution-manifest-v1.schema.json" },
+              { "type": "null" }
+            ]
+          }
+        }
+      }
+    },
+    "sourceBound": { "const": true },
+    "externalSideEffects": { "const": "HOST_CONTROLLED" }
+  }
+}

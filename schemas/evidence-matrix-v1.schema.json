@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence-matrix-v1.schema.json",
+  "title": "AE source-only evidence matrix",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "matrixId", "taskId", "sourceFingerprint", "requirements", "static", "runtime", "device", "activation", "status", "liveExecution", "freshness", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "evidence-matrix-v1" },
+    "matrixId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "requirements": { "type": "array", "items": { "$ref": "#/$defs/requirement" } },
+    "static": { "type": "array", "items": { "$ref": "#/$defs/item" } },
+    "runtime": { "type": "array", "items": { "$ref": "#/$defs/item" } },
+    "device": { "type": "array", "items": { "$ref": "#/$defs/item" } },
+    "activation": { "type": "array", "items": { "$ref": "#/$defs/item" } },
+    "status": { "enum": ["SOURCE_ONLY", "PARTIAL", "MISSING_COVERAGE", "COMPLETE"] },
+    "liveExecution": { "const": false },
+    "freshness": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "generatedAt", "maxAgeSeconds"],
+      "properties": {
+        "status": { "enum": ["CURRENT", "STALE", "UNKNOWN"] },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "maxAgeSeconds": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "sideEffects": { "const": [] }
+  },
+  "$defs": {
+    "item": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidenceId", "summary", "status", "evidenceRefs"],
+      "properties": {
+        "evidenceId": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["PASS", "FAIL", "BLOCKED", "NOT_VERIFIED", "NOT_RUN", "MISSING_COVERAGE", "NOT_REQUIRED"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "requirement": {
+      "type": "object", "additionalProperties": false,
+      "required": ["requirementId", "description", "status", "evidenceRefs", "residualRisk"],
+      "properties": {
+        "requirementId": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["PASS", "FAIL", "BLOCKED", "NOT_VERIFIED", "NOT_RUN", "MISSING_COVERAGE", "NOT_REQUIRED"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } },
+        "residualRisk": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project-onboarding-v1.schema.json",
+  "title": "BuildCrew project onboarding state",
+  "description": "One-time per-installation project onboarding state stored below an explicit external root.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "scopeId", "projectId", "hostId", "installationId", "projectState",
+    "status", "introShown", "repositoryFingerprint", "assessment", "context", "createdAt",
+    "updatedAt", "sideEffects"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "project-onboarding-v1" },
+    "scopeId": { "type": "string", "minLength": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "hostId": { "type": "string", "minLength": 1 },
+    "installationId": { "type": "string", "minLength": 1 },
+    "projectState": { "enum": ["NEW_PROJECT", "EXISTING_WITHOUT_DOCUMENTATION", "EXISTING_WITH_DOCUMENTATION"] },
+    "status": { "enum": ["PENDING", "COMPLETED"] },
+    "introShown": { "const": true },
+    "repositoryFingerprint": { "type": "string", "minLength": 1 },
+    "assessment": { "type": "object" },
+    "context": { "type": ["object", "null"] },
+    "createdAt": { "type": "string", "minLength": 1 },
+    "updatedAt": { "type": "string", "minLength": 1 },
+    "sideEffects": { "const": [] }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "context-enforced-gate-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "mode", "decision", "status", "action", "taskId", "repositoryId", "fingerprints", "sidecars", "controllerGate", "shadowBinding", "reuseAssessment", "blockers", "sideEffects", "generatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "context-enforced-gate-v1" },
+    "mode": { "const": "ENFORCED_CONTRACT" },
+    "decision": { "enum": ["ALLOW", "BLOCKED", "MISSING_COVERAGE", "INVALID"] },
+    "status": { "enum": ["ALLOW", "BLOCKED", "MISSING_COVERAGE", "INVALID"] },
+    "action": { "enum": ["routing", "model_selection", "agent_selection", "mutation", "closure"] },
+    "taskId": { "type": "string", "minLength": 1 },
+    "repositoryId": { "type": "string", "minLength": 1 },
+    "fingerprints": { "type": "object" },
+    "sidecars": { "type": "object" },
+    "controllerGate": { "type": "object" },
+    "shadowBinding": { "type": "object" },
+    "reuseAssessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "status", "schemaVersion", "taskId", "repositoryId", "sourceFingerprint", "taskScopeFingerprint", "outcome", "errors"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "status": { "enum": ["NOT_REQUIRED", "MISSING", "INVALID", "VALID"] },
+        "schemaVersion": { "const": "repository-reuse-assessment-v1" },
+        "taskId": { "type": "string", "minLength": 1 },
+        "repositoryId": { "type": "string", "minLength": 1 },
+        "sourceFingerprint": { "type": "string", "minLength": 1 },
+        "taskScopeFingerprint": { "type": "string", "minLength": 1 },
+        "outcome": { "enum": [null, "REUSE", "EXTEND", "NEW", "DOCUMENTED_EXCEPTION"] },
+        "errors": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "sideEffects": { "const": [] },
+    "generatedAt": { "type": "string", "minLength": 1 }
+  }
+}

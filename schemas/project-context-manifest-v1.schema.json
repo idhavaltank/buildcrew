@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project-context-manifest-v1.schema.json",
+  "title": "general project context manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "projectId", "profiles"],
+  "properties": {
+    "schemaVersion": { "const": "project-context-manifest-v1" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "profiles": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "products": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "productProfiles": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "applications": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "instructionSources": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["path", "authority"], "properties": { "path": { "$ref": "#/$defs/relativePath" }, "authority": { "type": "string", "minLength": 1 } } } },
+    "planRoots": { "type": "object", "additionalProperties": { "$ref": "#/$defs/relativePath" } },
+    "policyRules": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["ruleId", "enforcement", "appliesTo"], "properties": { "ruleId": { "type": "string", "minLength": 1 }, "title": { "type": "string" }, "requirement": { "type": "string" }, "enforcement": { "enum": ["BLOCK", "REQUIRED", "ADVISORY", "DISCOVERED"] }, "appliesTo": { "type": "array", "items": { "type": "string" } }, "riskSignals": { "type": "array", "items": { "type": "string" } }, "requiredCapabilities": { "type": "array", "items": { "type": "string" } }, "requiredEvidence": { "type": "array", "items": { "type": "string" } }, "conflictsWith": { "type": "array", "items": { "type": "string" } } } } },
+    "notes": { "type": "array", "items": { "type": "string" } }
+  },
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(^|/)\\.\\.(/|$)).*$"
+    }
+  }
+}

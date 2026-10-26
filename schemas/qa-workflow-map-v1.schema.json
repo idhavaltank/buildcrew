@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qa-workflow-map-v1.schema.json",
+  "title": "Advisory QA workflow map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "workflowId", "requestId", "taskId", "sourceFingerprint", "objective", "steps", "unresolved", "status", "generatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "qa-workflow-map-v1" },
+    "workflowId": { "type": "string", "minLength": 1 },
+    "requestId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 8 },
+    "objective": { "type": "string", "minLength": 1 },
+    "steps": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["stepId", "title", "target", "entryPoint", "action", "expected", "evidenceRequired"],
+        "properties": {
+          "stepId": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "target": { "enum": ["WEB", "MOBILE", "IOS", "FLUTTER", "SHARED"] },
+          "entryPoint": { "type": "string", "minLength": 1 },
+          "action": { "type": "string", "minLength": 1 },
+          "expected": { "type": "string", "minLength": 1 },
+          "evidenceRequired": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    },
+    "unresolved": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "status": { "enum": ["READY", "BLOCKED"] },
+    "generatedAt": { "type": "string", "format": "date-time" }
+  }
+}

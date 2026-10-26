@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qa-request-v1.schema.json",
+  "title": "Advisory QA request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "requestId", "taskId", "repository", "sourceFingerprint", "objective", "acceptanceCriteria", "targetPlatforms", "riskTier", "mode", "issuedAt", "expiresAt"],
+  "properties": {
+    "schemaVersion": { "const": "qa-request-v1" },
+    "requestId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "repository": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 8 },
+    "objective": { "type": "string", "minLength": 1 },
+    "acceptanceCriteria": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "targetPlatforms": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["WEB", "MOBILE", "FLUTTER", "SHARED"] } },
+    "riskTier": { "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+    "mode": { "enum": ["ADVISORY", "REQUIRED"] },
+    "issuedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": "string", "format": "date-time" }
+  }
+}

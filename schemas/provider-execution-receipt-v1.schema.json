@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "provider-execution-receipt-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "executionId", "assignmentId", "taskId", "providerId", "model", "status", "sourceFingerprint", "live", "evidenceRefs", "checkpoint", "blockers", "sideEffects", "generatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "provider-execution-receipt-v1" },
+    "executionId": { "type": "string", "minLength": 1 },
+    "assignmentId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "providerId": { "type": "string", "minLength": 1 },
+    "model": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["EXECUTED", "FAILED", "CANCELLED", "TIMED_OUT", "CAPABILITY_UNAVAILABLE", "REJECTED"] },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "live": { "type": "boolean" },
+    "evidenceRefs": { "type": "array", "items": { "type": "string" } },
+    "checkpoint": { "type": "object", "additionalProperties": false, "required": ["sequence", "state"], "properties": { "sequence": { "type": "integer", "minimum": 0 }, "state": { "enum": ["NONE", "SAVED", "PARTIAL", "FINAL"] } } },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "sideEffects": { "const": [] },
+    "generatedAt": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "static-compatibility-set-v1.schema.json",
+  "title": "AE multi-projection static compatibility report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "setId", "status", "anchor", "projections", "comparisons", "executed", "sourceOnly", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "static-compatibility-set-v1" },
+    "setId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["COMPATIBLE", "DIFFERENT", "MISSING_COVERAGE", "INVALID"] },
+    "anchor": { "type": "string", "minLength": 1 },
+    "projections": { "type": "array", "minItems": 2, "items": { "type": "string", "minLength": 1 } },
+    "comparisons": { "type": "array", "items": { "type": "object" } },
+    "executed": { "const": false },
+    "sourceOnly": { "const": true },
+    "sideEffects": { "const": [] },
+    "errors": { "type": "array", "items": { "type": "string" } },
+    "validation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["valid", "errors"],
+      "properties": {
+        "valid": { "type": "boolean" },
+        "errors": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

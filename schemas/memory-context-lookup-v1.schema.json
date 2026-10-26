@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "memory-context-lookup-v1.schema.json",
+  "title": "Memory Context Lookup Receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "outcome",
+    "taskId",
+    "queryFingerprint",
+    "memoryRoot",
+    "route",
+    "selectedPaths",
+    "sources",
+    "registryStatus",
+    "providerPolicy",
+    "sourceFirstRequired",
+    "currentSourceRevalidationRequired",
+    "errors",
+    "sideEffects",
+    "generatedAt"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "memory-context-lookup-v1"},
+    "outcome": {
+      "enum": ["matched", "no_relevant_memory", "unavailable", "denied", "failed", "invalid"]
+    },
+    "taskId": {"type": ["string", "null"]},
+    "queryFingerprint": {
+      "anyOf": [
+        {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        {"type": "null"}
+      ]
+    },
+    "memoryRoot": {"type": "string", "minLength": 1},
+    "route": {
+      "anyOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "routeId",
+            "repository",
+            "application",
+            "module",
+            "feature",
+            "matchedSignals",
+            "routingConfidence"
+          ],
+          "properties": {
+            "routeId": {"type": "string", "minLength": 1},
+            "repository": {"type": "string", "minLength": 1},
+            "application": {"type": "string", "minLength": 1},
+            "module": {"type": "string", "minLength": 1},
+            "feature": {"type": "string", "minLength": 1},
+            "matchedSignals": {
+              "type": "array",
+              "maxItems": 64,
+              "items": {"type": "string", "minLength": 1}
+            },
+            "routingConfidence": {"enum": ["route_map", "module_registry", "exact_scope"]}
+          }
+        }
+      ]
+    },
+    "selectedPaths": {
+      "type": "array",
+      "maxItems": 35,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "sources": {
+      "type": "array",
+      "maxItems": 35,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "modifiedAt"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "modifiedAt": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "registryStatus": {
+      "enum": [
+        "matched",
+        "not_selected",
+        "unavailable",
+        "invalid",
+        "repository_not_listed",
+        "application_not_listed",
+        "module_not_listed",
+        "project_memory_only"
+      ]
+    },
+    "providerPolicy": {"const": "local_first_provider_optional"},
+    "sourceFirstRequired": {"type": "boolean"},
+    "currentSourceRevalidationRequired": {"const": true},
+    "errors": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "sideEffects": {"type": "array", "maxItems": 0},
+    "generatedAt": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"outcome": {"const": "matched"}}, "required": ["outcome"]},
+      "then": {
+        "properties": {
+          "route": {"type": "object"},
+          "selectedPaths": {"minItems": 1},
+          "sources": {"minItems": 1},
+          "registryStatus": {"enum": ["matched", "repository_not_listed", "project_memory_only"]},
+          "sourceFirstRequired": {"const": false},
+          "errors": {"maxItems": 0}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"outcome": {"const": "no_relevant_memory"}}, "required": ["outcome"]},
+      "then": {
+        "properties": {
+          "route": {"type": "null"},
+          "sourceFirstRequired": {"const": true}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"outcome": {"enum": ["unavailable", "denied", "failed", "invalid"]}},
+        "required": ["outcome"]
+      },
+      "then": {"properties": {"sourceFirstRequired": {"const": true}}}
+    }
+  ]
+}

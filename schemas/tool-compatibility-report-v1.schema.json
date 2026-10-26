@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tool-compatibility-report-v1.schema.json",
+  "title": "BuildCrew source-only cross-tool compatibility report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reportId", "taskId", "overallStatus", "routeAgreement", "adapters", "results", "sourceOnly", "executed", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "tool-compatibility-report-v1" },
+    "reportId": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "taskId": { "type": "string", "minLength": 1 },
+    "overallStatus": { "enum": ["COMPATIBLE", "MISSING_COVERAGE", "BLOCKED", "INVALID"] },
+    "routeAgreement": { "type": "boolean" },
+    "adapters": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["status", "adapterId"],
+        "properties": {
+          "status": { "enum": ["READY", "MISSING_COVERAGE", "BLOCKED", "INVALID"] },
+          "adapterId": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "sourceOnly": { "const": true },
+    "executed": { "const": false },
+    "sideEffects": { "const": [] }
+  }
+}
