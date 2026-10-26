@@ -70,23 +70,13 @@ Use BuildCrew review mode to inspect this diff and report evidence and risk.
 
 ### Documentation
 
-Read the complete [BuildCrew documentation](https://idhavaltank.github.io/buildcrew/)
-for setup, concepts, workflows, examples, reference, FAQ, and contribution
-guidance.
-
-| Guide | Purpose |
-| --- | --- |
-| [Get started](https://idhavaltank.github.io/buildcrew/#get-started) | Run your first BuildCrew task. |
-| [Installation](https://idhavaltank.github.io/buildcrew/#installation) | Install the plugin or standalone skill. |
-| [Core concepts](https://idhavaltank.github.io/buildcrew/#concepts) | Understand the plugin, skill, modes, and evidence loop. |
-| [Workflows](https://idhavaltank.github.io/buildcrew/#workflows) | Plan, build, test, review, and ship. |
-| [Examples](https://idhavaltank.github.io/buildcrew/#examples) | See practical prompts and expected behavior. |
-| [Reference](https://idhavaltank.github.io/buildcrew/#reference) | Prompt structure and completion response guidance. |
+Read the complete <a href="https://idhavaltank.github.io/buildcrew/" target="_blank" rel="noopener noreferrer">BuildCrew documentation ↗</a>
+for setup, concepts, workflows, examples, reference, FAQ, and contribution guidance.
 
 ### Ownership and contributors
 
-- **Owner:** [Dhaval Tank](https://github.com/idhavaltank)
-- **Mobile Engineering Collaborator:** [Jay Zala](https://github.com/jayzala-dev)
+- **Owner:** <a href="https://github.com/idhavaltank" target="_blank" rel="noopener noreferrer">Dhaval Tank ↗</a>
+- **Mobile Engineering Collaborator:** <a href="https://github.com/jayzala-dev" target="_blank" rel="noopener noreferrer">Jay Zala ↗</a>
 
 BuildCrew is open to community suggestions. Anyone can fork the repository and
 open a pull request; changes are reviewed by Dhaval Tank before they are
