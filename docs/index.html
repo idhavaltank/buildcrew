@@ -3,196 +3,89 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#070b18">
-  <meta name="description" content="BuildCrew — You Lead. AI Assists. Make daily development clearer, leaner, and more trustworthy.">
-  <title>BuildCrew — Daily development, with a crew behind you</title>
+  <meta name="description" content="BuildCrew documentation: a human-led, evidence-first AI software engineering plugin.">
+  <title>BuildCrew — Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --night: #070b18;
-      --night-2: #101936;
-      --white: #f8faff;
-      --muted: #a9b4cb;
-      --dim: #737f9c;
-      --line: rgba(255,255,255,.14);
-      --glass: rgba(255,255,255,.075);
-      --cyan: #58e5d0;
-      --blue: #7582ff;
-      --violet: #ba93ff;
-      --orange: #ffbe77;
-      --shadow: 0 30px 100px rgba(0,0,0,.35);
-      --radius: 24px;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { margin: 0; color: var(--white); background: var(--night); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; }
-    body::before, body::after { position: fixed; z-index: -2; content: ""; width: 45vw; height: 45vw; max-width: 650px; max-height: 650px; border-radius: 50%; filter: blur(90px); opacity: .22; pointer-events: none; }
-    body::before { top: -18vw; right: -12vw; background: #5968ff; }
-    body::after { bottom: -20vw; left: -14vw; background: #15cdb6; }
-    a { color: inherit; text-decoration: none; }
-    button { font: inherit; }
-    :focus-visible { outline: 3px solid var(--cyan); outline-offset: 4px; }
-    .shell { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
-    .glass { border: 1px solid var(--line); background: var(--glass); box-shadow: var(--shadow); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
-    .nav { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid rgba(255,255,255,.08); background: rgba(7,11,24,.66); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; min-height: 76px; }
-    .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 1.15rem; font-weight: 950; letter-spacing: -.055em; }
-    .brand-mark { display: grid; place-items: center; width: 35px; height: 35px; border: 1px solid rgba(255,255,255,.25); border-radius: 12px; color: var(--night); background: linear-gradient(135deg, var(--cyan), var(--blue)); box-shadow: 0 0 24px rgba(88,229,208,.3); font-size: 1.25rem; }
-    .nav-links { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: .86rem; font-weight: 800; }
-    .nav-links a:hover { color: var(--white); }
-    .nav-cta { padding: 9px 14px; border: 1px solid rgba(88,229,208,.38); border-radius: 10px; color: var(--cyan) !important; background: rgba(88,229,208,.08); }
-    .hero { position: relative; overflow: hidden; padding: 120px 0 102px; }
-    .hero-grid { display: grid; grid-template-columns: 1.04fr .96fr; gap: 65px; align-items: center; }
-    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--cyan); font-size: .72rem; font-weight: 950; letter-spacing: .16em; text-transform: uppercase; }
-    .eyebrow::before { width: 23px; height: 2px; content: ""; border-radius: 99px; background: currentColor; box-shadow: 0 0 14px currentColor; }
-    h1, h2, h3, p { margin-top: 0; }
-    h1, h2, h3 { letter-spacing: -.06em; line-height: 1.04; }
-    h1 { max-width: 730px; margin: 22px 0 24px; font-size: clamp(3.5rem, 8.5vw, 7rem); }
-    h1 span { color: var(--cyan); text-shadow: 0 0 35px rgba(88,229,208,.25); }
-    h2 { margin-bottom: 18px; font-size: clamp(2.35rem, 5vw, 4.4rem); }
-    h3 { margin-bottom: 9px; font-size: 1.15rem; }
-    .hero-copy > p { max-width: 660px; color: #c5cde0; font-size: clamp(1.12rem, 2vw, 1.36rem); }
-    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 31px; }
-    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 49px; padding: 0 19px; border: 1px solid transparent; border-radius: 13px; font-weight: 900; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
-    .button:hover { transform: translateY(-3px); }
-    .button-primary { color: var(--night); background: linear-gradient(135deg, var(--cyan), #a7f8eb); box-shadow: 0 14px 35px rgba(88,229,208,.18); }
-    .button-secondary { border-color: var(--line); color: var(--white); background: var(--glass); }
-    .button-secondary:hover { background: rgba(255,255,255,.13); }
-    .control-note { display: flex; align-items: center; gap: 9px; margin-top: 21px; color: var(--dim); font-size: .86rem; font-weight: 750; }
-    .control-note::before { width: 8px; height: 8px; content: ""; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 5px rgba(88,229,208,.1), 0 0 16px var(--cyan); }
-    .hero-visual { position: relative; min-height: 460px; }
-    .ring { position: absolute; inset: 3% 2%; border: 1px solid rgba(255,255,255,.11); border-radius: 47% 53% 50% 50% / 52% 45% 55% 48%; transform: rotate(21deg); }
-    .ring::before, .ring::after { position: absolute; content: ""; border-radius: 50%; }
-    .ring::before { top: 13%; left: 12%; width: 11px; height: 11px; background: var(--cyan); box-shadow: 0 0 21px var(--cyan); }
-    .ring::after { right: 10%; bottom: 14%; width: 8px; height: 8px; background: var(--violet); box-shadow: 0 0 20px var(--violet); }
-    .crew-core { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 206px; height: 206px; transform: translate(-50%, -50%); border: 1px solid rgba(255,255,255,.24); border-radius: 50%; background: radial-gradient(circle at 32% 25%, rgba(88,229,208,.23), transparent 34%), rgba(18,28,61,.88); box-shadow: 0 0 0 13px rgba(88,229,208,.05), 0 0 72px rgba(88,229,208,.2), var(--shadow); text-align: center; backdrop-filter: blur(20px); }
-    .crew-core strong { display: block; font-size: 1.7rem; letter-spacing: -.07em; }
-    .crew-core small { color: var(--cyan); font-weight: 850; }
-    .crew-chip { position: absolute; display: flex; align-items: center; gap: 9px; padding: 13px 15px; border: 1px solid rgba(255,255,255,.18); border-radius: 15px; color: #e1e8f8; background: rgba(13,22,48,.6); box-shadow: 0 18px 42px rgba(0,0,0,.25); backdrop-filter: blur(19px); font-size: .81rem; font-weight: 850; }
-    .crew-chip i { width: 9px; height: 9px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
-    .crew-chip.one { top: 11%; left: 5%; } .crew-chip.two { top: 24%; right: 0; } .crew-chip.three { bottom: 16%; left: 0; } .crew-chip.four { right: 9%; bottom: 6%; }
-    .promise-bar { position: relative; z-index: 2; margin-top: -29px; overflow: hidden; border-radius: 20px; }
-    .promise-grid { display: grid; grid-template-columns: repeat(3,1fr); }
-    .promise { display: flex; align-items: center; gap: 13px; padding: 21px 24px; }
-    .promise + .promise { border-left: 1px solid var(--line); }
-    .promise-no { display: grid; place-items: center; flex: 0 0 auto; width: 36px; height: 36px; border: 1px solid rgba(117,130,255,.4); border-radius: 11px; color: var(--cyan); background: rgba(117,130,255,.12); font-size: .74rem; font-weight: 950; }
-    .promise strong { display: block; font-size: .94rem; } .promise span { display: block; color: var(--muted); font-size: .78rem; }
-    .section { padding: 120px 0; }
-    .section-head { max-width: 760px; margin-bottom: 44px; }
-    .section-head p { max-width: 680px; color: var(--muted); font-size: 1.08rem; }
-    .pain { display: grid; grid-template-columns: .93fr 1.07fr; gap: 52px; align-items: start; }
-    .pain-quote { padding: 30px; border-left: 3px solid #ff8099; border-radius: 0 var(--radius) var(--radius) 0; background: linear-gradient(120deg, rgba(255,128,153,.12), rgba(255,255,255,.04)); color: #ffd6df; font-size: clamp(1.35rem, 3vw, 2.25rem); font-weight: 900; letter-spacing: -.05em; line-height: 1.1; }
-    .pain-list { display: grid; gap: 12px; }
-    .pain-card { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; padding: 19px; border-radius: 17px; }
-    .pain-card b { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid rgba(255,128,153,.35); border-radius: 10px; color: #ff8099; background: rgba(255,128,153,.1); font-size: .77rem; }
-    .pain-card p { margin: 2px 0 0; color: var(--muted); font-size: .9rem; }
-    .shift { padding-top: 0; }
-    .shift-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .shift-card { padding: 29px; border-radius: var(--radius); }
-    .shift-card.before { border-color: rgba(255,128,153,.29); background: linear-gradient(135deg, rgba(255,128,153,.1), rgba(255,255,255,.04)); }
-    .shift-card.after { border-color: rgba(88,229,208,.3); background: linear-gradient(135deg, rgba(88,229,208,.1), rgba(255,255,255,.04)); }
-    .shift-card h3 { display: flex; align-items: center; gap: 10px; }
-    .shift-card h3 span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; }
-    .before h3 span { color: #ff8099; background: rgba(255,128,153,.13); } .after h3 span { color: var(--cyan); background: rgba(88,229,208,.13); }
-    .shift-card ul, .truth ul { margin: 0; padding-left: 20px; color: var(--muted); }
-    .shift-card li + li, .truth li + li { margin-top: 9px; }
-    .dark-band { background: linear-gradient(180deg, rgba(255,255,255,.025), transparent); }
-    .benefits { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-    .benefit { min-height: 225px; padding: 27px; border-radius: var(--radius); }
-    .benefit-icon { display: grid; place-items: center; width: 42px; height: 42px; margin-bottom: 29px; border: 1px solid rgba(88,229,208,.35); border-radius: 13px; color: var(--cyan); background: rgba(88,229,208,.1); font-weight: 950; }
-    .benefit p { margin-bottom: 0; color: var(--muted); }
-    .day { background: linear-gradient(110deg, rgba(117,130,255,.09), rgba(186,147,255,.06)); }
-    .day-grid { display: grid; grid-template-columns: .75fr 1.25fr; gap: 50px; align-items: center; }
-    .timeline { display: grid; gap: 0; }
-    .timeline-row { display: grid; grid-template-columns: 87px 25px 1fr; gap: 13px; min-height: 84px; }
-    .timeline-time { padding-top: 4px; color: var(--cyan); font-family: "SFMono-Regular", Consolas, monospace; font-size: .76rem; font-weight: 800; }
-    .timeline-dot { position: relative; display: flex; justify-content: center; }
-    .timeline-dot::before { width: 11px; height: 11px; margin-top: 5px; content: ""; border: 3px solid var(--night-2); border-radius: 50%; background: var(--cyan); box-shadow: 0 0 14px rgba(88,229,208,.7); }
-    .timeline-dot::after { position: absolute; top: 18px; bottom: -4px; width: 1px; content: ""; background: linear-gradient(var(--cyan), rgba(88,229,208,0)); }
-    .timeline-row:last-child .timeline-dot::after { display: none; }
-    .timeline-copy p { margin: 0; color: var(--muted); font-size: .89rem; }
-    .daily-card { padding: 28px; border-radius: var(--radius); }
-    .daily-card .mini-label { display: inline-block; margin-bottom: 23px; color: var(--cyan); font-size: .7rem; font-weight: 950; letter-spacing: .13em; text-transform: uppercase; }
-    .daily-card h3 { font-size: 1.55rem; }
-    .daily-card p { color: var(--muted); }
-    .daily-card .mini-flow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 23px; }
-    .mini-flow span { padding: 7px 10px; border: 1px solid var(--line); border-radius: 9px; color: #d8e1f4; background: rgba(255,255,255,.05); font-size: .75rem; font-weight: 800; }
-    .trust { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .truth { padding: 29px; border-radius: var(--radius); }
-    .truth.yes { border-color: rgba(88,229,208,.3); background: rgba(88,229,208,.08); }
-    .truth.no { border-color: rgba(255,190,119,.3); background: rgba(255,190,119,.07); }
-    .cta { padding: 120px 0; background: radial-gradient(circle at 82% 0, rgba(88,229,208,.17), transparent 38%), linear-gradient(120deg, rgba(117,130,255,.1), rgba(255,255,255,.025)); }
-    .cta-box { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; padding: 42px; border-radius: 30px; }
-    .cta-box p { max-width: 690px; margin-bottom: 0; color: var(--muted); font-size: 1.05rem; }
-    footer { padding: 30px 0 48px; color: var(--dim); font-size: .84rem; }
-    footer .shell { display: flex; justify-content: space-between; gap: 20px; }
-    .pain-card, .benefit, .daily-card, .truth, .shift-card, .cta-box { transition: transform .22s ease, border-color .22s ease, background .22s ease, box-shadow .22s ease; }
-    .pain-card:hover, .benefit:hover, .daily-card:hover, .truth:hover, .shift-card:hover, .cta-box:hover { transform: translateY(-5px); border-color: rgba(88,229,208,.38); box-shadow: 0 20px 50px rgba(0,0,0,.2); }
-    @media (max-width: 930px) {
-      .hero-grid, .pain, .day-grid { grid-template-columns: 1fr; }
-      .hero-visual { min-height: 405px; max-width: 650px; width: 100%; margin: 0 auto; }
-      .promise-grid { grid-template-columns: 1fr; }
-      .promise + .promise { border-top: 1px solid var(--line); border-left: 0; }
-      .benefits { grid-template-columns: 1fr 1fr; }
-      .cta-box { grid-template-columns: 1fr; align-items: start; }
-    }
-    @media (max-width: 620px) {
-      .shell { width: min(100% - 28px, 1160px); }
-      .nav-links { display: none; }
-      .nav-inner { min-height: 68px; }
-      .hero { padding: 82px 0 84px; }
-      .hero-visual { min-height: 315px; transform: scale(.82); transform-origin: top center; margin-bottom: -55px; }
-      .section, .cta { padding: 86px 0; }
-      .shift { padding-top: 0; }
-      .benefits, .shift-grid, .trust { grid-template-columns: 1fr; }
-      .timeline-row { grid-template-columns: 70px 25px 1fr; }
-      .cta-box { padding: 26px; }
-      footer .shell { flex-direction: column; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
-    }
+    :root { --ink:#10213b; --soft:#52627a; --muted:#718096; --paper:#fff; --wash:#f6f9fc; --line:#e4eaf1; --blue:#2563eb; --blue-dark:#1746b3; --teal:#08a88a; --teal-wash:#e7fbf6; --code:#0d1728; --shadow:0 18px 50px rgba(16,33,59,.08); --radius:16px; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:92px; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.7 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    body::before { position:fixed; z-index:-1; top:-180px; right:-180px; width:420px; height:420px; content:""; border-radius:50%; background:radial-gradient(circle,rgba(37,99,235,.12),transparent 68%); pointer-events:none; }
+    a { color:var(--blue); text-decoration:none; } a:hover { color:var(--blue-dark); text-decoration:underline; }
+    button { font:inherit; } :focus-visible { outline:3px solid #7dd3fc; outline-offset:3px; }
+    .topbar { position:sticky; top:0; z-index:20; border-bottom:1px solid rgba(228,234,241,.9); background:rgba(255,255,255,.92); backdrop-filter:blur(18px); }
+    .topbar-inner { display:flex; align-items:center; justify-content:space-between; min-height:68px; max-width:1240px; padding:0 28px; margin:0 auto; }
+    .brand { display:inline-flex; align-items:center; gap:10px; color:var(--ink); font-size:1.08rem; font-weight:850; letter-spacing:-.04em; } .brand:hover { color:var(--ink); text-decoration:none; }
+    .brand-mark { display:grid; place-items:center; width:32px; height:32px; border-radius:10px; color:#fff; background:linear-gradient(135deg,var(--blue),var(--teal)); box-shadow:0 7px 17px rgba(37,99,235,.2); font-weight:900; }
+    .toplinks { display:flex; align-items:center; gap:20px; color:var(--soft); font-size:.88rem; font-weight:650; } .toplinks a { color:inherit; }
+    .toplinks .github { padding:7px 12px; border:1px solid var(--line); border-radius:9px; color:var(--ink); background:var(--paper); }
+    .menu-toggle { display:none; border:1px solid var(--line); border-radius:9px; padding:7px 10px; color:var(--ink); background:var(--paper); cursor:pointer; }
+    .layout { display:grid; grid-template-columns:245px minmax(0,780px); gap:68px; max-width:1240px; padding:44px 28px 90px; margin:0 auto; }
+    .sidebar { position:sticky; top:102px; align-self:start; max-height:calc(100vh - 125px); overflow:auto; padding-right:12px; }
+    .side-label { margin:0 0 10px; color:var(--muted); font-size:.69rem; font-weight:850; letter-spacing:.13em; text-transform:uppercase; }
+    .side-group { display:grid; gap:3px; margin:0 0 27px; } .side-group a { display:block; padding:6px 10px; border-radius:8px; color:var(--soft); font-size:.9rem; transition:color .2s,background .2s,transform .2s; }
+    .side-group a:hover,.side-group a.active { color:var(--blue-dark); background:#edf4ff; text-decoration:none; transform:translateX(3px); }
+    .side-note { padding:15px; border:1px solid var(--line); border-radius:12px; color:var(--soft); background:var(--wash); font-size:.82rem; }
+    .side-note strong { display:block; margin-bottom:4px; color:var(--ink); }
+    .content { min-width:0; } section { scroll-margin-top:96px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; color:var(--blue); font-size:.73rem; font-weight:850; letter-spacing:.13em; text-transform:uppercase; } .eyebrow::before { width:22px; height:2px; content:""; border-radius:99px; background:currentColor; }
+    h1,h2,h3 { color:var(--ink); letter-spacing:-.045em; line-height:1.16; } h1 { margin:16px 0 18px; font-size:clamp(2.5rem,5vw,4.5rem); } .hero h1 { max-width:560px; font-size:clamp(1.55rem,2.5vw,2.15rem); font-weight:720; letter-spacing:-.025em; line-height:1.2; } .hero h1 .accent { color:var(--blue); } h2 { margin:58px 0 15px; font-size:1.75rem; } h3 { margin:28px 0 8px; font-size:1.12rem; }
+    p { margin:0 0 17px; color:var(--soft); } .lead { max-width:670px; color:var(--soft); font-size:1.18rem; line-height:1.7; }
+    .hero { padding:28px 0 20px; } .hero-actions { display:flex; flex-wrap:wrap; gap:10px; margin:26px 0 30px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; min-height:43px; padding:0 16px; border:1px solid transparent; border-radius:9px; font-weight:800; transition:transform .2s,box-shadow .2s,background .2s; } .button:hover { text-decoration:none; transform:translateY(-2px); }
+    .button-primary { color:#fff; background:var(--blue); box-shadow:0 9px 20px rgba(37,99,235,.2); } .button-primary:hover { color:#fff; background:var(--blue-dark); }
+    .button-secondary { border-color:var(--line); color:var(--ink); background:var(--paper); } .button-secondary:hover { color:var(--ink); background:var(--wash); }
+    .hero-card { padding:22px; border:1px solid #dbe8f3; border-radius:var(--radius); background:linear-gradient(135deg,#f5fbff,#f0fcf8); box-shadow:var(--shadow); }
+    .hero-card strong { display:block; margin-bottom:7px; font-size:1.05rem; } .hero-card p { margin:0; font-size:.93rem; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; margin:25px 0; } .card { padding:21px; border:1px solid var(--line); border-radius:var(--radius); background:var(--paper); box-shadow:0 8px 25px rgba(16,33,59,.035); transition:transform .25s,box-shadow .25s,border-color .25s; }
+    .card:hover { border-color:#b9d1f8; box-shadow:var(--shadow); transform:translateY(-4px); } .card h3 { margin-top:0; } .card p { margin-bottom:0; font-size:.92rem; } .card .kicker { display:block; margin-bottom:10px; color:var(--teal); font-size:.73rem; font-weight:850; letter-spacing:.1em; text-transform:uppercase; }
+    .callout { padding:18px 20px; margin:23px 0; border-left:4px solid var(--blue); border-radius:0 12px 12px 0; background:#f1f6ff; } .callout p { margin:0; } .callout.tip { border-color:var(--teal); background:var(--teal-wash); } .callout.warning { border-color:#d99000; background:#fff8e6; }
+    pre { position:relative; overflow-x:auto; padding:19px 20px; margin:19px 0 25px; border:1px solid #1c2e49; border-radius:12px; color:#dbeafe; background:var(--code); font:.87rem/1.65 "JetBrains Mono","SFMono-Regular",Consolas,"Liberation Mono",monospace; }
+    code { padding:2px 5px; border-radius:5px; color:#be123c; background:#fff1f2; font-size:.9em; } pre code { padding:0; color:inherit; background:transparent; }
+    .copy { position:absolute; top:9px; right:9px; border:1px solid #38506f; border-radius:7px; padding:4px 8px; color:#cbd5e1; background:#13223a; font-size:.72rem; cursor:pointer; transition:background .2s; } .copy:hover { color:#fff; background:#1d3557; }
+    table { width:100%; border-collapse:collapse; margin:21px 0 28px; font-size:.91rem; } th,td { padding:11px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; } th { color:var(--ink); background:var(--wash); font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; } td { color:var(--soft); }
+    ol,ul { padding-left:22px; color:var(--soft); } li+li { margin-top:7px; } .steps { counter-reset:step; display:grid; gap:16px; padding:0; margin:25px 0; list-style:none; } .steps li { position:relative; padding:18px 20px 18px 61px; border:1px solid var(--line); border-radius:13px; transition:transform .22s,border-color .22s; } .steps li:hover { border-color:#b9d1f8; transform:translateX(4px); }
+    .steps li::before { position:absolute; top:18px; left:20px; display:grid; place-items:center; width:26px; height:26px; counter-increment:step; content:counter(step); border-radius:50%; color:#fff; background:var(--blue); font-size:.8rem; font-weight:850; } .steps strong { display:block; margin-bottom:4px; color:var(--ink); } .steps span { color:var(--soft); }
+    .section-divider { height:1px; margin:70px 0 0; background:var(--line); } .badge { display:inline-flex; padding:3px 8px; border-radius:99px; color:#06785f; background:var(--teal-wash); font-size:.73rem; font-weight:850; }
+    .footer { border-top:1px solid var(--line); background:var(--wash); } .footer-inner { display:flex; justify-content:space-between; gap:30px; max-width:1240px; padding:28px; margin:0 auto; color:var(--muted); font-size:.83rem; } .footer a { color:var(--soft); }
+    [data-reveal] { opacity:0; transform:translateY(18px); transition:opacity .65s ease,transform .65s ease; } [data-reveal].visible { opacity:1; transform:none; } .clicking { animation:clickPulse .4s ease; } @keyframes clickPulse { 50% { transform:scale(.97); } }
+    @media (max-width:900px) { .layout { grid-template-columns:1fr; gap:14px; padding-top:22px; } .sidebar { position:static; max-height:none; padding:0; } .sidebar-inner { display:none; padding:11px 0 2px; } .sidebar.open .sidebar-inner { display:block; } .menu-toggle { display:inline-block; } .toplinks { display:none; } .grid { grid-template-columns:1fr; } }
+    @media (max-width:620px) { .topbar-inner,.layout,.footer-inner { padding-right:17px; padding-left:17px; } h1 { font-size:2.55rem; } h2 { margin-top:43px; font-size:1.55rem; } .footer-inner { flex-direction:column; gap:7px; } th,td { padding:9px 7px; } }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
   </style>
 </head>
 <body>
-  <header class="nav">
-    <div class="shell nav-inner">
-      <a class="brand" href="#top" aria-label="BuildCrew home"><span class="brand-mark">⌁</span>BuildCrew</a>
-      <nav class="nav-links" aria-label="Main navigation"><a href="#benefits">Why BuildCrew</a><a href="#day">Daily flow</a><a href="#trust">Trust</a><a href="#credits">Credits</a><a class="nav-cta" href="#try">Try the idea</a></nav>
-    </div>
-  </header>
-
-  <main id="top">
-    <section class="hero">
-      <div class="shell hero-grid">
-        <div class="hero-copy">
-          <span class="eyebrow">Daily development, upgraded</span>
-          <h1>Your direction.<br><span>AI assistance.</span></h1>
-          <p>BuildCrew gives every developer a complete AI software engineering crew—ready to understand the project, build the change, check the risks, and leave you with evidence.</p>
-          <div class="actions"><a class="button button-primary" href="#benefits">See why it matters</a><a class="button button-secondary" href="#day">See a daily flow</a></div>
-          <div class="control-note">You lead. AI assists. You stay in control.</div>
-        </div>
-        <div class="hero-visual" aria-label="BuildCrew team visualization"><div class="ring"></div><div class="crew-core"><div><strong>BuildCrew</strong><small>your AI crew</small></div></div><div class="crew-chip glass one"><i></i>Understand</div><div class="crew-chip glass two"><i></i>Build</div><div class="crew-chip glass three"><i></i>Review</div><div class="crew-chip glass four"><i></i>Verify</div></div>
-      </div>
-    </section>
-
-    <section class="promise-bar"><div class="shell promise-grid glass"><div class="promise"><span class="promise-no">01</span><div><strong>Less context switching</strong><span>One guided flow from idea to evidence.</span></div></div><div class="promise"><span class="promise-no">02</span><div><strong>Less unnecessary code</strong><span>Reuse first. Smallest useful change.</span></div></div><div class="promise"><span class="promise-no">03</span><div><strong>More confidence</strong><span>Know what was checked—and what was not.</span></div></div></div></section>
-
-    <section class="section" id="problem"><div class="shell pain"><div><span class="eyebrow">The everyday problem</span><h2>AI made coding faster. It did not make trust automatic.</h2><div class="pain-quote">You still have to ask: “Did it understand my project—or just generate something that looks right?”</div></div><div class="pain-list"><article class="pain-card glass"><b>01</b><div><h3>Too much time explaining</h3><p>Every new AI session needs project context, conventions, architecture, and history all over again.</p></div></article><article class="pain-card glass"><b>02</b><div><h3>Too much code too soon</h3><p>AI can jump straight to implementation before checking what already exists.</p></div></article><article class="pain-card glass"><b>03</b><div><h3>Too little proof afterward</h3><p>A finished-looking response does not tell you what was tested, missed, or changed indirectly.</p></div></article><article class="pain-card glass"><b>04</b><div><h3>Too much developer doubt</h3><p>You remain responsible for the result—without a disciplined process to support that responsibility.</p></div></article></div></div></section>
-
-    <section class="section shift"><div class="shell"><div class="section-head"><span class="eyebrow">The BuildCrew difference</span><h2>Turn AI from a code generator into a daily development partner.</h2><p>BuildCrew keeps the developer in charge while giving AI a repeatable way to understand, act, check, and communicate.</p></div><div class="shift-grid"><article class="shift-card before glass"><h3><span>×</span>Typical AI coding</h3><ul><li>Prompt → code → confidence</li><li>Architecture may be assumed.</li><li>Extra abstractions can slip in.</li><li>Testing and limitations may be unclear.</li></ul></article><article class="shift-card after glass"><h3><span>✓</span>BuildCrew-assisted development</h3><ul><li>Instruction → context → smallest change</li><li>Existing patterns are checked first.</li><li>Risk determines how much process is needed.</li><li>Evidence and remaining uncertainty are reported.</li></ul></article></div></div></section>
-
-    <section class="section dark-band" id="benefits"><div class="shell"><div class="section-head"><span class="eyebrow">Why developers use it</span><h2>Make the work easier to trust, not harder to start.</h2><p>BuildCrew is designed for the work that fills a normal development week—not just impressive demos.</p></div><div class="benefits"><article class="benefit glass"><div class="benefit-icon">⌁</div><h3>Start faster</h3><p>Project onboarding and context discovery reduce repeated explanations and help AI begin from the repository’s reality.</p></article><article class="benefit glass"><div class="benefit-icon">↘</div><h3>Stay lean</h3><p>Small tasks stay small. Reuse checks and minimal-change gates discourage unnecessary wrappers, dependencies, and refactors.</p></article><article class="benefit glass"><div class="benefit-icon">✓</div><h3>Review with clarity</h3><p>See the scope, evidence, tests, residual risk, and limitations instead of trusting a vague “done.”</p></article><article class="benefit glass"><div class="benefit-icon">↻</div><h3>Continue tomorrow</h3><p>Session continuity and sanitized learning help long-running work resume without losing the thread.</p></article><article class="benefit glass"><div class="benefit-icon">!</div><h3>Escalate wisely</h3><p>Security, release, runtime, and coupled changes receive stronger checks when their risk deserves it.</p></article><article class="benefit glass"><div class="benefit-icon">◎</div><h3>Keep ownership</h3><p>BuildCrew follows your instructions. It assists your judgment; it does not replace your responsibility.</p></article></div></div></section>
-
-    <section class="section day" id="day"><div class="shell day-grid"><div><span class="eyebrow">A normal workday</span><h2>One crew. Every step that matters.</h2><p class="muted">You bring the intent. BuildCrew brings structure around the task, then stays lightweight when the work is routine.</p><div class="mini-flow"><span>Understand</span><span>Reuse</span><span>Build</span><span>Test</span><span>Verify</span></div></div><div class="timeline"><div class="timeline-row"><div class="timeline-time">09:10</div><div class="timeline-dot"></div><div class="timeline-copy"><h3>“Add an empty state.”</h3><p>You give the goal, constraints, and target area.</p></div></div><div class="timeline-row"><div class="timeline-time">09:12</div><div class="timeline-dot"></div><div class="timeline-copy"><h3>Understand before changing</h3><p>BuildCrew reads the relevant project context, patterns, and tests.</p></div></div><div class="timeline-row"><div class="timeline-time">09:18</div><div class="timeline-dot"></div><div class="timeline-copy"><h3>Build the smallest patch</h3><p>Existing behavior is reused and the change stays within scope.</p></div></div><div class="timeline-row"><div class="timeline-time">09:27</div><div class="timeline-dot"></div><div class="timeline-copy"><h3>Return with evidence</h3><p>You see what changed, what passed, and what still needs validation.</p></div></div></div></div></section>
-
-    <section class="section" id="trust"><div class="shell"><div class="section-head"><span class="eyebrow">The honest promise</span><h2>Trust is built by showing the work.</h2><p>BuildCrew is not a promise that AI is perfect. It is a process that makes unsupported confidence harder to hide.</p></div><div class="trust"><article class="truth yes glass"><h3>BuildCrew helps you</h3><ul><li>Understand where a change belongs.</li><li>Reduce unnecessary engineering effort.</li><li>Review what AI actually did.</li><li>See evidence and remaining risk.</li></ul></article><article class="truth no glass"><h3>BuildCrew will not pretend</h3><ul><li>That every change is automatically 100% correct.</li><li>That a passing test proves untested behavior.</li><li>That static inspection proves production behavior.</li><li>That AI owns the project—you do.</li></ul></article></div></div></section>
-
-    <section class="section dark-band" id="credits"><div class="shell"><div class="section-head"><span class="eyebrow">Built in the open</span><h2>A crew shaped by people who build.</h2><p>BuildCrew is an installable plugin with a reusable skill, practical documentation, and a human-led operating model.</p></div><div class="trust"><article class="truth yes glass"><h3>Plugin owner</h3><p><a href="https://github.com/idhavaltank">Dhaval Tank</a><br>Owns the BuildCrew plugin and skill direction.</p></article><article class="truth no glass"><h3>Contributor</h3><p><a href="https://github.com/jayzala-dev">Jay Zala</a><br>Mobile-side contributor.</p></article></div><div class="actions"><a class="button button-primary" href="https://github.com/idhavaltank">View owner profile</a><a class="button button-secondary" href="https://github.com/jayzala-dev">View contributor profile</a></div></div></section>
-
-    <section class="cta" id="try"><div class="shell"><div class="cta-box glass"><div><span class="eyebrow">Try one real task</span><h2>Give your next change a crew behind it.</h2><p>Start with a bug fix, a small feature, or a code review. Let BuildCrew show you what human-led, evidence-first AI development feels like in daily work.</p></div><a class="button button-primary" href="#top">Start with BuildCrew ↑</a></div></div></section>
-  </main>
-
-  <footer><div class="shell"><span><strong>BuildCrew</strong> — You Lead. AI Assists.</span><span>Owner: <a href="https://github.com/idhavaltank">Dhaval Tank</a> · Contributor: <a href="https://github.com/jayzala-dev">Jay Zala</a></span></div></footer>
+  <header class="topbar"><div class="topbar-inner"><a class="brand" href="#overview"><span class="brand-mark">⌁</span>BuildCrew</a><nav class="toplinks"><a href="#get-started">Get started</a><a href="#reference">Reference</a><a href="https://github.com/idhavaltank/buildcrew" class="github" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav><button class="menu-toggle" aria-expanded="false">Menu</button></div></header>
+  <div class="layout">
+    <aside class="sidebar"><div class="sidebar-inner"><p class="side-label">Documentation</p><nav class="side-group"><a href="#overview" class="active">Overview</a><a href="#get-started">Get started</a><a href="#installation">Installation</a></nav><p class="side-label">Learn BuildCrew</p><nav class="side-group"><a href="#concepts">Core concepts</a><a href="#workflows">Workflows</a><a href="#examples">Examples</a><a href="#reference">Reference</a></nav><p class="side-label">Project</p><nav class="side-group"><a href="#faq">FAQ</a><a href="#contributing">Contributing</a></nav><div class="side-note"><strong>BuildCrew 0.1.0</strong>Instruction-first release. You lead the decision; BuildCrew helps make the work easier to verify.</div></div></aside>
+    <main class="content">
+      <section id="overview" data-reveal><span class="eyebrow">Developer documentation</span><h1>You Lead, <span class="accent">AI Assists.</span></h1><p class="lead">BuildCrew is a human-led, evidence-first AI software engineering plugin for understanding projects, making focused changes, and reporting what was actually verified.</p><div class="hero-actions"><a class="button button-primary" href="#get-started">Get started</a><a class="button button-secondary" href="#installation">Install BuildCrew</a></div><div class="hero-card"><strong>The BuildCrew loop</strong><p><b>Instruction</b> → context → reuse → smallest safe change → checks → evidence</p></div></section>
+      <div class="section-divider"></div>
+      <section id="get-started" data-reveal><h2>Get started</h2><p>BuildCrew works best when it can read the repository it is helping with. Open the project in your AI coding host, make sure its existing instructions are available, and have a specific task or question ready.</p><ol class="steps"><li><strong>Install the plugin or skill</strong><span>Choose the supported Codex plugin installation or a manual skill installation from the installation section below.</span></li><li><strong>Start a new session</strong><span>New sessions load newly installed skills and prevent stale instructions from an earlier conversation.</span></li><li><strong>Begin with context</strong><span>Tell BuildCrew the goal, target area, constraints, and acceptance criteria. Ask it to inspect before editing.</span></li><li><strong>Review the plan</strong><span>Confirm the scope and approach before asking BuildCrew to implement anything.</span></li><li><strong>Verify the result</strong><span>Ask for focused tests or checks, then review the evidence and remaining risk.</span></li></ol><h3>Your first prompt</h3><pre><button class="copy">Copy</button><code>Use BuildCrew to inspect this repository and plan a small feature. Do not edit files yet.</code></pre><div class="callout tip"><p><strong>Good practice:</strong> Start with a small bug fix or feature. It makes the workflow easy to evaluate and keeps the first feedback concrete.</p></div></section>
+      <section id="installation" data-reveal><h2>Installation</h2><p>BuildCrew is a plugin package containing the <code>buildcrew</code> skill. Use the native plugin path when available, or install the skill files directly.</p><h3>Codex plugin</h3><pre><button class="copy">Copy</button><code>codex plugin marketplace add idhavaltank/buildcrew<br>codex plugin add buildcrew@buildcrew</code></pre><p>Restart the Codex desktop app or start a new CLI thread. The current release is instruction-only and does not require lifecycle hooks.</p><h3>macOS or Linux</h3><pre><button class="copy">Copy</button><code>mkdir -p ~/.codex/skills/buildcrew<br>cp -R skills/buildcrew/* ~/.codex/skills/buildcrew/</code></pre><h3>Windows PowerShell</h3><pre><button class="copy">Copy</button><code>New-Item -ItemType Directory -Force "$HOME\.codex\skills\buildcrew"<br>Copy-Item "skills\buildcrew\*" "$HOME\.codex\skills\buildcrew" -Recurse -Force</code></pre><h3>Project-local installation</h3><pre><button class="copy">Copy</button><code>your-project/.codex/skills/buildcrew/</code></pre><div class="callout warning"><p><strong>Review before installing:</strong> A skill is instruction and resource content supplied to an AI agent. Read the files and understand any scripts or hooks before enabling an external package.</p></div></section>
+      <section id="concepts" data-reveal><h2>Core concepts</h2><p>BuildCrew is a plugin package, a skill workflow, and an evidence contract working together.</p><table><thead><tr><th>Part</th><th>Purpose</th><th>Location</th></tr></thead><tbody><tr><td><strong>Plugin</strong></td><td>Distribution, metadata, presentation, and installation.</td><td><code>plugin.json</code></td></tr><tr><td><strong>Skill</strong></td><td>Instructions the agent follows during engineering work.</td><td><code>skills/buildcrew/SKILL.md</code></td></tr><tr><td><strong>Documentation</strong></td><td>Human-facing setup, guides, examples, and reference.</td><td><code>docs/index.html</code></td></tr></tbody></table><div class="grid"><article class="card"><span class="kicker">01 · Understand</span><h3>Context before code</h3><p>Read the task, repository instructions, relevant source, tests, dependencies, and constraints.</p></article><article class="card"><span class="kicker">02 · Reuse</span><h3>Use what exists</h3><p>Look for existing components, helpers, patterns, and conventions before adding new structure.</p></article><article class="card"><span class="kicker">03 · Build</span><h3>Smallest complete change</h3><p>Make the smallest complete change that satisfies the request and preserves safeguards.</p></article><article class="card"><span class="kicker">04 · Verify</span><h3>Show the evidence</h3><p>Run checks appropriate to the risk and report evidence, limitations, and residual risk.</p></article></div><h3>Modes</h3><table><thead><tr><th>Mode</th><th>Use it for</th><th>Editing</th></tr></thead><tbody><tr><td><code>plan</code></td><td>Context discovery and an implementation plan.</td><td>No</td></tr><tr><td><code>build</code></td><td>Implementing an approved plan.</td><td>Yes</td></tr><tr><td><code>test</code></td><td>Adding or running focused verification.</td><td>When requested</td></tr><tr><td><code>review</code></td><td>Inspecting changes for correctness and risk.</td><td>No by default</td></tr><tr><td><code>ship</code></td><td>Preparing evidence and delivery notes.</td><td>When requested</td></tr></tbody></table><div class="callout"><p><strong>Trust rule:</strong> Never present a test as passing unless it actually ran, or imply that static inspection proves production behavior.</p></div></section>
+      <section id="workflows" data-reveal><h2>Workflows</h2><p>Choose the workflow that matches the work. Routine changes stay lightweight; coupled or risky changes receive stronger checks.</p><h3>Plan</h3><pre><button class="copy">Copy</button><code>Use BuildCrew plan mode. Inspect the repository and produce a bounded implementation plan for adding an empty state to the profile screen. Do not edit files.</code></pre><h3>Build</h3><pre><button class="copy">Copy</button><code>Use BuildCrew build mode to implement the approved plan. Keep the change focused and run the relevant checks.</code></pre><h3>Test and review</h3><pre><button class="copy">Copy</button><code>Use BuildCrew review mode to inspect this diff for correctness, security, missing tests, and unnecessary complexity.</code></pre><h3>Ship</h3><p>Use ship mode when the implementation is complete and you need a final delivery summary, documentation check, release note, or handoff.</p><div class="callout tip"><p><strong>Escalate when needed:</strong> Security boundaries, data migrations, release configuration, shared abstractions, mobile platform behavior, and production-only behavior deserve broader verification.</p></div></section>
+      <section id="examples" data-reveal><h2>Examples</h2><p>Adapt these patterns to your repository and constraints.</p><div class="grid"><article class="card"><span class="badge">Routine change</span><h3>Small feature</h3><p>Add an empty state to the profile screen. BuildCrew should inspect existing patterns, reuse project components, make the smallest change, and run focused tests.</p></article><article class="card"><span class="badge">Regression risk</span><h3>Bug fix</h3><p>Fix a retry loop that duplicates network requests. BuildCrew should trace the path, confirm the root cause, add a regression test, and report runtime risk.</p></article></div><h3>New project</h3><div class="callout warning"><p><strong>Do not invent architecture blindly.</strong> First ask about users, goals, core features, technology preferences, data, testing, security, and deployment expectations.</p></div><h3>Undocumented project</h3><p>Learn from source, configuration, dependencies, and tests. Record the documentation gap and avoid treating assumptions as facts.</p></section>
+      <section id="reference" data-reveal><h2>Prompt and response reference</h2><p>Make BuildCrew’s scope, mode, and expected output explicit.</p><table><thead><tr><th>Prompt part</th><th>What to provide</th></tr></thead><tbody><tr><td>Goal</td><td>What outcome should exist when the task is complete?</td></tr><tr><td>Target</td><td>Which screen, package, service, files, or workflow are in scope?</td></tr><tr><td>Constraints</td><td>What must remain unchanged?</td></tr><tr><td>Acceptance</td><td>How will you decide whether the result works?</td></tr><tr><td>Mode</td><td>Should BuildCrew plan, build, test, review, or ship?</td></tr></tbody></table><h3>Reusable prompt</h3><pre><button class="copy">Copy</button><code>Use BuildCrew [mode].<br>Goal: [desired outcome]<br>Target: [project area]<br>Constraints: [important limits]<br>Acceptance criteria: [how success will be checked]<br>Do not [explicitly excluded work].</code></pre><h3>Completion response</h3><ol><li><strong>Summary:</strong> what was requested and what was done.</li><li><strong>Changed files:</strong> the files or areas that moved.</li><li><strong>Verification:</strong> commands, tests, inspections, or previews that actually ran.</li><li><strong>Not checked:</strong> relevant checks that did not run.</li><li><strong>Risk:</strong> assumptions, runtime limitations, or follow-up validation.</li></ol></section>
+      <section id="faq" data-reveal><h2>FAQ</h2><h3>Is BuildCrew a plugin or a skill?</h3><p>BuildCrew is an installable plugin package that contains the BuildCrew skill. The plugin handles distribution and metadata; the skill contains the instructions the agent follows.</p><h3>Does BuildCrew write code automatically?</h3><p>Only when you ask it to build or edit. The recommended workflow begins with context and a plan.</p><h3>Does it guarantee correct code?</h3><p>No. It improves the workflow around understanding, implementation, and verification. It cannot prove production behavior that was not exercised.</p><h3>Does it require lifecycle hooks?</h3><p>The current release does not. It is instruction-only, so installation does not need hooks or background processes.</p><h3>Who owns BuildCrew?</h3><p><a href="https://github.com/idhavaltank" target="_blank" rel="noopener noreferrer">Dhaval Tank</a> owns the plugin and skill direction. <a href="https://github.com/jayzala-dev" target="_blank" rel="noopener noreferrer">Jay Zala</a> is credited as a Mobile Engineering Collaborator.</p></section>
+      <section id="contributing" data-reveal><h2>Contributing</h2><p>BuildCrew is developed in public. Everyone can use the project, fork it, and suggest improvements through pull requests. Dhaval Tank owns the official plugin and reviews changes before they are merged into <code>main</code>.</p><div class="grid"><article class="card"><span class="kicker">Owner</span><h3><a href="https://github.com/idhavaltank" target="_blank" rel="noopener noreferrer">Dhaval Tank ↗</a></h3><p>Owns the BuildCrew plugin and skill direction, and is the required maintainer reviewer.</p></article><article class="card"><span class="kicker">Collaborator</span><h3><a href="https://github.com/jayzala-dev" target="_blank" rel="noopener noreferrer">Jay Zala ↗</a></h3><p>Mobile Engineering Collaborator.</p></article></div><ol class="steps"><li><strong>Open an issue first</strong><span>Describe the problem, host, expected behavior, and smallest useful improvement.</span></li><li><strong>Fork and create a branch</strong><span>Keep one focused change per pull request.</span></li><li><strong>Verify the change</strong><span>Check links, manifests, installation examples, and Pages rendering.</span></li><li><strong>Open a pull request</strong><span>Explain what changed, why, how it was tested, and what remains uncertain.</span></li><li><strong>Wait for maintainer review</strong><span>Changes are merged into the official <code>main</code> branch only after Dhaval Tank approves them.</span></li></ol><p><a href="https://github.com/idhavaltank/buildcrew/issues" target="_blank" rel="noopener noreferrer">Issues ↗</a> · <a href="https://github.com/idhavaltank/buildcrew/pulls" target="_blank" rel="noopener noreferrer">Pull requests ↗</a></p></section>
+    </main>
+  </div>
+  <footer class="footer"><div class="footer-inner"><span>BuildCrew · You lead. AI assists.</span><span>Owner: <a href="https://github.com/idhavaltank" target="_blank" rel="noopener noreferrer">Dhaval Tank ↗</a> · Mobile Engineering Collaborator: <a href="https://github.com/jayzala-dev" target="_blank" rel="noopener noreferrer">Jay Zala ↗</a></span></div></footer>
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    if (toggle && sidebar) toggle.addEventListener('click', () => { const open = sidebar.classList.toggle('open'); toggle.setAttribute('aria-expanded', String(open)); });
+    document.querySelectorAll('a[href^="#"]').forEach((link) => link.addEventListener('click', (event) => { const target = document.querySelector(link.getAttribute('href')); if (!target) return; event.preventDefault(); target.scrollIntoView({ behavior:'smooth', block:'start' }); history.replaceState(null, '', link.getAttribute('href')); document.querySelectorAll('.side-group a').forEach((item) => item.classList.remove('active')); document.querySelectorAll(`.side-group a[href="${link.getAttribute('href')}"]`).forEach((item) => item.classList.add('active')); if (sidebar) sidebar.classList.remove('open'); }));
+    document.querySelectorAll('.button,.side-group a,.toplinks a').forEach((item) => item.addEventListener('click', () => { item.classList.remove('clicking'); void item.offsetWidth; item.classList.add('clicking'); }));
+    document.querySelectorAll('.copy').forEach((button) => button.addEventListener('click', async () => { const code = button.parentElement.querySelector('code'); await navigator.clipboard.writeText(code.innerText); const original = button.textContent; button.textContent = 'Copied'; setTimeout(() => { button.textContent = original; }, 1200); }));
+    const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('visible'); }), { threshold:.12 });
+    document.querySelectorAll('[data-reveal]').forEach((section) => revealObserver.observe(section));
+    const navObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (!entry.isIntersecting) return; document.querySelectorAll('.side-group a').forEach((item) => item.classList.toggle('active', item.getAttribute('href') === `#${entry.target.id}`)); }), { rootMargin:'-30% 0px -60% 0px', threshold:0 });
+    document.querySelectorAll('main section[id]').forEach((section) => navObserver.observe(section));
+  </script>
 </body>
 </html>

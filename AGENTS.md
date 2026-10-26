@@ -5,4 +5,4 @@ Read `skills/buildcrew/SKILL.md` when the task involves planning, building,
 testing, reviewing, debugging, or shipping software.
 
 Owner: Dhaval Tank — https://github.com/idhavaltank
-Mobile-side contributor: Jay Zala — https://github.com/jayzala-dev
+Mobile Engineering Collaborator: Jay Zala — https://github.com/jayzala-dev
