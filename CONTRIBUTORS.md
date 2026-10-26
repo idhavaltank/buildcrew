@@ -7,4 +7,4 @@ skill direction.
 
 ## Contributor
 
-[Jay Zala](https://github.com/jayzala-dev) is a mobile-side contributor.
+[Jay Zala](https://github.com/jayzala-dev) is a Mobile Engineering Collaborator.
