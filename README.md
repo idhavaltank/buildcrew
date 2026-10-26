@@ -24,35 +24,78 @@ BuildCrew encourages:
 instruction → context → reuse → smallest change → checks → evidence
 ```
 
-### Install in Codex
+### Install BuildCrew across AI coding hosts
 
-From a published plugin marketplace:
+BuildCrew is a portable skill, but installation commands are host-specific.
+The reusable workflow lives in `skills/buildcrew/SKILL.md`; the plugin
+manifests and host adapters determine how each AI coding tool loads it.
+
+Choose one installation path for your AI coding host. Do not run every section.
+After installation, start a new session and use the verification prompt below.
+
+#### Codex plugin
+
+From the published plugin marketplace:
 
 ```bash
 codex plugin marketplace add idhavaltank/buildcrew
 codex plugin add buildcrew@buildcrew
 ```
 
-Start Codex, review any requested hooks, and open a new thread. This starter
-package is instruction-only and does not require lifecycle hooks.
+Start Codex and open a new thread. This release is instruction-only and does
+not require lifecycle hooks.
 
-### Manual installation
+#### Claude Code
 
-#### macOS/Linux
+From the BuildCrew repository root, use the Claude Code skill directory for a
+project or for your user account:
+
+```bash
+mkdir -p .claude/skills/buildcrew
+cp -R skills/buildcrew/* .claude/skills/buildcrew/
+```
+
+For a global installation, use `~/.claude/skills/buildcrew/` instead of the
+project-local `.claude/skills/buildcrew/` path, then start a new session.
+
+#### Cursor, Windsurf, Cline, Kiro, Zed, and Copilot Chat
+
+These hosts can use the included repository instructions where supported. From
+the BuildCrew repository root:
+
+```text
+Copy AGENTS.md into the project root, then open a new agent session.
+```
+
+For a host-native skill or rules directory, copy the contents of
+`skills/buildcrew/` into that host’s supported skill/rules location.
+
+#### Gemini CLI, Antigravity, OpenCode, and other hosts
+
+Use the host’s native extension or skill installer when available and provide
+the `skills/buildcrew/` directory. If the host does not support the Agent
+Skills format or `AGENTS.md`, it needs a small host-specific adapter; the
+workflow itself remains the same. This repository currently provides the
+portable skill and `AGENTS.md` fallback; it does not claim a native one-command
+installer for every host.
+
+#### Codex manual installation
+
+##### macOS/Linux
 
 ```bash
 mkdir -p ~/.codex/skills/buildcrew
 cp -R skills/buildcrew/* ~/.codex/skills/buildcrew/
 ```
 
-#### Windows PowerShell
+##### Windows PowerShell
 
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.codex\skills\buildcrew"
 Copy-Item "skills\buildcrew\*" "$HOME\.codex\skills\buildcrew" -Recurse -Force
 ```
 
-For one project only, copy the skill to:
+For one Codex project only, copy the skill to:
 
 ```text
 your-project/.codex/skills/buildcrew/
