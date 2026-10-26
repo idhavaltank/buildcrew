@@ -1,8 +1,13 @@
 # Install BuildCrew
 
-BuildCrew is distributed as a plugin containing the `buildcrew` skill. Use the
-native plugin installer when your host supports it; use manual installation
-when it does not.
+BuildCrew is a portable skill distributed inside an installable plugin. The
+workflow is shared across AI coding hosts, but each host has its own way to
+load skills, plugins, extensions, or repository instructions.
+
+Choose one installation path for your host. Do not run every section. All
+manual commands below should be run from the root of a BuildCrew checkout
+unless the section says otherwise. After installation, start a new session and
+run the verification prompt at the end of this guide.
 
 ## Codex plugin
 
@@ -14,23 +19,51 @@ codex plugin add buildcrew@buildcrew
 ```
 
 Restart the Codex desktop app or start a new CLI thread after installation.
-Review and trust lifecycle hooks if a future BuildCrew release adds them.
+This release is instruction-only and does not require lifecycle hooks.
 
-## Manual macOS/Linux installation
+## Claude Code
+
+Project-local installation:
+
+```bash
+mkdir -p .claude/skills/buildcrew
+cp -R skills/buildcrew/* .claude/skills/buildcrew/
+```
+
+For a global installation, copy the same files into
+`~/.claude/skills/buildcrew/`, then start a new session.
+
+## Cursor, Windsurf, Cline, Kiro, Zed, and Copilot Chat
+
+Copy the included `AGENTS.md` from the BuildCrew checkout into the project root
+when the host supports
+repository instructions. Otherwise, copy `skills/buildcrew/` into the host’s
+native skill or rules directory.
+
+## Gemini CLI, Antigravity, OpenCode, and other hosts
+
+Use the host’s native extension or skill installer when available and provide
+the `skills/buildcrew/` directory. Native commands and directories vary by
+host. If a host supports neither the Agent Skills format nor `AGENTS.md`, add a
+small host-specific adapter that loads the same `SKILL.md` instructions. This
+repository does not currently claim a native one-command installer for every
+host.
+
+## Manual Codex installation on macOS/Linux
 
 ```bash
 mkdir -p ~/.codex/skills/buildcrew
 cp -R skills/buildcrew/* ~/.codex/skills/buildcrew/
 ```
 
-## Manual Windows PowerShell installation
+## Manual Codex installation on Windows PowerShell
 
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.codex\skills\buildcrew"
 Copy-Item "skills\buildcrew\*" "$HOME\.codex\skills\buildcrew" -Recurse -Force
 ```
 
-## Project-local installation
+## Project-local Codex installation
 
 Copy the `skills/buildcrew` directory into the project where it should apply:
 

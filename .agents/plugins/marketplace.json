@@ -1,0 +1,20 @@
+{
+  "name": "buildcrew",
+  "interface": {
+    "displayName": "BuildCrew Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "buildcrew",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
