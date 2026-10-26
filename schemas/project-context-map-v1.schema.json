@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project-context-map-v1.schema.json",
+  "title": "general project context map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "repository", "status", "fingerprints", "sources", "platformSignals", "productSignals", "manifestProfiles", "planRoots", "commandSources", "gaps", "conflicts", "persistence", "generatedAt", "discoveryVersion"],
+  "properties": {
+    "schemaVersion": { "const": "project-context-map-v1" },
+    "repository": { "$ref": "#/$defs/repository" },
+    "status": { "enum": ["UNSEEN", "DISCOVERING", "CURRENT", "STALE", "INCOMPLETE", "CONFLICT", "UNAVAILABLE", "CORRUPT"] },
+    "fingerprints": { "$ref": "#/$defs/fingerprints" },
+    "sources": { "type": "array", "items": { "$ref": "#/$defs/source" } },
+    "platformSignals": { "type": "array", "items": { "$ref": "#/$defs/platformSignal" } },
+    "productSignals": { "type": "array", "items": { "$ref": "#/$defs/productSignal" } },
+    "manifestProfiles": { "type": "array", "items": { "type": "string" } },
+    "planRoots": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["path", "status"], "properties": { "path": { "$ref": "#/$defs/relativePath" }, "status": { "enum": ["canonical", "legacy", "unknown"] } } } },
+    "commandSources": { "type": "array", "items": { "$ref": "#/$defs/relativePath" } },
+    "gaps": { "type": "array", "items": { "$ref": "#/$defs/gap" } },
+    "conflicts": { "type": "array", "items": { "$ref": "#/$defs/conflict" } },
+    "persistence": { "enum": ["external", "session_only", "unavailable"] },
+    "generatedAt": { "type": "string", "minLength": 1 },
+    "discoveryVersion": { "const": "project-context-bootstrap-v1" }
+  },
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(^|/)\\.\\.(/|$)).*$"
+    },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projectId", "repositoryId", "repositoryPathHint", "identityConfidence"],
+      "properties": {
+        "projectId": { "type": "string", "minLength": 1 },
+        "repositoryId": { "type": "string", "minLength": 1 },
+        "repositoryPathHint": { "type": "string", "minLength": 1 },
+        "worktreeIdentity": { "type": ["string", "null"] },
+        "sourceRef": { "type": ["string", "null"] },
+        "identityConfidence": { "enum": ["explicit", "repository_metadata", "local_fallback"] }
+      }
+    },
+    "fingerprints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceFingerprint", "contextFingerprint", "policyFingerprint", "taskScopeFingerprint"],
+      "properties": {
+        "sourceFingerprint": { "type": "string", "minLength": 1 },
+        "contextFingerprint": { "type": "string", "minLength": 1 },
+        "policyFingerprint": { "type": "string", "minLength": 1 },
+        "taskScopeFingerprint": { "type": "string", "minLength": 1 }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "kind", "scope", "scopeKind", "contentHash", "sizeBytes", "classificationConfidence", "usability"],
+      "properties": {
+        "path": { "$ref": "#/$defs/relativePath" },
+        "kind": { "enum": ["instruction", "architecture", "product", "plan", "reference", "quality", "manifest", "test", "ci", "workflow", "generated", "runtime_candidate", "contract", "unknown"] },
+        "scope": { "type": "string", "minLength": 1 },
+        "scopeKind": { "enum": ["root", "ancestor", "target", "global_candidate", "unknown"] },
+        "contentHash": { "type": "string", "minLength": 1 },
+        "sizeBytes": { "type": "integer", "minimum": 0 },
+        "modifiedAt": { "type": ["string", "null"] },
+        "classificationConfidence": { "enum": ["high", "medium", "low"] },
+        "usability": { "enum": ["authoritative", "contextual", "candidate", "ignored"] },
+        "evidenceSpans": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["startLine", "endLine"], "properties": { "startLine": { "type": "integer", "minimum": 1 }, "endLine": { "type": "integer", "minimum": 1 } } } },
+        "limitation": { "type": ["string", "null"] }
+      }
+    },
+    "platformSignal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["platform", "signal", "sourcePath", "confidence", "detectionMode"],
+      "properties": {
+        "platform": { "enum": ["web", "backend", "mobile", "flutter", "desktop", "extension", "cross_platform", "unknown"] },
+        "signal": { "type": "string", "minLength": 1 },
+        "sourcePath": { "type": "string", "minLength": 1 },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "detectionMode": { "enum": ["explicit", "manifest", "heuristic"] }
+      }
+    },
+    "productSignal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["product", "signal", "sourcePath", "confidence", "detectionMode"],
+      "properties": {
+        "product": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]{0,63}$" },
+        "signal": { "type": "string", "minLength": 1 },
+        "sourcePath": { "type": "string", "minLength": 1 },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "detectionMode": { "enum": ["explicit", "manifest", "heuristic"] }
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gapId", "category", "expected", "blocking", "reason"],
+      "properties": {
+        "gapId": { "type": "string", "minLength": 1 },
+        "category": { "type": "string", "minLength": 1 },
+        "expected": { "type": "string", "minLength": 1 },
+        "blocking": { "type": "boolean" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conflictId", "sourcePaths", "subject", "blocking", "reason"],
+      "properties": {
+        "conflictId": { "type": "string", "minLength": 1 },
+        "sourcePaths": { "type": "array", "items": { "$ref": "#/$defs/relativePath" } },
+        "subject": { "type": "string", "minLength": 1 },
+        "blocking": { "type": "boolean" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

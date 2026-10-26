@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "promotion-receipt-v1.schema.json",
+  "title": "Temporary promotion rehearsal receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receiptVersion",
+    "receiptId",
+    "stage",
+    "status",
+    "startedAt",
+    "finishedAt",
+    "terminal",
+    "evidence",
+    "blockers",
+    "residualRisk"
+  ],
+  "properties": {
+    "receiptVersion": { "const": "promotion-receipt-v1" },
+    "receiptId": { "type": "string", "minLength": 1 },
+    "stage": {
+      "enum": [
+        "candidate-validation",
+        "installation",
+        "active-configuration",
+        "activation",
+        "rollback"
+      ]
+    },
+    "status": { "enum": ["PASS", "FAIL", "BLOCKED", "NOT_STARTED"] },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "finishedAt": { "type": "string", "format": "date-time" },
+    "terminal": { "const": true },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commands", "artifacts", "facts"],
+      "properties": {
+        "commands": { "type": "array", "items": { "type": "object" } },
+        "artifacts": { "type": "array", "items": { "type": "string" } },
+        "facts": { "type": "object" }
+      }
+    },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "residualRisk": { "type": "array", "items": { "type": "string" } }
+  }
+}

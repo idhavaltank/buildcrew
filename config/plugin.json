@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "buildcrew",
+  "version": "0.1.0",
+  "description": "You Lead, AI Assists. Evidence-driven software engineering workflow for AI coding tools.",
+  "author": {
+    "name": "Dhaval Tank",
+    "url": "https://github.com/idhavaltank"
+  },
+  "homepage": "https://idhavaltank.github.io/buildcrew/",
+  "repository": "https://github.com/idhavaltank/buildcrew",
+  "keywords": ["software-engineering", "agentic", "planning", "testing", "code-review", "evidence", "memory"],
+  "license": "MIT"
+}

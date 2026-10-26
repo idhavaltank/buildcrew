@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "model-assignment-v1.schema.json",
+  "title": "AE model assignment v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "assignmentId",
+    "status",
+    "taskId",
+    "projectId",
+    "repositoryId",
+    "tenantId",
+    "packetVersion",
+    "planVersion",
+    "waveId",
+    "attempt",
+    "sourceFingerprint",
+    "policyFingerprint",
+    "role",
+    "scope",
+    "hostId",
+    "desiredModel",
+    "resolvedModel",
+    "reasoningEffort",
+    "selectionRationale",
+    "capabilityStatus",
+    "overrideEvidence",
+    "issuedAt",
+    "expiresAt",
+    "terminalStatus"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "model-assignment-v1" },
+    "assignmentId": { "type": "string", "minLength": 1 },
+    "status": {
+      "enum": [
+        "DIRECT_NO_ASSIGNMENT",
+        "SELECTED",
+        "HOST_INHERITED",
+        "CAPABILITY_UNAVAILABLE",
+        "OVERRIDE_EVIDENCED",
+        "FALLBACK_EVIDENCED",
+        "INVALIDATED",
+        "REJECTED"
+      ]
+    },
+    "taskId": { "type": "string", "minLength": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "repositoryId": { "type": "string", "minLength": 1 },
+    "tenantId": { "type": ["string", "null"] },
+    "packetVersion": { "type": "string", "minLength": 1 },
+    "planVersion": { "type": "string", "minLength": 1 },
+    "waveId": { "type": "string", "minLength": 1 },
+    "attempt": { "type": "integer", "minimum": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "policyFingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "role": {
+      "enum": ["worker", "normal-coordinator", "high-risk-coordinator", "final-audit"]
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scopeId", "paths", "authority"],
+      "properties": {
+        "scopeId": { "type": "string", "minLength": 1 },
+        "paths": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "authority": { "enum": ["read", "write"] }
+      }
+    },
+    "hostId": { "type": "string", "minLength": 1 },
+    "desiredModel": {
+      "type": ["string", "null"],
+      "enum": ["model-fast", "model-balanced", "model-advanced", null]
+    },
+    "resolvedModel": {
+      "type": ["string", "null"],
+      "enum": ["model-fast", "model-balanced", "model-advanced", null]
+    },
+    "reasoningEffort": {
+      "type": ["string", "null"],
+      "enum": ["low", "medium", "high", "max", null]
+    },
+    "selectionRationale": { "type": "string", "minLength": 1 },
+    "capabilityStatus": {
+      "enum": ["AVAILABLE", "UNAVAILABLE", "INHERITED", "OVERRIDE_APPROVED", "FALLBACK_APPROVED", "INVALID"]
+    },
+    "overrideEvidence": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "model",
+        "reasoningEffort",
+        "taskId",
+        "scopeId",
+        "evidence",
+        "approvalId",
+        "issuedAt",
+        "expiresAt",
+        "policyFingerprint"
+      ],
+      "properties": {
+        "origin": { "enum": ["explicit_user", "host_policy"] },
+        "model": { "enum": ["model-balanced", "model-advanced"] },
+        "reasoningEffort": { "enum": ["low", "medium", "high", "max"] },
+        "taskId": { "type": "string", "minLength": 1 },
+        "scopeId": { "type": "string", "minLength": 1 },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "contains": {
+            "type": "string",
+            "pattern": "^fallback_policy:[^:]+$"
+          },
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "approvalId": { "type": "string", "minLength": 1 },
+        "issuedAt": { "type": "string", "minLength": 1 },
+        "expiresAt": { "type": "string", "minLength": 1 },
+        "policyFingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "issuedAt": { "type": "string", "minLength": 1 },
+    "expiresAt": { "type": "string", "minLength": 1 },
+    "terminalStatus": { "type": "boolean" },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["taskId"],
+      "properties": {
+        "taskId": { "type": "string", "minLength": 1 },
+        "taskClass": {
+          "type": "string",
+          "enum": [
+            "lightweight",
+            "small",
+            "normal",
+            "coupled",
+            "high-risk",
+            "security",
+            "cross-repository",
+            "architecture",
+            "difficult-root-cause",
+            "final-audit"
+          ]
+        }
+      }
+    }
+  }
+}

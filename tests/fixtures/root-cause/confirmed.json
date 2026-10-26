@@ -1,0 +1,16 @@
+{
+  "issueVersion": "issue-record-v1",
+  "taskId": "fixture-confirmed-001",
+  "symptom": "sync remains pending after resume",
+  "reproduction": "resume app with queued mutation",
+  "affectedLayers": ["mobile", "queue", "api"],
+  "hypotheses": ["replay worker loses lease"],
+  "evidence": ["queue log shows retry without ack"],
+  "rootCause": {
+    "status": "confirmed",
+    "claim": "replay worker loses its lease before acknowledging the mutation",
+    "evidence": ["lease trace links retry to missing acknowledgement"]
+  },
+  "regressionRisk": "replay ordering",
+  "acceptanceMapping": ["sync completes after resume"]
+}

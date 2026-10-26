@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ae-authorization-evidence-envelope-v1.schema.json",
+  "title": "AE authorization evidence envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "envelopeId", "approvalId", "taskReviewBindingDigest",
+    "wrappedArtifactType", "wrappedArtifactDigest", "taskId", "projectId",
+    "repositoryId", "tenantId", "hostId", "authorizationEpoch", "producerId",
+    "issuedAt", "expiresAt", "terminal"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "ae-authorization-evidence-envelope-v1"},
+    "envelopeId": {"type": "string", "minLength": 1},
+    "approvalId": {"type": "string", "minLength": 1},
+    "taskReviewBindingDigest": {"$ref": "#/$defs/fingerprint"},
+    "wrappedArtifactType": {"const": "model-assignment-v1"},
+    "wrappedArtifactDigest": {"$ref": "#/$defs/fingerprint"},
+    "taskId": {"type": "string", "minLength": 1},
+    "projectId": {"type": "string", "minLength": 1},
+    "repositoryId": {"type": "string", "minLength": 1},
+    "tenantId": {"type": ["string", "null"]},
+    "hostId": {"type": "string", "minLength": 1},
+    "authorizationEpoch": {"type": "integer", "minimum": 1},
+    "producerId": {"type": "string", "minLength": 1},
+    "issuedAt": {"type": "string", "format": "date-time"},
+    "expiresAt": {"type": "string", "format": "date-time"},
+    "terminal": {"const": true}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

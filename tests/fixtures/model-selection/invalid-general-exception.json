@@ -1,0 +1,49 @@
+{
+  "taskFacts": {
+    "schemaVersion": "model-selection-task-v1",
+    "route": "NEW_TASK",
+    "taskClass": "normal",
+    "taskId": "task-invalid-exception-001",
+    "projectId": "project-demo",
+    "repositoryId": "repo-demo",
+    "tenantId": "tenant-demo",
+    "packetVersion": "packet-v1",
+    "planVersion": "plan-v1",
+    "waveId": "wave-invalid-exception-1",
+    "attempt": 1,
+    "sourceFingerprint": "source-invalid-exception-001",
+    "hostId": "host-invalid-exception",
+    "issuedAt": "2026-08-24T08:00:00Z",
+    "expiresAt": "2026-08-24T09:00:00Z",
+    "needsCoordinator": false,
+    "workerScopes": [
+      {
+        "scopeId": "worker-1",
+        "paths": ["src/feature.py"],
+        "authority": "write"
+      }
+    ],
+    "coordinatorScope": null,
+    "validationTime": "2026-08-24T08:30:00Z",
+    "override": {
+      "origin": "explicit_user",
+      "model": "model-advanced",
+      "reasoningEffort": "max",
+      "taskId": "task-invalid-exception-001",
+      "scopeId": "worker-1",
+      "evidence": ["fast_model_failed_once"],
+      "approvalId": "user-approval-002",
+      "issuedAt": "2026-08-24T08:00:00Z",
+      "expiresAt": "2026-08-24T09:00:00Z"
+    }
+  },
+  "hostCatalog": {
+    "schemaVersion": "host-model-catalog-v1",
+    "hostId": "host-invalid-exception",
+    "availableModels": {
+      "model-advanced": ["max"]
+    },
+    "inheritedModel": null,
+    "inheritedReason": null
+  }
+}

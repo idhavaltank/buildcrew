@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-finding-resolution-v1.schema.json",
+  "title": "Trusted terminal finding resolution receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "receiptId", "receiptDigest", "taskId", "projectId", "repositoryId", "tenantId", "sourceFingerprint", "overallDiffFingerprint", "findingId", "shardId", "severity", "resolutionKind", "repairScope", "duplicateOf", "reviewerIdentity", "reviewerAuthority", "evidenceRefs", "evidenceDigest", "policyFingerprint", "issuedAt", "expiresAt", "status", "terminal"],
+  "properties": {
+    "schemaVersion": {"const": "review-finding-resolution-v1"},
+    "receiptId": {"type": "string", "minLength": 1},
+    "receiptDigest": {"$ref": "#/$defs/fingerprint"},
+    "taskId": {"type": "string", "minLength": 1},
+    "projectId": {"type": "string", "minLength": 1},
+    "repositoryId": {"type": "string", "minLength": 1},
+    "tenantId": {"type": ["string", "null"]},
+    "sourceFingerprint": {"type": "string", "minLength": 1},
+    "overallDiffFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "findingId": {"type": "string", "minLength": 1},
+    "shardId": {"type": "string", "minLength": 1},
+    "severity": {"enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"]},
+    "resolutionKind": {"enum": ["fixed", "duplicate"]},
+    "repairScope": {"$ref": "#/$defs/strings"},
+    "duplicateOf": {"type": ["string", "null"]},
+    "reviewerIdentity": {"type": "string", "minLength": 1},
+    "reviewerAuthority": {"enum": ["review-host", "controller"]},
+    "evidenceRefs": {"$ref": "#/$defs/strings"},
+    "evidenceDigest": {"$ref": "#/$defs/fingerprint"},
+    "policyFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "issuedAt": {"type": "string", "format": "date-time"},
+    "expiresAt": {"type": "string", "format": "date-time"},
+    "status": {"const": "PASS"},
+    "terminal": {"const": true}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "strings": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  }
+}

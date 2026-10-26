@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "independent-closure-v1.schema.json",
+  "title": "Independent Phase 1-3 closure report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "reviewer",
+    "sourceFingerprint",
+    "candidateFingerprint",
+    "candidateSupplied",
+    "phases",
+    "closureEligible",
+    "runtimeStatus",
+    "deviceStatus",
+    "activationStatus",
+    "learningStatus",
+    "sideEffects"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "independent-closure-v1" },
+    "reviewer": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "candidateFingerprint": { "type": ["string", "null"] },
+    "candidateSupplied": { "type": "boolean" },
+    "phases": { "type": "object" },
+    "closureEligible": { "type": "boolean" },
+    "runtimeStatus": { "enum": ["PASS", "UNAVAILABLE", "MISSING_COVERAGE"] },
+    "deviceStatus": { "enum": ["PASS", "NOT_REQUIRED", "UNAVAILABLE"] },
+    "activationStatus": { "enum": ["PASS", "NOT_REQUIRED", "UNAVAILABLE"] },
+    "learningStatus": { "type": "string", "minLength": 1 },
+    "sideEffects": { "type": "array", "maxItems": 0 }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gate-state-v1.schema.json",
+  "title": "Hybrid evidence gate state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["static", "review", "runtime", "device", "publication", "activation", "learning"],
+  "properties": {
+    "static": { "$ref": "#/$defs/gate" },
+    "review": { "$ref": "#/$defs/gate" },
+    "runtime": { "$ref": "#/$defs/gate" },
+    "device": { "$ref": "#/$defs/gate" },
+    "publication": { "$ref": "#/$defs/gate" },
+    "activation": { "$ref": "#/$defs/gate" },
+    "learning": { "$ref": "#/$defs/gate" }
+  },
+  "$defs": {
+    "gate": {
+      "enum": ["PASS", "FAIL", "BLOCKED", "MISSING_COVERAGE", "UNVERIFIED", "NOT_REQUIRED", "NOT_STARTED", "SOURCE_ONLY", "INSTALLED_NOT_ACTIVE", "ACTIVE"]
+    }
+  }
+}

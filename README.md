@@ -1,142 +1,357 @@
-# BuildCrew
+<p align="center">
+  <img src="docs/logo.svg" alt="BuildCrew logo" width="128" />
+</p>
 
-## You Lead. AI Assists.
+<h1 align="center">BuildCrew</h1>
 
-BuildCrew is an installable AI software engineering plugin containing a
-repeatable skill for understanding projects, planning changes, building safely,
-testing the result, and reporting evidence.
+<h3 align="center">You Lead, AI Assists.</h3>
 
-It is designed for daily development—not just demos. BuildCrew helps an AI
-agent inspect the repository before editing, reuse existing patterns, keep
-routine work lightweight, and make remaining uncertainty visible.
+<p align="center">
+  <strong>BuildCrew</strong> is an installable plugin package containing the
+  BuildCrew skill. The skill is portable and provider-neutral for everyday
+  software development: it helps AI coding tools understand a project, reuse
+  what already exists, make the smallest safe change, verify the result, and
+  preserve useful context for the next session.
+</p>
 
-### Why it is useful
+<p align="center">
+  <a href="RELEASE.md"><img src="https://img.shields.io/badge/version-0.1.0-2563eb" alt="Version 0.1.0" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-08a88a.svg" alt="MIT License" /></a>
+  <a href="https://idhavaltank.github.io/buildcrew/"><img src="https://img.shields.io/badge/docs-GitHub%20Pages-1746b3" alt="Documentation" /></a>
+</p>
 
-Typical AI coding often follows:
+<p align="center">
+  <a href="https://idhavaltank.github.io/buildcrew/">Documentation</a> ·
+  <a href="#install">Install</a> ·
+  <a href="#step-2-configure-buildcrew-for-every-user-input">Configure activation</a> ·
+  <a href="CONTRIBUTING.md">Contributing</a> ·
+  <a href="SECURITY.md">Security</a>
+</p>
 
-```text
-prompt → generated code → confidence
+## What BuildCrew does
+
+BuildCrew gives an AI coding assistant a disciplined engineering workflow:
+
+- **Understand first** — inspect requirements, documentation, source, tests,
+  configuration, and project conventions before editing.
+- **Reuse before creating** — find the existing component, helper, service,
+  hook, contract, or pattern before introducing a new abstraction.
+- **Change the smallest safe surface** — keep scope focused and avoid unrelated
+  refactors, dependencies, or architecture changes.
+- **Verify with evidence** — separate static inspection, tests, builds, runtime,
+  browser, device, deployment, and production proof.
+- **Continue across sessions** — resume exact work with bounded context and
+  sanitized project memory instead of repeating repository discovery.
+- **Stay honest about capability** — unavailable host integrations are reported
+  as unavailable; they are never presented as completed work.
+
+## The engineering loop
+
+```mermaid
+flowchart LR
+    A[User request] --> B[Requirement gate]
+    B --> C[Project context lookup]
+    C --> D[Source and pattern inspection]
+    D --> E[Reuse decision]
+    E --> F[Bounded implementation]
+    F --> G[Focused verification]
+    G --> H[Evidence-based report]
+    H --> I[Sanitized learning and continuity]
+    I -. next session .-> C
 ```
 
-BuildCrew encourages:
+BuildCrew is designed to work like a careful engineering team while keeping the
+human in control of scope, approvals, and consequential actions.
 
-```text
-instruction → context → reuse → smallest change → checks → evidence
-```
+## Why use it?
 
-### Install BuildCrew across AI coding hosts
+| Common agent problem | BuildCrew response |
+| --- | --- |
+| The agent loses the original goal | Requirement identity, bounded task scope, and acceptance criteria |
+| The agent loops and burns budget | Repeated-action detection, budgets, checkpoints, and stop conditions |
+| Long context becomes confusing | Targeted lookup, compact continuity references, and measured context reduction |
+| The agent invents a new solution | Repository-first reuse assessment before source mutation |
+| A test claim cannot be trusted | Evidence tiers that distinguish what actually ran from what was only inspected |
+| A webpage or file contains hostile instructions | Trust boundaries, sanitized intake, approval gates, and source-first decisions |
+| A change is hard to explain later | Traceable requirements, changed files, verification, risk, and learning records |
 
-BuildCrew is a portable skill, but installation commands are host-specific.
-The reusable workflow lives in `skills/buildcrew/SKILL.md`; the plugin
-manifests and host adapters determine how each AI coding tool loads it.
+## Install
 
-Choose one installation path for your AI coding host. Do not run every section.
-After installation, start a new session and use the verification prompt below.
+BuildCrew is distributed as an installable plugin package containing a portable
+skill. Choose the installation method supported by your AI coding tool.
+
+Follow the installation steps in order: install BuildCrew, configure the host for
+every-input activation, start a fresh session, and verify the setup.
+
+### Step 1: Install BuildCrew in your AI coding tool
 
 #### Codex plugin
-
-From the published plugin marketplace:
 
 ```bash
 codex plugin marketplace add idhavaltank/buildcrew
 codex plugin add buildcrew@buildcrew
 ```
 
-Start Codex and open a new thread. This release is instruction-only and does
-not require lifecycle hooks.
+Start a new Codex session after installation.
 
 #### Claude Code
 
-From the BuildCrew repository root, use the Claude Code skill directory for a
-project or for your user account:
+From the BuildCrew repository root:
 
 ```bash
 mkdir -p .claude/skills/buildcrew
-cp -R skills/buildcrew/* .claude/skills/buildcrew/
+cp -R SKILL.md config engine references schemas scripts .claude/skills/buildcrew/
 ```
 
-For a global installation, use `~/.claude/skills/buildcrew/` instead of the
-project-local `.claude/skills/buildcrew/` path, then start a new session.
+For a global installation, use `~/.claude/skills/buildcrew/` instead
+of the project-local path.
 
 #### Cursor, Windsurf, Cline, Kiro, Zed, and Copilot Chat
 
-These hosts can use the included repository instructions where supported. From
-the BuildCrew repository root:
-
-```text
-Copy AGENTS.md into the project root, then open a new agent session.
-```
-
-For a host-native skill or rules directory, copy the contents of
-`skills/buildcrew/` into that host’s supported skill/rules location.
+Copy `AGENTS.md` into the target project root when the host supports repository
+instructions. Otherwise, copy the BuildCrew package contents into the host's native
+skill or rules directory.
 
 #### Gemini CLI, Antigravity, OpenCode, and other hosts
 
-Use the host’s native extension or skill installer when available and provide
-the `skills/buildcrew/` directory. If the host does not support the Agent
-Skills format or `AGENTS.md`, it needs a small host-specific adapter; the
-workflow itself remains the same. This repository currently provides the
-portable skill and `AGENTS.md` fallback; it does not claim a native one-command
-installer for every host.
+Use the host's native extension or skill installer when available. If the host
+supports neither Agent Skills nor `AGENTS.md`, it needs a small host-specific
+adapter. BuildCrew provides the portable workflow and fallback instructions; host
+runtime integrations remain host-owned.
 
-#### Codex manual installation
-
-##### macOS/Linux
-
-```bash
-mkdir -p ~/.codex/skills/buildcrew
-cp -R skills/buildcrew/* ~/.codex/skills/buildcrew/
-```
-
-##### Windows PowerShell
+#### Windows PowerShell
 
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.codex\skills\buildcrew"
-Copy-Item "skills\buildcrew\*" "$HOME\.codex\skills\buildcrew" -Recurse -Force
+Copy-Item "SKILL.md", "config", "engine", "references", "schemas", "scripts" "$HOME\.codex\skills\buildcrew" -Recurse -Force
 ```
 
-For one Codex project only, copy the skill to:
+### Host runtime configuration for multi-agent execution
 
-```text
-your-project/.codex/skills/buildcrew/
-```
+In this documentation, **host** means the AI coding tool that loads and runs
+BuildCrew—for example, Codex, Claude Code, Cursor, Windsurf, Gemini
+CLI, or another supported tool.
 
-Start a new agent session after installation.
+Installing BuildCrew provides the workflow, agent roles, routing rules, and evidence
+contracts. It does not automatically create live sub-agents on its own. Real
+multi-agent execution requires the selected host to be configured with a
+runtime that can start agents and return their results.
 
-### Example prompts
-
-```text
-Use BuildCrew to plan this feature before changing files.
-Use BuildCrew build mode to implement the approved plan.
-Use BuildCrew review mode to inspect this diff and report evidence and risk.
-```
-
-### Documentation
-
-Read the complete [BuildCrew documentation](https://idhavaltank.github.io/buildcrew/)
-for setup, concepts, workflows, examples, reference, FAQ, and contribution
-guidance.
-
-| Guide | Purpose |
+| Setup | What happens |
 | --- | --- |
-| [Get started](https://idhavaltank.github.io/buildcrew/#get-started) | Run your first BuildCrew task. |
-| [Installation](https://idhavaltank.github.io/buildcrew/#installation) | Install the plugin or standalone skill. |
-| [Core concepts](https://idhavaltank.github.io/buildcrew/#concepts) | Understand the plugin, skill, modes, and evidence loop. |
-| [Workflows](https://idhavaltank.github.io/buildcrew/#workflows) | Plan, build, test, review, and ship. |
-| [Examples](https://idhavaltank.github.io/buildcrew/#examples) | See practical prompts and expected behavior. |
-| [Reference](https://idhavaltank.github.io/buildcrew/#reference) | Prompt structure and completion response guidance. |
+| Skill installed only | The host’s lead AI follows the BuildCrew workflow by itself. |
+| Host runtime configured | BuildCrew can select and spawn the required specialist agents automatically. |
+| Host runtime unavailable | BuildCrew continues with the lead AI and reports that separate agent execution is unavailable. |
 
-### Ownership and contributors
+For live multi-agent execution, the host configuration must provide an approved
+native-agent executor (the component that starts an agent), a model provider
+(the AI model service), a runtime coordinator (the component that manages agent
+assignments), a project scope, and execution permissions. Configure each AI
+coding tool separately; installing BuildCrew in one host does not configure it in
+another host. BuildCrew also does not claim that agents ran unless the host returns
+valid execution evidence.
 
-- **Owner:** [Dhaval Tank](https://github.com/idhavaltank)
-- **Mobile Engineering Collaborator:** [Jay Zala](https://github.com/jayzala-dev)
+### Multi-agent example
 
-BuildCrew is open to community suggestions. Anyone can fork the repository and
-open a pull request; changes are reviewed by Dhaval Tank before they are
-merged into the official `main` branch.
+For an architecture request, BuildCrew may coordinate the following sequence:
 
-### Project status
+```text
+Orchestrator and Context Coordinator
+  → Knowledge Retriever and Codebase Analyst
+  → Solution Architect
+  → Independent Reviewer
+  → Final Validator
+```
 
-This is the public release starter package. Before publishing a production
-release, select and add the project license, connect the final repository URL,
-and validate the plugin on each target host.
+BuildCrew selects roles according to task complexity and risk. If the host cannot
+spawn agents, the lead AI follows the same workflow without pretending that
+separate agents ran.
+
+### Common questions
+
+**Does BuildCrew spawn agents automatically?** Only when the selected host runtime
+supports agent execution. Otherwise, the lead AI handles the workflow.
+
+**What is a host?** A host is the AI coding tool that loads and runs BuildCrew, such
+as Codex, Claude Code, Cursor, Windsurf, or Gemini CLI. Each host requires its
+own configuration for live multi-agent execution.
+
+### Step 2: Configure BuildCrew for every user input
+
+After installation, open the project in your AI coding tool and send the
+following one-time setup prompt. It asks the host to load BuildCrew for every user
+input, run onboarding, and configure continuity where the host supports it.
+This step is required for smooth continuous use of BuildCrew.
+
+```text
+I installed BuildCrew for this project. Make BuildCrew the single engineering workflow for every input in this project, including questions, follow-ups, reviews, plans, and coding tasks. Handle simple questions briefly.
+
+First, locate and validate the installed SKILL.md. Check this tool's persistent project instructions and whether another engineering controller is active. Follow BuildCrew's activation checks and keep a reversible way to restore the prior configuration. Add the smallest supported project instruction or hook to use BuildCrew on each input. Preserve unrelated settings. If another controller already owns this scope, report the conflict before changing it.
+
+Run BuildCrew's one-time project onboarding and keep its marker in an approved directory outside the project. On each later input, invoke scripts/context_loop.py auto with a sanitized intake: simple questions use lookup only, while actionable work starts or resumes its exact task. At completed, blocked, or paused closure, invoke scripts/context_loop.py close. Keep one shared BUILDCREW_HOME for tools that should share context.
+
+Report what you configured, where, and the onboarding state. Tell me whether to reload or start a new session, and how to verify BuildCrew with an ordinary project request that does not name it. If this tool cannot make or verify BuildCrew persistent, say so.
+```
+
+This is a one-time setup prompt for the current installation, host, and project
+scope. Persistent every-input use depends on the host's supported project
+instruction, hook, or equivalent loading mechanism. If the host cannot support
+persistent activation, it must report that limitation rather than claim that
+BuildCrew will trigger automatically.
+
+### Step 3: Start a fresh session and verify activation
+
+After configuring the host, reload the project or start a new session. Then
+send an ordinary request without naming BuildCrew:
+
+```text
+Inspect this project and explain the relevant existing patterns before making any changes. Do not edit files yet.
+```
+
+Verify that the response follows the BuildCrew workflow and reports what it inspected.
+If the host cannot confirm persistent activation, use BuildCrew explicitly in the
+prompt and follow the host-specific limitation it reports.
+
+## Start your first task
+
+After installation and onboarding, begin with a small request:
+
+```text
+Use BuildCrew to inspect this repository and plan a small feature. Do not edit files yet.
+```
+
+For implementation work, include the goal, target area, constraints, and
+acceptance criteria. BuildCrew will inspect the relevant project context before
+proposing or making a change.
+
+## Project discovery
+
+BuildCrew supports three first-project situations:
+
+1. **New project** — gather purpose, requirements, technology choices,
+   architecture, scope, priorities, and constraints before implementation.
+2. **Existing project without documentation** — inspect structure, dependencies,
+   configuration, source paths, tests, and execution flow; record the useful
+   project context afterward.
+3. **Existing project with documentation** — read the relevant documentation,
+   validate it against current source, then implement within the established
+   architecture and conventions.
+
+The first-project introduction is shown once per installation, host, and
+project scope. Later inputs use the normal bounded context workflow.
+
+## Memory and session continuity
+
+BuildCrew uses memory as a bounded reference, not as a replacement for current
+source. The continuity loop is:
+
+```text
+input → targeted context lookup → process → verify → close → sanitized learning
+      → next input resumes the exact task and revalidates current source
+```
+
+Memory and worklog state share `BUILDCREW_HOME`. Every-input lookup is
+read-only by default. Closure may write only sanitized, scoped, evidence-backed
+learning and a candidate reference. Canonical project memory requires its own
+review and ingestion step.
+
+Useful commands:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/context_loop.py auto
+PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/context_loop.py measure
+PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/context_loop.py close
+PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/storage_paths.py
+```
+
+## Engineering capabilities
+
+- Requirement-first intake and task identity
+- New and existing project onboarding
+- Repository-first reuse and minimal-change gates
+- SOLID, maintainability, readability, security, and testability guidance
+- Named specialist and reviewer contracts
+- Bounded delegation and one-writer scope control
+- Budget, repeated-action, cancellation, approval, and trace boundaries
+- Browser, Android, iOS Simulator, and Flutter adapter contracts
+- Context lookup, session handoff, progress, worklog, and learning workflows
+- Human-readable code checks across supported languages
+- Deterministic package integrity and release validation
+- Portable adapters for multiple AI coding environments
+
+## Host compatibility
+
+BuildCrew is provider-neutral. It does not bundle credentials or vendor-specific
+model APIs, and it does not claim that a host capability is live without host
+evidence.
+
+| Host or environment | Portable instructions | Live integration |
+| --- | ---: | ---: |
+| Codex | Yes | Host configuration required |
+| Claude Code | Yes | Host configuration required |
+| Cursor | Yes | Host configuration required |
+| Windsurf | Yes | Host configuration required |
+| Gemini CLI | Yes | Host configuration required |
+| Antigravity | Yes | Host configuration required |
+| Browser, Android, iOS, Flutter | Adapter contracts | Matching runtime and target required |
+
+Source files and adapters prove policy and compatibility contracts. They do not
+by themselves prove that an agent, provider, browser, emulator, device,
+deployment, or production system ran successfully.
+
+## Validation
+
+Run from the repository root:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tests -p 'test_*.py' -v
+PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_model_selection.py config/model-selection-v1.json
+PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_tool_adapter.py --help
+PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/context_loop.py --help
+PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/project_onboarding.py --help
+PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/build_clean_package.py --help
+PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/verify_package_parity.py --help
+PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/build_release.py --help
+```
+
+These checks establish only the proof tier they actually exercise. They do not
+establish installation, activation, host, browser, device, deployment, or
+production behavior.
+
+## Repository map
+
+| Path | Purpose |
+| --- | --- |
+| `SKILL.md` | Core operating policy and lifecycle contract |
+| `references/` | Context, memory, review, safety, platform, and host guidance |
+| `schemas/` | Versioned contracts for tasks, evidence, reviews, and state |
+| `config/` | Capability-based model selection policy |
+| `engine/` | Dependency-free routing, validation, safety, and coordination logic |
+| `scripts/` | CLI helpers, validators, packaging, release, and continuity tools |
+| `tests/` | Focused contract, safety, routing, and packaging tests |
+| `docs/` | Human-facing GitHub Pages documentation |
+
+## Community and governance
+
+BuildCrew is an open-source plugin package developed and maintained by
+**Dhaval Tank** for the community. Anyone can use the plugin package, create
+their own versions, and contribute improvements through pull requests.
+**Dhaval Tank** maintains the official plugin package and its BuildCrew skill,
+and reviews all contributions to ensure quality, consistency, and reliability
+before approving them for inclusion in the official version.
+
+- Owner: [Dhaval Tank](https://github.com/idhavaltank)
+- Mobile Engineering Collaborator: [Jay Zala](https://github.com/jayzala-dev)
+- Contributions: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Security: [SECURITY.md](SECURITY.md)
+- Release process: [RELEASE.md](RELEASE.md)
+
+## Links
+
+- Repository: <https://github.com/idhavaltank/buildcrew>
+- Documentation: <https://idhavaltank.github.io/buildcrew/>
+- License: [MIT](LICENSE)
+
+## License
+
+BuildCrew is released under the [MIT License](LICENSE).

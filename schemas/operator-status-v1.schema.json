@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "operator-status-v1.schema.json",
+  "title": "Shadow operator status",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "status",
+    "taskId",
+    "route",
+    "complexity",
+    "riskTier",
+    "authority",
+    "fingerprint",
+    "planVersion",
+    "writer",
+    "staticStatus",
+    "reviewStatus",
+    "runtimeStatus",
+    "deviceStatus",
+    "publicationStatus",
+    "activationStatus",
+    "learningStatus",
+    "blockers",
+    "nextAction",
+    "candidateStatus",
+    "shadowStatus",
+    "sideEffects"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "operator-status-v1" },
+    "status": { "enum": ["PASS", "BLOCKED"] },
+    "taskId": { "type": "string", "minLength": 1 },
+    "route": { "enum": ["DIRECT", "REVIEW_ONLY", "PLAN_ONLY", "DIRECT_WORK", "NEW_TASK", "BLOCKED"] },
+    "complexity": { "enum": ["LIGHTWEIGHT", "NORMAL", "COUPLED"] },
+    "riskTier": { "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+    "authority": { "type": "string", "minLength": 1 },
+    "fingerprint": { "type": "string", "minLength": 1 },
+    "planVersion": { "type": "string", "minLength": 1 },
+    "writer": { "type": ["string", "null"], "minLength": 1 },
+    "staticStatus": { "$ref": "#/$defs/status" },
+    "reviewStatus": { "$ref": "#/$defs/status" },
+    "runtimeStatus": { "$ref": "#/$defs/status" },
+    "deviceStatus": { "$ref": "#/$defs/status" },
+    "publicationStatus": { "$ref": "#/$defs/status" },
+    "activationStatus": { "$ref": "#/$defs/status" },
+    "learningStatus": { "$ref": "#/$defs/status" },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "nextAction": { "type": "string", "minLength": 1 },
+    "candidateStatus": { "enum": ["PASS", "FAIL", "BLOCKED", "MISSING_COVERAGE", "UNVERIFIED", "NOT_REQUIRED", "NOT_STARTED", "UNAVAILABLE", "SOURCE_ONLY", "INSTALLED_NOT_ACTIVE", "ACTIVE", "AVAILABLE", "CANDIDATE_UNAVAILABLE", "INVALID", "CONFLICT"] },
+    "shadowStatus": { "enum": ["PASS", "FAIL", "BLOCKED", "MISSING_COVERAGE", "UNVERIFIED", "NOT_REQUIRED", "NOT_STARTED", "UNAVAILABLE", "SOURCE_ONLY", "INSTALLED_NOT_ACTIVE", "ACTIVE", "AVAILABLE", "CANDIDATE_UNAVAILABLE", "INVALID", "CONFLICT"] },
+    "sideEffects": { "const": [] }
+  },
+  "$defs": {
+    "status": {
+      "enum": ["PASS", "FAIL", "BLOCKED", "MISSING_COVERAGE", "UNVERIFIED", "NOT_REQUIRED", "NOT_STARTED", "UNAVAILABLE", "SOURCE_ONLY", "INSTALLED_NOT_ACTIVE", "ACTIVE"]
+    }
+  }
+}

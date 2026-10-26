@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "observability-persistence-receipt-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "receiptId", "runId", "status", "eventId", "persisted", "deduplicated", "redacted", "durable", "blockers", "sideEffects", "generatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "observability-persistence-receipt-v1" },
+    "receiptId": { "type": "string", "minLength": 1 },
+    "runId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["PERSISTED", "DEDUPLICATED", "CAPABILITY_UNAVAILABLE", "REJECTED", "FAILED"] },
+    "eventId": { "type": "string", "minLength": 1 },
+    "persisted": { "type": "boolean" },
+    "deduplicated": { "type": "boolean" },
+    "redacted": { "type": "boolean" },
+    "durable": { "type": "boolean" },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "sideEffects": { "const": [] },
+    "generatedAt": { "type": "string", "minLength": 1 }
+  }
+}

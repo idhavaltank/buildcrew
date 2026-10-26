@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "compatibility-matrix-v1.schema.json",
+  "title": "Static cross-platform compatibility matrix",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "matrixId", "taskId", "sourceFingerprint", "criteria", "overallStatus", "generatedAt", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "compatibility-matrix-v1" },
+    "matrixId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 8 },
+    "criteria": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["criterionId", "description", "webStatus", "mobileStatus", "comparisonStatus", "evidenceRefs", "residualRisk"],
+        "properties": {
+          "criterionId": { "type": "string", "minLength": 1 },
+          "description": { "type": "string", "minLength": 1 },
+          "webStatus": { "enum": ["PASS", "FAIL", "BLOCKED", "NOT_VERIFIED", "NOT_REQUIRED", "MISSING_COVERAGE"] },
+          "mobileStatus": { "enum": ["PASS", "FAIL", "BLOCKED", "NOT_VERIFIED", "NOT_REQUIRED", "MISSING_COVERAGE"] },
+          "comparisonStatus": { "enum": ["PASS", "FAIL", "BLOCKED", "NOT_VERIFIED", "NOT_REQUIRED", "MISSING_COVERAGE"] },
+          "evidenceRefs": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+          "residualRisk": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    },
+    "overallStatus": { "enum": ["PASS", "FAIL", "BLOCKED", "NOT_VERIFIED", "NOT_REQUIRED", "MISSING_COVERAGE"] },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "sideEffects": { "const": [] }
+  }
+}

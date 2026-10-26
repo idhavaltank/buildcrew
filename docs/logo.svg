@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="logo-title">
+  <title id="logo-title">BuildCrew</title>
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563eb" />
+      <stop offset="1" stop-color="#08a88a" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="32" fill="url(#brand)" />
+  <path d="M34 48 49 64 34 80M58 80h35" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8" />
+  <path d="m86 29 3 8 8 3-8 3-3 8-3-8-8-3 8-3 3-8Z" fill="#fff" />
+</svg>

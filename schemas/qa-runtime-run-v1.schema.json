@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qa-runtime-run-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "runId", "packetId", "taskId", "sourceFingerprint", "status", "controller", "adapterIds", "adapterReceipts", "qaReceipt", "blockers", "live", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "qa-runtime-run-v1" },
+    "runId": { "type": "string", "minLength": 1 },
+    "packetId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["PASS", "FAILED", "BLOCKED", "NOT_VERIFIED"] },
+    "controller": { "const": "AE" },
+    "adapterIds": { "type": "array", "items": { "type": "string" } },
+    "adapterReceipts": { "type": "array", "items": { "type": "object" } },
+    "qaReceipt": { "type": "object" },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "live": { "type": "boolean" },
+    "sideEffects": { "const": [] }
+  }
+}

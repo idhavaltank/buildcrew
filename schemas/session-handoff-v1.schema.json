@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "session-handoff-v1.schema.json",
+  "title": "AE safe cross-session handoff v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "handoffId", "taskId", "sourceSessionId", "repository",
+    "task", "source", "phase", "completedWork", "decisions", "findings",
+    "verification", "blockers", "residualRisk", "nextAction", "privacyReceipt",
+    "createdAt", "expiresAt", "status", "handoffMode", "requiresRevalidation"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "session-handoff-v1"},
+    "handoffId": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"},
+    "taskId": {"type": "string", "minLength": 1},
+    "sourceSessionId": {"type": "string", "minLength": 1},
+    "repository": {
+      "type": "object", "additionalProperties": false,
+      "required": ["projectId", "repositoryId", "worktreeId", "branch", "head", "sourceRef"],
+      "properties": {
+        "projectId": {"type": "string", "minLength": 1},
+        "repositoryId": {"type": "string", "minLength": 1},
+        "worktreeId": {"type": "string", "minLength": 1},
+        "branch": {"type": "string", "minLength": 1},
+        "head": {"type": "string", "minLength": 1},
+        "sourceRef": {"type": "string", "minLength": 1}
+      }
+    },
+    "task": {
+      "type": "object", "additionalProperties": false,
+      "required": ["objective", "route", "risk", "acceptanceCriteria", "acceptanceFingerprint", "policyVersion", "planVersion"],
+      "properties": {
+        "objective": {"type": "string", "minLength": 1},
+        "route": {"type": "string", "minLength": 1},
+        "risk": {"type": "string", "minLength": 1},
+        "acceptanceCriteria": {"$ref": "#/$defs/strings"},
+        "acceptanceFingerprint": {"$ref": "#/$defs/fingerprint"},
+        "policyVersion": {"type": "string", "minLength": 1},
+        "planVersion": {"type": "string", "minLength": 1}
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["sourceFingerprint", "overallDiffFingerprint", "dirty", "dirtyFingerprint", "changedPaths"],
+      "properties": {
+        "sourceFingerprint": {"$ref": "#/$defs/fingerprint"},
+        "overallDiffFingerprint": {"$ref": "#/$defs/fingerprint"},
+        "dirty": {"type": "boolean"},
+        "dirtyFingerprint": {"$ref": "#/$defs/fingerprint"},
+        "changedPaths": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "phase": {
+      "type": "object", "additionalProperties": false,
+      "required": ["current", "next"],
+      "properties": {
+        "current": {"type": "string", "minLength": 1},
+        "next": {"type": "string", "minLength": 1}
+      }
+    },
+    "completedWork": {"$ref": "#/$defs/strings"},
+    "decisions": {"$ref": "#/$defs/strings"},
+    "findings": {"$ref": "#/$defs/strings"},
+    "verification": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["check", "status", "evidenceRef"],
+        "properties": {
+          "check": {"type": "string", "minLength": 1},
+          "status": {"type": "string", "minLength": 1},
+          "evidenceRef": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "blockers": {"$ref": "#/$defs/strings"},
+    "residualRisk": {"$ref": "#/$defs/strings"},
+    "nextAction": {
+      "type": "object", "additionalProperties": false,
+      "required": ["objective", "readScope", "writeScope", "checks", "stopConditions"],
+      "properties": {
+        "objective": {"type": "string", "minLength": 1},
+        "readScope": {"$ref": "#/$defs/strings"},
+        "writeScope": {"$ref": "#/$defs/strings"},
+        "checks": {"$ref": "#/$defs/strings"},
+        "stopConditions": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "privacyReceipt": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schemaVersion", "receiptId", "receiptDigest", "handoffId", "taskId", "sourceSessionId", "contentDigest", "redactorIdentity", "redactionPolicyVersion", "scannerVersion", "redactionProvenance", "secretScanStatus", "authorityScanStatus", "issuedAt", "terminal"],
+      "properties": {
+        "schemaVersion": {"const": "handoff-privacy-receipt-v1"},
+        "receiptId": {"type": "string", "minLength": 1},
+        "receiptDigest": {"$ref": "#/$defs/fingerprint"},
+        "handoffId": {"type": "string", "minLength": 1},
+        "taskId": {"type": "string", "minLength": 1},
+        "sourceSessionId": {"type": "string", "minLength": 1},
+        "contentDigest": {"$ref": "#/$defs/fingerprint"},
+        "redactorIdentity": {"type": "string", "minLength": 1},
+        "redactionPolicyVersion": {"type": "string", "minLength": 1},
+        "scannerVersion": {"type": "string", "minLength": 1},
+        "redactionProvenance": {"const": "CALLER_REDACTED"},
+        "secretScanStatus": {"const": "PASS"},
+        "authorityScanStatus": {"const": "PASS"},
+        "issuedAt": {"type": "string", "format": "date-time"},
+        "terminal": {"const": true}
+      }
+    },
+    "createdAt": {"type": "string", "format": "date-time"},
+    "expiresAt": {"type": "string", "format": "date-time"},
+    "status": {"enum": ["READY", "BLOCKED"]},
+    "handoffMode": {"enum": ["PAUSE", "TRANSFER"]},
+    "requiresRevalidation": {"const": true}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "strings": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  }
+}

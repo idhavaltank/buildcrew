@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-delta-packet-v1.schema.json",
+  "title": "Review delta packet v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "packetId", "taskId", "shardId", "lens", "shardFingerprint", "currentOverallDiffFingerprint", "changedPaths", "changedSymbols", "changedCriteriaIds", "changedBoundaries", "findingIds", "priorReceiptId", "evidenceRefs", "reasons", "stopConditions"],
+  "properties": {
+    "schemaVersion": {"const": "review-delta-packet-v1"},
+    "packetId": {"type": "string", "minLength": 1},
+    "taskId": {"type": "string", "minLength": 1},
+    "shardId": {"type": "string", "minLength": 1},
+    "lens": {"enum": ["work", "architecture", "security", "runtime", "visual"]},
+    "shardFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "currentOverallDiffFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "changedPaths": {"$ref": "#/$defs/strings"},
+    "changedSymbols": {"$ref": "#/$defs/strings"},
+    "changedCriteriaIds": {"$ref": "#/$defs/strings"},
+    "changedBoundaries": {"$ref": "#/$defs/strings"},
+    "findingIds": {"$ref": "#/$defs/strings"},
+    "priorReceiptId": {"type": ["string", "null"]},
+    "evidenceRefs": {"$ref": "#/$defs/strings"},
+    "reasons": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "stopConditions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "strings": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  }
+}

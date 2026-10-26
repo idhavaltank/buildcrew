@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-finding-ledger-v1.schema.json",
+  "title": "Review finding ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "ledgerId", "taskId", "projectId", "repositoryId", "tenantId", "sourceFingerprint", "overallDiffFingerprint", "findings", "updatedAt"],
+  "properties": {
+    "schemaVersion": {"const": "review-finding-ledger-v1"},
+    "ledgerId": {"type": "string", "minLength": 1},
+    "taskId": {"type": "string", "minLength": 1},
+    "projectId": {"type": "string", "minLength": 1},
+    "repositoryId": {"type": "string", "minLength": 1},
+    "tenantId": {"type": ["string", "null"]},
+    "sourceFingerprint": {"type": "string", "minLength": 1},
+    "overallDiffFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "updatedAt": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "lens": {"enum": ["work", "architecture", "security", "runtime", "visual"]},
+    "strings": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "riskAcceptance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["authorizationId", "authorizationDigest", "approvalId", "approverIdentity", "approverAuthority", "scope", "rationale", "decidedAt", "expiresAt", "nextReviewAt", "residualRisk"],
+      "properties": {
+        "authorizationId": {"type": "string", "minLength": 1},
+        "authorizationDigest": {"$ref": "#/$defs/fingerprint"},
+        "approvalId": {"type": "string", "minLength": 1},
+        "approverIdentity": {"type": "string", "minLength": 1},
+        "approverAuthority": {"type": "string", "minLength": 1},
+        "scope": {"$ref": "#/$defs/strings"},
+        "rationale": {"type": "string", "minLength": 1},
+        "decidedAt": {"type": "string", "format": "date-time"},
+        "expiresAt": {"type": "string", "format": "date-time"},
+        "nextReviewAt": {"type": "string", "format": "date-time"},
+        "residualRisk": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "finding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["findingId", "ownerLens", "dependentLenses", "shardId", "severity", "state", "title", "evidenceRefs", "sourceReceiptIds", "repairScope", "resolutionKind", "duplicateOf", "riskAcceptance", "resolutionReceiptId", "resolutionReceiptDigest"],
+      "properties": {
+        "findingId": {"type": "string", "minLength": 1},
+        "ownerLens": {"$ref": "#/$defs/lens"},
+        "dependentLenses": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/lens"}},
+        "shardId": {"type": "string", "minLength": 1},
+        "severity": {"enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"]},
+        "state": {"enum": ["OPEN", "ACCEPTED_FOR_REPAIR", "REPAIR_IN_PROGRESS", "DELTA_REVIEW_PENDING", "RESOLVED", "ACCEPTED_RISK", "BLOCKED", "DUPLICATE"]},
+        "title": {"type": "string", "minLength": 1},
+        "evidenceRefs": {"$ref": "#/$defs/strings"},
+        "sourceReceiptIds": {"$ref": "#/$defs/strings"},
+        "repairScope": {"$ref": "#/$defs/strings"},
+        "resolutionKind": {"type": ["string", "null"]},
+        "duplicateOf": {"type": ["string", "null"]},
+        "riskAcceptance": {"anyOf": [{"$ref": "#/$defs/riskAcceptance"}, {"type": "null"}]},
+        "resolutionReceiptId": {"type": ["string", "null"]},
+        "resolutionReceiptDigest": {"anyOf": [{"$ref": "#/$defs/fingerprint"}, {"type": "null"}]}
+      }
+    }
+  }
+}

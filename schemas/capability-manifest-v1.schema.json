@@ -1,0 +1,363 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capability-manifest-v1.schema.json",
+  "title": "AE declarative Harness capability manifest",
+  "description": "A strict, non-authoritative catalog of optional Harness capabilities. AE remains the only controller.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "registry",
+    "authority",
+    "capabilities"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "capability-manifest-v1"
+    },
+    "registry": {
+      "$ref": "#/$defs/registry"
+    },
+    "authority": {
+      "$ref": "#/$defs/authority"
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/capability"
+      }
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "fingerprint": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "safeText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "^(?!.*(?:https?://|ftp://|javascript:|data:)).*$"
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registryId",
+        "scope",
+        "canonical",
+        "owner",
+        "version",
+        "fingerprint",
+        "enabledByDefault"
+      ],
+      "properties": {
+        "registryId": {
+          "const": "ae-host-capability-registry"
+        },
+        "scope": {
+          "const": "host-workspace"
+        },
+        "canonical": {
+          "const": true
+        },
+        "owner": {
+          "const": "general"
+        },
+        "version": {
+          "$ref": "#/$defs/semver"
+        },
+        "fingerprint": {
+          "$ref": "#/$defs/fingerprint"
+        },
+        "enabledByDefault": {
+          "const": false
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "controller",
+        "canRoute",
+        "canSelectModel",
+        "canGrantWrite",
+        "canCloseLifecycle",
+        "canCreateState",
+        "canAccessSecrets",
+        "canFetchInstructions",
+        "canInvokeCallbacks",
+        "canRunArbitraryCode"
+      ],
+      "properties": {
+        "mode": {
+          "const": "NON_AUTHORITATIVE"
+        },
+        "controller": {
+          "const": "AE"
+        },
+        "canRoute": {
+          "const": false
+        },
+        "canSelectModel": {
+          "const": false
+        },
+        "canGrantWrite": {
+          "const": false
+        },
+        "canCloseLifecycle": {
+          "const": false
+        },
+        "canCreateState": {
+          "const": false
+        },
+        "canAccessSecrets": {
+          "const": false
+        },
+        "canFetchInstructions": {
+          "const": false
+        },
+        "canInvokeCallbacks": {
+          "const": false
+        },
+        "canRunArbitraryCode": {
+          "const": false
+        }
+      }
+    },
+    "status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "documented",
+        "installed",
+        "runnable",
+        "executed"
+      ],
+      "properties": {
+        "documented": {
+          "enum": [
+            "DOCUMENTED",
+            "UNAVAILABLE"
+          ]
+        },
+        "installed": {
+          "enum": [
+            "INSTALLED",
+            "UNAVAILABLE"
+          ]
+        },
+        "runnable": {
+          "enum": [
+            "RUNNABLE",
+            "UNAVAILABLE"
+          ]
+        },
+        "executed": {
+          "enum": [
+            "EXECUTED",
+            "NOT_EXECUTED",
+            "UNAVAILABLE"
+          ]
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scopeClass",
+        "maxRepositories",
+        "maxPaths",
+        "allowedPathClasses",
+        "requiresAEGrant",
+        "externalSideEffects"
+      ],
+      "properties": {
+        "scopeClass": {
+          "enum": [
+            "TASK_EVIDENCE",
+            "REPOSITORY"
+          ]
+        },
+        "maxRepositories": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "maxPaths": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "allowedPathClasses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "documentation",
+              "source",
+              "tests",
+              "ci",
+              "observability",
+              "evidence",
+              "quality"
+            ]
+          }
+        },
+        "requiresAEGrant": {
+          "const": true
+        },
+        "externalSideEffects": {
+          "const": false
+        }
+      }
+    },
+    "evidenceRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidenceType",
+        "required",
+        "freshness",
+        "description"
+      ],
+      "properties": {
+        "evidenceType": {
+          "enum": [
+            "catalog-fingerprint",
+            "documentation-reference",
+            "installed-package-check",
+            "runnable-check-result",
+            "executed-check-result",
+            "source-diff",
+            "test-result",
+            "review-receipt",
+            "runtime-observation",
+            "unavailable-record"
+          ]
+        },
+        "required": {
+          "const": true
+        },
+        "freshness": {
+          "enum": [
+            "source-bound",
+            "task-bound",
+            "runtime-bound",
+            "not-applicable"
+          ]
+        },
+        "description": {
+          "$ref": "#/$defs/safeText"
+        }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capabilityId",
+        "provider",
+        "owner",
+        "version",
+        "fingerprint",
+        "availability",
+        "enabledByDefault",
+        "status",
+        "taskCategories",
+        "readWriteClass",
+        "scope",
+        "evidenceRequirements",
+        "purpose"
+      ],
+      "properties": {
+        "capabilityId": {
+          "enum": [
+            "repository-documentation",
+            "lint-architecture",
+            "ci-gates",
+            "observability",
+            "specialist-profiles",
+            "quality-technical-debt"
+          ]
+        },
+        "provider": {
+          "const": "Harness"
+        },
+        "owner": {
+          "const": "Harness"
+        },
+        "version": {
+          "$ref": "#/$defs/semver"
+        },
+        "fingerprint": {
+          "$ref": "#/$defs/fingerprint"
+        },
+        "availability": {
+          "enum": [
+            "AVAILABLE",
+            "UNAVAILABLE",
+            "DISABLED",
+            "STALE",
+            "DUPLICATE",
+            "INVALID"
+          ]
+        },
+        "enabledByDefault": {
+          "const": false
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "taskCategories": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "documentation",
+              "lint",
+              "architecture",
+              "ci",
+              "observability",
+              "specialist-selection",
+              "quality",
+              "technical-debt",
+              "verification"
+            ]
+          }
+        },
+        "readWriteClass": {
+          "enum": [
+            "READ_ONLY",
+            "REPOSITORY_DOCUMENTATION_WRITE"
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "evidenceRequirements": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/evidenceRequirement"
+          }
+        },
+        "purpose": {
+          "$ref": "#/$defs/safeText"
+        }
+      }
+    }
+  }
+}

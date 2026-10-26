@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "runtime-control-receipt-v1.schema.json",
+  "title": "BuildCrew runtime control receipt",
+  "description": "A bounded host-control snapshot. It never claims live execution or side effects by itself.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "runId", "taskId", "status", "sourceFingerprint", "limits", "usage",
+    "elapsedSeconds", "terminationReason", "loop", "eventCount", "observabilityReceipts",
+    "sourceOnly", "liveExecution", "sideEffects"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "runtime-control-receipt-v1" },
+    "runId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["READY", "RUNNING", "COMPLETED", "FAILED", "BLOCKED", "CANCELLED", "TIMED_OUT"] },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "limits": { "$ref": "#/$defs/limits" },
+    "usage": { "$ref": "#/$defs/usage" },
+    "elapsedSeconds": { "type": "number", "minimum": 0 },
+    "terminationReason": { "type": ["string", "null"] },
+    "loop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recentFingerprints", "uniqueActions", "windowSize", "maxRepeats"],
+      "properties": {
+        "recentFingerprints": { "type": "array", "items": { "type": "string" } },
+        "uniqueActions": { "type": "integer", "minimum": 0 },
+        "windowSize": { "type": "integer", "minimum": 1 },
+        "maxRepeats": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "eventCount": { "type": "integer", "minimum": 0 },
+    "observabilityReceipts": { "type": "array" },
+    "sourceOnly": { "const": true },
+    "liveExecution": { "const": false },
+    "sideEffects": { "const": [] }
+  },
+  "$defs": {
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxWallSeconds", "maxSteps", "maxToolCalls", "maxWorkerCalls", "maxEstimatedTokens", "maxCostMicros", "maxRepeatActions", "repeatWindow", "maxContextTokens"],
+      "properties": {
+        "maxWallSeconds": { "type": "number", "exclusiveMinimum": 0 },
+        "maxSteps": { "type": "integer", "minimum": 1 },
+        "maxToolCalls": { "type": "integer", "minimum": 1 },
+        "maxWorkerCalls": { "type": "integer", "minimum": 1 },
+        "maxEstimatedTokens": { "type": "integer", "minimum": 1 },
+        "maxCostMicros": { "type": "integer", "minimum": 1 },
+        "maxRepeatActions": { "type": "integer", "minimum": 1 },
+        "repeatWindow": { "type": "integer", "minimum": 1 },
+        "maxContextTokens": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["steps", "toolCalls", "workerCalls", "estimatedTokens", "costMicros"],
+      "properties": {
+        "steps": { "type": "integer", "minimum": 0 },
+        "toolCalls": { "type": "integer", "minimum": 0 },
+        "workerCalls": { "type": "integer", "minimum": 0 },
+        "estimatedTokens": { "type": "integer", "minimum": 0 },
+        "costMicros": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

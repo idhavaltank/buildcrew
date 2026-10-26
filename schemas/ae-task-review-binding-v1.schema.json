@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ae-task-review-binding-v1.schema.json",
+  "title": "AE task review authority binding v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "bindingId", "taskId", "projectId", "repositoryId",
+    "tenantId", "acceptanceFingerprint", "criterionMapFingerprint",
+    "sourceFingerprint", "overallDiffFingerprint", "writerOwner",
+    "requiredLenses", "shardFingerprints", "hostId", "authorizationEpoch",
+    "issuedAt", "expiresAt"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "ae-task-review-binding-v1"},
+    "bindingId": {"type": "string", "minLength": 1},
+    "taskId": {"type": "string", "minLength": 1},
+    "projectId": {"type": "string", "minLength": 1},
+    "repositoryId": {"type": "string", "minLength": 1},
+    "tenantId": {"type": ["string", "null"]},
+    "acceptanceFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "criterionMapFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "sourceFingerprint": {"type": "string", "minLength": 1},
+    "overallDiffFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "writerOwner": {"type": "string", "minLength": 1},
+    "requiredLenses": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": {"enum": ["work", "architecture", "security", "runtime", "visual"]}
+    },
+    "shardFingerprints": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": {"$ref": "#/$defs/fingerprint"}
+    },
+    "hostId": {"type": "string", "minLength": 1},
+    "authorizationEpoch": {"type": "integer", "minimum": 1},
+    "issuedAt": {"type": "string", "format": "date-time"},
+    "expiresAt": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

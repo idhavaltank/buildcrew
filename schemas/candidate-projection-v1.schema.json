@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "candidate-projection-v1.schema.json",
+  "title": "Candidate capability projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "sourceFingerprint",
+    "route",
+    "complexity",
+    "riskTier",
+    "riskReasons",
+    "knowledgeScope",
+    "requiredCapabilities",
+    "requiredCoverage",
+    "status"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "candidate-projection-v1" },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "route": { "type": ["string", "null"] },
+    "complexity": { "enum": ["LIGHTWEIGHT", "NORMAL", "COUPLED"] },
+    "riskTier": { "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+    "riskReasons": { "type": "array", "items": { "type": "string" } },
+    "knowledgeScope": {
+      "enum": ["NONE", "WORKFLOW_ONLY", "TARGETED_REPOSITORY", "CROSS_REPOSITORY", "EXTERNAL"]
+    },
+    "requiredCapabilities": { "type": "array", "items": { "type": "string" } },
+    "requiredCoverage": { "type": "array", "items": { "type": "string" } },
+    "status": { "enum": ["AVAILABLE", "CANDIDATE_UNAVAILABLE", "INVALID"] }
+  }
+}

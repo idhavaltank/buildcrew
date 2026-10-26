@@ -1,0 +1,12 @@
+{
+  "name": "tenant-authorization",
+  "request": {
+    "rawText": "Review whether this endpoint can expose another tenant's products",
+    "requestType": "review"
+  },
+  "expected": {
+    "route": "REVIEW_ONLY",
+    "complexity": "COUPLED",
+    "riskTier": "HIGH"
+  }
+}

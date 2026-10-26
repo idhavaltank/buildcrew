@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-receipt-v2.schema.json",
+  "title": "Hybrid review receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receiptVersion",
+    "receiptId",
+    "taskId",
+    "packetVersion",
+    "planVersion",
+    "waveId",
+    "attempt",
+    "role",
+    "host",
+    "writerOwner",
+    "scope",
+    "startedAt",
+    "finishedAt",
+    "status",
+    "confidence",
+    "coverage",
+    "findings",
+    "commands",
+    "artifacts",
+    "blockers",
+    "residualRisk",
+    "terminal"
+  ],
+  "properties": {
+    "receiptVersion": { "const": "review-receipt-v2" },
+    "receiptId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "packetVersion": { "type": "string", "minLength": 1 },
+    "planVersion": { "type": "string", "minLength": 1 },
+    "waveId": { "type": "string", "minLength": 1 },
+    "attempt": { "type": "integer", "minimum": 1 },
+    "role": { "type": "string", "minLength": 1 },
+    "host": { "type": "string", "minLength": 1 },
+    "writerOwner": { "type": ["string", "null"] },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "sourceFingerprint", "lane"],
+      "properties": {
+        "repository": { "type": "string", "minLength": 1 },
+        "sourceFingerprint": { "type": "string", "minLength": 1 },
+        "lane": { "type": "string", "minLength": 1 }
+      }
+    },
+    "startedAt": { "type": "string", "minLength": 1 },
+    "finishedAt": { "type": "string", "minLength": 1 },
+    "status": {
+      "enum": ["completed", "failed", "timed_out", "interrupted", "crashed", "shutdown"]
+    },
+    "confidence": { "enum": ["low", "medium", "high"] },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requirements", "files", "flows"],
+      "properties": {
+        "requirements": { "type": "array", "items": { "type": "string" } },
+        "files": { "type": "array", "items": { "type": "string" } },
+        "flows": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "findings": { "type": "array" },
+    "commands": { "type": "array" },
+    "artifacts": { "type": "array" },
+    "blockers": { "type": "array" },
+    "residualRisk": { "type": "array" },
+    "terminal": { "const": true }
+  }
+}

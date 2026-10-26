@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "hybrid-intake-v1",
+  "taskId": "invalid-unknown-field",
+  "request": {
+    "rawText": "Fix the sync issue",
+    "normalizedObjective": "Fix sync",
+    "requestType": "bug",
+    "constraints": [],
+    "acceptanceCriteria": ["sync completes"],
+    "untrustedField": true
+  },
+  "scope": {
+    "project": "demo",
+    "repository": "/repo",
+    "repositoryRef": "main",
+    "domain": "mobile",
+    "sourceFingerprint": "sha-001"
+  },
+  "behavior": {
+    "current": "stuck",
+    "expected": "complete",
+    "reproduction": "reopen app",
+    "userImpact": "sync unavailable"
+  },
+  "evidence": {},
+  "candidateProjection": null,
+  "reconciliation": {},
+  "execution": {},
+  "verification": {},
+  "learning": {},
+  "state": {}
+}

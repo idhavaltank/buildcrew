@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "tool-adapter-manifest-v1",
+  "adapterId": "windsurf-fixture",
+  "tool": {"toolId": "windsurf", "displayName": "Windsurf", "adapterVersion": "1.0.0"},
+  "authority": {"mode": "NON_AUTHORITATIVE", "controller": "BuildCrew", "canRoute": false, "canSelectModel": false, "canGrantWrite": false, "canCloseLifecycle": false, "canCreateState": false, "canAccessSecrets": false, "canRunArbitraryCode": false},
+  "capabilities": [
+    {"capabilityId": "approval", "status": "AVAILABLE", "proof": "contract_fixture", "mode": "OBSERVE"},
+    {"capabilityId": "browser", "status": "UNVERIFIED", "proof": "not_observed", "mode": "OBSERVE"},
+    {"capabilityId": "device", "status": "UNVERIFIED", "proof": "not_observed", "mode": "OBSERVE"},
+    {"capabilityId": "external_actions", "status": "UNAVAILABLE", "proof": "not_observed", "mode": "EXECUTE"},
+    {"capabilityId": "memory", "status": "UNVERIFIED", "proof": "not_observed", "mode": "READ"},
+    {"capabilityId": "persistent_state", "status": "UNVERIFIED", "proof": "not_observed", "mode": "WRITE"},
+    {"capabilityId": "repo_read", "status": "AVAILABLE", "proof": "contract_fixture", "mode": "READ"},
+    {"capabilityId": "repo_write", "status": "AVAILABLE", "proof": "contract_fixture", "mode": "WRITE"},
+    {"capabilityId": "shell", "status": "AVAILABLE", "proof": "contract_fixture", "mode": "EXECUTE"},
+    {"capabilityId": "subagents", "status": "UNVERIFIED", "proof": "not_observed", "mode": "EXECUTE"},
+    {"capabilityId": "tests", "status": "AVAILABLE", "proof": "contract_fixture", "mode": "EXECUTE"},
+    {"capabilityId": "worktree", "status": "UNVERIFIED", "proof": "not_observed", "mode": "WRITE"}
+  ],
+  "sideEffects": []
+}

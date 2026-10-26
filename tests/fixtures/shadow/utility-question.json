@@ -1,0 +1,12 @@
+{
+  "name": "utility-question",
+  "request": {
+    "rawText": "What does this utility function do?",
+    "requestType": "question"
+  },
+  "expected": {
+    "route": "DIRECT",
+    "complexity": "LIGHTWEIGHT",
+    "riskTier": "LOW"
+  }
+}

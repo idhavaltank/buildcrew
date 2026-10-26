@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "native-agent-receipt-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "receiptId", "assignmentId", "taskId", "canonicalName", "role", "model", "status", "sourceFingerprint", "live", "claim", "checkpoints", "blockers", "sideEffects", "generatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "native-agent-receipt-v1" },
+    "receiptId": { "type": "string", "minLength": 1 },
+    "assignmentId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "canonicalName": { "type": "string", "minLength": 1 },
+    "role": { "type": "string", "minLength": 1 },
+    "model": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "live": { "type": "boolean" },
+    "claim": { "type": "object" },
+    "checkpoints": { "type": "array", "items": { "type": "string" } },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "sideEffects": { "const": [] },
+    "generatedAt": { "type": "string", "minLength": 1 }
+  }
+}

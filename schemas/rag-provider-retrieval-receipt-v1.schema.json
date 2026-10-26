@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rag-provider-retrieval-receipt-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "receiptId", "taskId", "sourceFingerprint", "providerId", "status", "live", "scope", "recordCount", "acknowledged", "blockers", "sideEffects", "generatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "rag-provider-retrieval-receipt-v1" },
+    "receiptId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "providerId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["RETRIEVED", "NO_MATCH", "FAILED", "CAPABILITY_UNAVAILABLE", "REJECTED"] },
+    "live": { "type": "boolean" },
+    "scope": { "type": "object" },
+    "recordCount": { "type": "integer", "minimum": 0 },
+    "acknowledged": { "const": false },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "sideEffects": { "const": [] },
+    "generatedAt": { "type": "string", "minLength": 1 }
+  }
+}

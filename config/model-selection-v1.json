@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "model-selection-policy-v1",
+  "policyId": "ae-model-selection",
+  "policyVersion": "1.1.0",
+  "policyFingerprint": "4a5cfe72db769755ed94de8894fa2ad00f98d7449a228b58cc9173716556da2b",
+  "supportedModels": [
+    "model-fast",
+    "model-balanced",
+    "model-advanced"
+  ],
+  "workerDefault": {
+    "model": "model-fast",
+    "reasoningEffort": "medium"
+  },
+  "workerRules": [
+    {
+      "taskClasses": ["lightweight"],
+      "model": "model-fast",
+      "reasoningEffort": "low"
+    },
+    {
+      "taskClasses": ["small"],
+      "model": "model-fast",
+      "reasoningEffort": "medium"
+    },
+    {
+      "taskClasses": ["normal"],
+      "model": "model-balanced",
+      "reasoningEffort": "high"
+    },
+    {
+      "taskClasses": [
+        "coupled",
+        "high-risk",
+        "security",
+        "cross-repository",
+        "architecture",
+        "difficult-root-cause"
+      ],
+      "model": "model-advanced",
+      "reasoningEffort": "max"
+    },
+    {
+      "taskClasses": ["final-audit"],
+      "model": "model-fast",
+      "reasoningEffort": "max"
+    }
+  ],
+  "coordinatorRules": [
+    {
+      "role": "normal-coordinator",
+      "model": "model-balanced",
+      "reasoningEffort": "high",
+      "taskClasses": [
+        "small",
+        "normal"
+      ]
+    },
+    {
+      "role": "high-risk-coordinator",
+      "model": "model-advanced",
+      "reasoningEffort": "max",
+      "taskClasses": [
+        "coupled",
+        "high-risk",
+        "security",
+        "cross-repository",
+        "architecture",
+        "difficult-root-cause"
+      ]
+    },
+    {
+      "role": "final-audit",
+      "model": "model-advanced",
+      "reasoningEffort": "max",
+      "taskClasses": [
+        "final-audit",
+        "high-risk"
+      ]
+    }
+  ],
+  "fallbackRules": [
+    {
+      "ruleId": "normal-worker-fast_model-to-balanced_model",
+      "enabled": true,
+      "automatic": true,
+      "fromModel": "model-fast",
+      "toModel": "model-balanced",
+      "reasoningEffort": "high",
+      "roles": ["worker"],
+      "taskClasses": ["lightweight", "small"],
+      "requiredEvidence": ["fast_model_unavailable"],
+      "approvalOrigin": "host_policy",
+      "approvalId": "ae-fallback-normal-worker-v1",
+      "maxScopes": 1,
+      "maxLifetimeSeconds": 3600
+    },
+    {
+      "ruleId": "normal-worker-balanced_model-to-advanced_model",
+      "enabled": true,
+      "automatic": true,
+      "fromModel": "model-balanced",
+      "toModel": "model-advanced",
+      "reasoningEffort": "max",
+      "roles": ["worker"],
+      "taskClasses": ["normal"],
+      "requiredEvidence": ["balanced_model_unavailable"],
+      "approvalOrigin": "host_policy",
+      "approvalId": "ae-fallback-normal-balanced_model-v1",
+      "maxScopes": 1,
+      "maxLifetimeSeconds": 3600
+    },
+    {
+      "ruleId": "high-risk-worker-advanced-to-balanced",
+      "enabled": true,
+      "automatic": false,
+      "fromModel": "model-advanced",
+      "toModel": "model-balanced",
+      "reasoningEffort": "high",
+      "roles": ["worker"],
+      "taskClasses": [
+        "coupled",
+        "high-risk",
+        "security",
+        "cross-repository",
+        "architecture",
+        "difficult-root-cause"
+      ],
+      "requiredEvidence": ["advanced_model_unavailable", "bounded_scope_failure"],
+      "approvalOrigin": "explicit_user",
+      "approvalId": "ae-fallback-high-risk-worker-v1",
+      "maxScopes": 1,
+      "maxLifetimeSeconds": 3600
+    }
+  ],
+  "maximumParallelism": 4,
+  "capabilityAllowlist": [
+    "model-dispatch",
+    "bounded-worker",
+    "normal-coordination",
+    "high-risk-coordination",
+    "final-audit"
+  ],
+  "exceptionRequirements": {
+    "allowedModels": ["model-balanced"],
+    "trustedOrigins": [
+      "explicit_user",
+      "host_policy"
+    ],
+    "requiredEvidence": [
+      "advanced_model_unavailable",
+      "bounded_scope_failure"
+    ],
+    "allowedTaskClasses": [
+      "coupled",
+      "high-risk",
+      "security",
+      "cross-repository",
+      "architecture",
+      "difficult-root-cause"
+    ],
+    "maxScopes": 1,
+    "requiresTaskBinding": true,
+    "requiresApproval": true,
+    "requiresExpiry": true
+  },
+  "expirySemantics": {
+    "required": true,
+    "maxLifetimeSeconds": 3600,
+    "clock": "UTC"
+  }
+}

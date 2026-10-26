@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "capability-manifest-v1",
+  "registry": {
+    "registryId": "ae-host-capability-registry",
+    "scope": "host-workspace",
+    "canonical": true,
+    "owner": "general",
+    "version": "1.0.0",
+    "fingerprint": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "enabledByDefault": false
+  },
+  "authority": {
+    "mode": "NON_AUTHORITATIVE",
+    "controller": "AE",
+    "canRoute": false,
+    "canSelectModel": false,
+    "canGrantWrite": false,
+    "canCloseLifecycle": false,
+    "canCreateState": false,
+    "canAccessSecrets": false,
+    "canFetchInstructions": false,
+    "canInvokeCallbacks": false,
+    "canRunArbitraryCode": false
+  },
+  "capabilities": [
+    {
+      "capabilityId": "repository-documentation",
+      "provider": "Harness",
+      "owner": "Harness",
+      "version": "1.0.0",
+      "fingerprint": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "availability": "AVAILABLE",
+      "enabledByDefault": false,
+      "status": {
+        "documented": "DOCUMENTED",
+        "installed": "INSTALLED",
+        "runnable": "RUNNABLE",
+        "executed": "NOT_EXECUTED"
+      },
+      "taskCategories": ["documentation", "verification"],
+      "readWriteClass": "REPOSITORY_DOCUMENTATION_WRITE",
+      "scope": {
+        "scopeClass": "REPOSITORY",
+        "maxRepositories": 1,
+        "maxPaths": 25,
+        "allowedPathClasses": ["documentation"],
+        "requiresAEGrant": true,
+        "externalSideEffects": false
+      },
+      "evidenceRequirements": [
+        {
+          "evidenceType": "catalog-fingerprint",
+          "required": true,
+          "freshness": "source-bound",
+          "description": "First duplicate declaration."
+        }
+      ],
+      "purpose": "First declaration of repository documentation."
+    },
+    {
+      "capabilityId": "repository-documentation",
+      "provider": "Harness",
+      "owner": "Harness",
+      "version": "1.1.0",
+      "fingerprint": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+      "availability": "AVAILABLE",
+      "enabledByDefault": false,
+      "status": {
+        "documented": "DOCUMENTED",
+        "installed": "INSTALLED",
+        "runnable": "RUNNABLE",
+        "executed": "NOT_EXECUTED"
+      },
+      "taskCategories": ["documentation", "verification"],
+      "readWriteClass": "REPOSITORY_DOCUMENTATION_WRITE",
+      "scope": {
+        "scopeClass": "REPOSITORY",
+        "maxRepositories": 1,
+        "maxPaths": 25,
+        "allowedPathClasses": ["documentation"],
+        "requiresAEGrant": true,
+        "externalSideEffects": false
+      },
+      "evidenceRequirements": [
+        {
+          "evidenceType": "catalog-fingerprint",
+          "required": true,
+          "freshness": "source-bound",
+          "description": "Second conflicting declaration."
+        }
+      ],
+      "purpose": "Second declaration that must not be merged."
+    }
+  ]
+}

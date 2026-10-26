@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence-event-v1.schema.json",
+  "title": "AE source-only evidence event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "eventId", "runId", "eventType", "taskId", "sequence", "occurredAt", "status", "sourceFingerprint", "details", "live", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "evidence-event-v1" },
+    "eventId": { "type": "string", "minLength": 1 },
+    "runId": { "type": "string", "minLength": 1 },
+    "eventType": { "enum": ["TASK", "AGENT", "MODEL", "TOOL", "CHECK", "CHECKPOINT", "TIMEOUT", "CANCELLATION", "RECEIPT", "STATUS"] },
+    "taskId": { "type": "string", "minLength": 1 },
+    "sequence": { "type": "integer", "minimum": 0 },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "status": { "enum": ["STARTED", "IN_PROGRESS", "PASS", "FAILED", "BLOCKED", "CANCELLED", "TIMED_OUT", "SOURCE_ONLY", "NOT_VERIFIED", "CLOSED"] },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "details": { "type": "object" },
+    "live": { "const": false },
+    "sideEffects": { "const": [] }
+  }
+}

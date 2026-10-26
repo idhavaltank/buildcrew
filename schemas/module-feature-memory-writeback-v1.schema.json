@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "module-feature-memory-writeback-v1.schema.json",
+  "title": "Module Feature Memory Write-back Receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "outcome",
+    "canonicalFilesChanged",
+    "noClobber",
+    "errors",
+    "sideEffects"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "module-feature-memory-writeback-v1"},
+    "outcome": {
+      "enum": ["queued", "already_queued", "conflict", "partial", "scope_restricted", "blocked", "not_required", "not_configured"]
+    },
+    "taskId": {"type": ["string", "null"]},
+    "recordId": {"type": ["string", "null"]},
+    "route": {
+      "anyOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["routeId", "projectId", "repository", "application", "module", "feature", "routingConfidence"],
+          "properties": {
+            "routeId": {"type": "string", "minLength": 1},
+            "projectId": {"type": "string", "minLength": 1},
+            "repository": {"type": "string", "minLength": 1},
+            "application": {"type": "string", "minLength": 1},
+            "module": {"type": "string", "minLength": 1},
+            "feature": {"type": "string", "minLength": 1},
+            "routingConfidence": {"enum": ["route", "explicit", "derived"]}
+          }
+        }
+      ]
+    },
+    "scopeBinding": {
+      "anyOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["projectId", "repository", "branchOrTree", "tenantId", "accessScope"],
+          "properties": {
+            "projectId": {"type": "string", "minLength": 1},
+            "repository": {"type": "string", "minLength": 1},
+            "branchOrTree": {"type": "string", "minLength": 1},
+            "tenantId": {"type": ["string", "null"]},
+            "accessScope": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      ]
+    },
+    "notePath": {"type": ["string", "null"]},
+    "noteRelativePath": {"type": ["string", "null"]},
+    "canonicalFilesChanged": {"const": false},
+    "noClobber": {"const": true},
+    "ingestionRequired": {"type": "boolean"},
+    "generatedAt": {"type": ["string", "null"], "format": "date-time"},
+    "errors": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "sideEffects": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"outcome": {"enum": ["queued", "already_queued", "partial", "conflict"]}}, "required": ["outcome"]},
+      "then": {
+        "required": ["taskId", "recordId", "route", "scopeBinding", "notePath", "noteRelativePath", "ingestionRequired", "generatedAt"],
+        "properties": {
+          "taskId": {"type": "string", "minLength": 1},
+          "recordId": {"type": "string", "minLength": 1},
+          "route": {"type": "object"},
+          "scopeBinding": {"type": "object"},
+          "notePath": {"type": "string", "minLength": 1},
+          "noteRelativePath": {"type": "string", "minLength": 1},
+          "ingestionRequired": {"const": true},
+          "generatedAt": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"outcome": {"const": "queued"}}, "required": ["outcome"]},
+      "then": {"properties": {"errors": {"maxItems": 0}, "sideEffects": {"minItems": 1}}}
+    },
+    {
+      "if": {"properties": {"outcome": {"const": "already_queued"}}, "required": ["outcome"]},
+      "then": {"properties": {"errors": {"maxItems": 0}, "sideEffects": {"maxItems": 0}}}
+    },
+    {
+      "if": {"properties": {"outcome": {"enum": ["partial", "conflict", "blocked"]}}, "required": ["outcome"]},
+      "then": {"properties": {"errors": {"minItems": 1}}}
+    },
+    {
+      "if": {"properties": {"outcome": {"const": "partial"}}, "required": ["outcome"]},
+      "then": {"properties": {"sideEffects": {"minItems": 1}}}
+    },
+    {
+      "if": {"properties": {"outcome": {"const": "scope_restricted"}}, "required": ["outcome"]},
+      "then": {
+        "required": ["taskId", "recordId", "route", "scopeBinding", "notePath", "noteRelativePath", "ingestionRequired", "generatedAt"],
+        "properties": {
+          "taskId": {"type": "string", "minLength": 1},
+          "recordId": {"type": "string", "minLength": 1},
+          "route": {"type": "object"},
+          "scopeBinding": {"type": "object"},
+          "notePath": {"type": "null"},
+          "noteRelativePath": {"type": "null"},
+          "ingestionRequired": {"const": false},
+          "errors": {"maxItems": 0},
+          "sideEffects": {"maxItems": 0},
+          "generatedAt": {"type": "string", "format": "date-time"}
+        }
+      }
+    }
+  ]
+}

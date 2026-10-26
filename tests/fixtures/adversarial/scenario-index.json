@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "ae-adversarial-scenarios-v1",
+  "scenarios": [
+    {"id": "direct-question", "expected": "DIRECT_NO_ASSIGNMENT"},
+    {"id": "small-bug", "expected": "DIRECT_NO_ASSIGNMENT"},
+    {"id": "normal-feature", "expected": "SELECTED"},
+    {"id": "coupled-offline-sync", "expected": "SELECTED"},
+    {"id": "security-review", "expected": "SELECTED"},
+    {"id": "cross-repository-issue", "expected": "REJECTED"},
+    {"id": "fast-model-unavailable", "expected": "FALLBACK_EVIDENCED"},
+    {"id": "fast-model-unavailable-no-balanced_model", "expected": "CAPABILITY_UNAVAILABLE"},
+    {"id": "final-audit-no-fallback", "expected": "CAPABILITY_UNAVAILABLE"},
+    {"id": "high-risk-fallback-requires-approval", "expected": "CAPABILITY_UNAVAILABLE"},
+    {"id": "evidence-approved-exception", "expected": "OVERRIDE_EVIDENCED"},
+    {"id": "untrusted-model-injection", "expected": "REJECTED"},
+    {"id": "duplicate-controller", "expected": "REJECTED"},
+    {"id": "duplicate-registry", "expected": "REJECTED"},
+    {"id": "disabled-role-capability", "expected": "REJECTED"},
+    {"id": "outdated-harness-capability", "expected": "REJECTED"},
+    {"id": "max-worker-overflow", "expected": "REJECTED"},
+    {"id": "stale-receipt", "expected": "INVALIDATED"},
+    {"id": "changed-acceptance", "expected": "INVALIDATED"},
+    {"id": "cross-project-memory", "expected": "INVALIDATED"},
+    {"id": "protected-root-escape", "expected": "REJECTED"},
+    {"id": "failed-rollback", "expected": "BLOCKED"}
+  ]
+}

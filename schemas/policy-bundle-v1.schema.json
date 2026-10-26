@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "policy-bundle-v1.schema.json",
+  "title": "general policy bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "repository", "fingerprints", "selectedProfiles", "rules", "requiredCapabilities", "requiredEvidence", "riskTier", "riskReasons", "conflicts", "mutationStatus", "policyVersion", "generatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "policy-bundle-v1" },
+    "repository": { "$ref": "project-context-map-v1.schema.json#/$defs/repository" },
+    "fingerprints": { "$ref": "project-context-map-v1.schema.json#/$defs/fingerprints" },
+    "selectedProfiles": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "rules": { "type": "array", "items": { "$ref": "#/$defs/rule" } },
+    "requiredCapabilities": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "requiredEvidence": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "riskTier": { "enum": ["lightweight", "normal", "coupled", "high"] },
+    "riskReasons": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "conflicts": { "type": "array", "items": { "$ref": "project-context-map-v1.schema.json#/$defs/conflict" } },
+    "mutationStatus": { "enum": ["READY", "BLOCKED", "REVIEW_REQUIRED"] },
+    "policyVersion": { "type": "string", "minLength": 1 },
+    "generatedAt": { "type": "string", "minLength": 1 }
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ruleId", "scope", "title", "requirement", "enforcement", "source", "sourceRef", "appliesTo", "riskSignals", "requiredCapabilities", "requiredEvidence", "conflictsWith"],
+      "properties": {
+        "ruleId": { "type": "string", "minLength": 1 },
+        "scope": { "enum": ["COMMON", "SHARED_APPLICATION", "WEB", "MOBILE", "BACKEND", "FLUTTER", "PROJECT", "TASK"] },
+        "title": { "type": "string", "minLength": 1 },
+        "requirement": { "type": "string", "minLength": 1 },
+        "enforcement": { "enum": ["BLOCK", "REQUIRED", "ADVISORY", "DISCOVERED"] },
+        "source": { "enum": ["v3_builtin", "shared_profile", "platform_profile", "repository_instruction", "project_manifest", "task_requirement", "retrieved_lesson"] },
+        "sourceRef": { "type": "string", "minLength": 1 },
+        "sourceEvidence": { "type": ["string", "null"] },
+        "appliesTo": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "riskSignals": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "requiredCapabilities": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "requiredEvidence": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "conflictsWith": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "condition": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

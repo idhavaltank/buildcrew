@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "readability-assessment-v1.schema.json",
+  "title": "BuildCrew human-readable code assessment",
+  "description": "A redacted source-only maintainability assessment. It cannot prove human authorship.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "assessmentId", "taskId", "sourceFingerprint", "policy", "files", "findings",
+    "status", "humanAuthorship", "sourceOnly", "liveExecution", "sideEffects"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "readability-assessment-v1" },
+    "assessmentId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 1 },
+    "policy": { "$ref": "#/$defs/policy" },
+    "files": { "type": "array", "items": { "$ref": "#/$defs/file" } },
+    "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+    "status": { "enum": ["PASS", "NEEDS_REVIEW", "BLOCKED"] },
+    "humanAuthorship": { "const": "NOT_DETERMINABLE" },
+    "sourceOnly": { "const": true },
+    "liveExecution": { "const": false },
+    "sideEffects": { "const": [] }
+  },
+  "$defs": {
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxLineLength", "maxFunctionLines", "maxComplexity", "complexityCommentThreshold", "maxNestingDepth"],
+      "properties": {
+        "maxLineLength": { "type": "integer", "minimum": 1 },
+        "maxFunctionLines": { "type": "integer", "minimum": 1 },
+        "maxComplexity": { "type": "integer", "minimum": 1 },
+        "complexityCommentThreshold": { "type": "integer", "minimum": 1 },
+        "maxNestingDepth": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "language", "status", "findingCount", "findings"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "language": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["PASS", "NEEDS_REVIEW", "BLOCKED"] },
+        "findingCount": { "type": "integer", "minimum": 0 },
+        "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["findingId", "path", "line", "rule", "severity", "message", "suggestion"],
+      "properties": {
+        "findingId": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "line": { "type": "integer", "minimum": 0 },
+        "rule": { "type": "string", "minLength": 1 },
+        "severity": { "enum": ["ERROR", "WARNING", "INFO"] },
+        "message": { "type": "string", "minLength": 1 },
+        "suggestion": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

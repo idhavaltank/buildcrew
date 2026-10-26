@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "promotion-simulation-v1.schema.json",
+  "title": "AE disposable promotion simulation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "mode", "simulationId", "candidate", "candidateFingerprint", "priorSelection", "stages", "terminalStatus", "blockers", "residualRisk", "configurationScope", "liveChanged", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "promotion-simulation-v1" },
+    "mode": { "const": "DISPOSABLE_SIMULATION" },
+    "simulationId": { "type": "string", "minLength": 1 },
+    "candidate": { "type": "object" },
+    "candidateFingerprint": { "type": "string", "minLength": 1 },
+    "priorSelection": { "type": "string", "minLength": 1 },
+    "stages": {
+      "type": "array", "minItems": 6, "maxItems": 6,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["stage", "status", "scope", "summary", "blockers"],
+        "properties": {
+          "stage": { "enum": ["candidate-validation", "installation", "canary", "activation", "rollback", "recovery"] },
+          "status": { "enum": ["PASS", "FAIL", "BLOCKED", "NOT_STARTED"] },
+          "scope": { "const": "DISPOSABLE_ONLY" },
+          "summary": { "type": "string", "minLength": 1 },
+          "blockers": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "terminalStatus": { "type": "string", "minLength": 1 },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "residualRisk": { "type": "array", "items": { "type": "string" } },
+    "configurationScope": { "const": "DISPOSABLE_ONLY" },
+    "liveChanged": { "const": false },
+    "sideEffects": { "const": [] },
+    "validation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["valid", "errors"],
+      "properties": {
+        "valid": { "type": "boolean" },
+        "errors": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

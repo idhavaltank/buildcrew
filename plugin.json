@@ -2,31 +2,32 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "buildcrew",
   "version": "0.1.0",
-  "description": "Human-led, evidence-first AI software engineering workflows for daily development.",
+  "description": "You Lead, AI Assists. Evidence-driven software engineering workflow for AI coding tools.",
   "author": {
     "name": "Dhaval Tank",
     "url": "https://github.com/idhavaltank"
   },
   "homepage": "https://idhavaltank.github.io/buildcrew/",
   "repository": "https://github.com/idhavaltank/buildcrew",
-  "keywords": ["software-engineering", "planning", "testing", "code-review", "evidence"],
+  "keywords": ["software-engineering", "agentic", "planning", "testing", "code-review", "evidence", "memory"],
   "extensions": {
     "com.openai": {
       "interface": {
         "displayName": "BuildCrew",
-        "shortDescription": "Your human-led AI software engineering crew",
-        "longDescription": "Understand the project, build the smallest safe change, verify the result, and report evidence with the developer in control.",
+        "shortDescription": "Evidence-driven AI software engineering workflow",
+        "longDescription": "You Lead, AI Assists. Understand the project, reuse existing patterns, make the smallest safe change, verify evidence, and preserve useful context across sessions.",
         "developerName": "Dhaval Tank",
         "category": "Developer Tools",
         "capabilities": ["Instructions"],
         "websiteURL": "https://idhavaltank.github.io/buildcrew/",
         "defaultPrompt": [
-          "Use BuildCrew to plan this task before implementation.",
-          "Use BuildCrew to build and verify this change.",
-          "Review this change using BuildCrew's evidence-first workflow."
+          "Use BuildCrew to understand this task before implementation.",
+          "Use BuildCrew to implement and verify this change.",
+          "Review this change using BuildCrew's evidence-driven workflow."
         ],
-        "brandColor": "#58e5d0"
+        "brandColor": "#2367d1"
       }
     }
-  }
+  },
+  "license": "MIT"
 }

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "flutter-execution-trace-v1.schema.json",
+  "title": "Flutter static execution-chain trace v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "traceId", "taskId", "repositoryId", "sourceFingerprint", "overallDiffFingerprint", "route", "policyVersion", "policyFingerprint", "riskSignals", "required", "stages", "overallStatus", "runtimeEvidenceStatus", "generatedAt"],
+  "properties": {
+    "schemaVersion": {"const": "flutter-execution-trace-v1"},
+    "traceId": {"type": "string", "minLength": 1},
+    "taskId": {"type": "string", "minLength": 1},
+    "repositoryId": {"type": "string", "minLength": 1},
+    "sourceFingerprint": {"type": "string", "minLength": 1},
+    "overallDiffFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "route": {"enum": ["FAST_DAILY", "FULL_SAFETY", "RUNTIME_VALIDATION"]},
+    "policyVersion": {"const": "flutter-trace-applicability-v1"},
+    "policyFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "riskSignals": {"$ref": "#/$defs/strings"},
+    "required": {"type": "boolean"},
+    "stages": {"type": "array", "minItems": 10, "maxItems": 10, "items": {"$ref": "#/$defs/stage"}},
+    "overallStatus": {"enum": ["PASS", "FAIL", "BLOCKED", "MISSING_COVERAGE"]},
+    "runtimeEvidenceStatus": {"const": "NOT_VERIFIED"},
+    "generatedAt": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "strings": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "stage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["stageId", "applicability", "status", "paths", "symbols", "evidenceRefs", "residualRisk"],
+      "properties": {
+        "stageId": {"enum": ["entry-ui", "state", "repository-client", "local-storage", "queue-sync", "lifecycle", "native-boundary", "rendered-result", "backend-contract", "regression"]},
+        "applicability": {"enum": ["AFFECTED", "PRESERVED", "NOT_APPLICABLE"]},
+        "status": {"enum": ["PASS", "FAIL", "BLOCKED", "MISSING_COVERAGE", "NOT_APPLICABLE"]},
+        "paths": {"$ref": "#/$defs/strings"},
+        "symbols": {"$ref": "#/$defs/strings"},
+        "evidenceRefs": {"$ref": "#/$defs/strings"},
+        "residualRisk": {"$ref": "#/$defs/strings"}
+      }
+    }
+  }
+}

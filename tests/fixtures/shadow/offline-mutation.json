@@ -1,0 +1,12 @@
+{
+  "name": "offline-mutation",
+  "request": {
+    "rawText": "Make adding a product work offline with queue replay and conflict handling",
+    "requestType": "change"
+  },
+  "expected": {
+    "route": "NEW_TASK",
+    "complexity": "COUPLED",
+    "riskTier": "HIGH"
+  }
+}

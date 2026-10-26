@@ -1,0 +1,32 @@
+{
+  "taskFacts": {
+    "schemaVersion": "model-selection-task-v1",
+    "route": "DIRECT_WORK",
+    "taskClass": "small",
+    "taskId": "task-small-001",
+    "projectId": "project-demo",
+    "repositoryId": "repo-demo",
+    "tenantId": "tenant-demo",
+    "packetVersion": "packet-v1",
+    "planVersion": "plan-v1",
+    "waveId": "wave-small",
+    "attempt": 1,
+    "sourceFingerprint": "source-small-001",
+    "hostId": "host-small",
+    "issuedAt": "2026-08-24T08:00:00Z",
+    "expiresAt": "2026-08-24T09:00:00Z",
+    "needsCoordinator": false,
+    "workerScopes": [],
+    "coordinatorScope": null,
+    "validationTime": "2026-08-24T08:10:00Z"
+  },
+  "hostCatalog": {
+    "schemaVersion": "host-model-catalog-v1",
+    "hostId": "host-small",
+    "availableModels": {
+      "model-fast": ["max"]
+    },
+    "inheritedModel": null,
+    "inheritedReason": null
+  }
+}

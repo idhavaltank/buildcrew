@@ -1,0 +1,12 @@
+{
+  "name": "wrong-fingerprint-receipt",
+  "request": {
+    "rawText": "Review and reject a receipt bound to the wrong task and source fingerprint",
+    "requestType": "review"
+  },
+  "expected": {
+    "route": "REVIEW_ONLY",
+    "complexity": "NORMAL",
+    "riskTier": "LOW"
+  }
+}

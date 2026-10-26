@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://idhavaltank.github.io/buildcrew/sitemap.xml

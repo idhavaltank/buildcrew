@@ -1,0 +1,12 @@
+{
+  "name": "unauthorized-memory",
+  "request": {
+    "rawText": "Review an unauthorized memory record and filter it before model exposure",
+    "requestType": "review"
+  },
+  "expected": {
+    "route": "REVIEW_ONLY",
+    "complexity": "NORMAL",
+    "riskTier": "LOW"
+  }
+}

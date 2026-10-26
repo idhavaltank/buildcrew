@@ -1,0 +1,12 @@
+{
+  "issueVersion": "issue-record-v1",
+  "taskId": "fixture-symptom-001",
+  "symptom": "sync remains pending after resume",
+  "reproduction": "resume app with queued mutation",
+  "affectedLayers": ["mobile", "queue", "api"],
+  "hypotheses": ["replay worker loses lease"],
+  "evidence": ["queue log shows retry without ack"],
+  "rootCause": null,
+  "regressionRisk": "replay ordering",
+  "acceptanceMapping": ["sync completes after resume"]
+}

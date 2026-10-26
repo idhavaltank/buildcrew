@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "qa-request-v1",
+  "requestId": "qa-request-invalid",
+  "taskId": "task-fixture",
+  "repository": "repository-fixture",
+  "sourceFingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "objective": "Invalid fixture",
+  "acceptanceCriteria": ["Unknown fields fail closed"],
+  "targetPlatforms": ["WEB"],
+  "riskTier": "LOW",
+  "mode": "ADVISORY",
+  "issuedAt": "2026-08-25T10:00:00Z",
+  "expiresAt": "2026-08-25T11:00:00Z",
+  "unexpected": true
+}

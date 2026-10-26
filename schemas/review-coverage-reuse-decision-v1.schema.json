@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-coverage-reuse-decision-v1.schema.json",
+  "title": "Review coverage reuse decision v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "decisionId", "planId", "taskId", "shardId", "shardFingerprint", "currentOverallDiffFingerprint", "manifestDigest", "changeSetDigest", "priorReceiptDigest", "priorReceiptId", "decision", "reasons"],
+  "properties": {
+    "schemaVersion": {"const": "review-coverage-reuse-decision-v1"},
+    "decisionId": {"type": "string", "minLength": 1},
+    "planId": {"type": "string", "minLength": 1},
+    "taskId": {"type": "string", "minLength": 1},
+    "shardId": {"type": "string", "minLength": 1},
+    "shardFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "currentOverallDiffFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "manifestDigest": {"$ref": "#/$defs/fingerprint"},
+    "changeSetDigest": {"$ref": "#/$defs/fingerprint"},
+    "priorReceiptDigest": {"$ref": "#/$defs/fingerprint"},
+    "priorReceiptId": {"type": "string", "minLength": 1},
+    "decision": {"const": "REUSE"},
+    "reasons": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "portable-task-packet-v1",
+  "taskId": "cross-tool-demo-001",
+  "requestType": "IMPLEMENTATION",
+  "objective": "Make a small source change and verify it with focused tests.",
+  "complexity": "LIGHTWEIGHT",
+  "acceptanceCriteria": [
+    "The requested source behavior is implemented.",
+    "Focused tests or checks provide evidence for the change."
+  ],
+  "constraints": [
+    "Preserve unrelated work.",
+    "Do not perform external side effects."
+  ],
+  "riskSignals": [],
+  "requiredCapabilities": [
+    {"capabilityId": "repo_read", "reason": "inspect the current implementation"},
+    {"capabilityId": "repo_write", "reason": "apply the bounded source change"},
+    {"capabilityId": "tests", "reason": "run focused verification"}
+  ],
+  "requiredEvidence": ["source", "test"],
+  "allowedActions": {"read": true, "write": true, "execute": true, "external": false},
+  "approval": {"status": "NOT_REQUIRED", "approvalId": null, "reason": "No destructive or external action is requested."},
+  "scope": {"maxRepositories": 1, "maxPaths": 8, "writable": true, "externalSideEffects": false}
+}

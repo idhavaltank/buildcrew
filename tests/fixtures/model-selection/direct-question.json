@@ -1,0 +1,34 @@
+{
+  "taskFacts": {
+    "schemaVersion": "model-selection-task-v1",
+    "route": "DIRECT",
+    "taskClass": "lightweight",
+    "taskId": "task-direct-001",
+    "projectId": "project-demo",
+    "repositoryId": "repo-demo",
+    "tenantId": "tenant-demo",
+    "packetVersion": "packet-v1",
+    "planVersion": "plan-v1",
+    "waveId": "wave-direct",
+    "attempt": 1,
+    "sourceFingerprint": "source-direct-001",
+    "hostId": "host-direct",
+    "issuedAt": "2026-08-24T08:00:00Z",
+    "expiresAt": "2026-08-24T09:00:00Z",
+    "needsCoordinator": false,
+    "workerScopes": [],
+    "coordinatorScope": null,
+    "validationTime": "2026-08-24T08:10:00Z"
+  },
+  "hostCatalog": {
+    "schemaVersion": "host-model-catalog-v1",
+    "hostId": "host-direct",
+    "availableModels": {
+      "model-fast": ["max"],
+      "model-balanced": ["high"],
+      "model-advanced": ["max"]
+    },
+    "inheritedModel": null,
+    "inheritedReason": null
+  }
+}

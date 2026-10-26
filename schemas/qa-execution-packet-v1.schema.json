@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qa-execution-packet-v1.schema.json",
+  "title": "Advisory QA execution packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "packetId", "requestId", "workflowId", "taskId", "sourceFingerprint", "targetAllowlist", "requiredCapabilities", "requiredEvidence", "stepIds", "timeoutSeconds", "isolation", "mode", "status", "issuedAt", "expiresAt"],
+  "properties": {
+    "schemaVersion": { "const": "qa-execution-packet-v1" },
+    "packetId": { "type": "string", "minLength": 1 },
+    "requestId": { "type": "string", "minLength": 1 },
+    "workflowId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 8 },
+    "targetAllowlist": {
+      "type": "object", "additionalProperties": false,
+      "required": ["repository", "webTargets", "androidTargets", "testDataScope"],
+      "properties": {
+        "repository": { "type": "string", "minLength": 1 },
+        "webTargets": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "androidTargets": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "iosTargets": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "flutterTargets": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "testDataScope": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "requiredCapabilities": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "requiredEvidence": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "stepIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "timeoutSeconds": { "type": "integer", "minimum": 1 },
+    "isolation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["externalState", "network", "credentials"],
+      "properties": {
+        "externalState": { "enum": ["NONE", "DISPOSABLE_ONLY", "EXPLICIT_APPROVAL"] },
+        "network": { "enum": ["DISABLED", "ALLOWLISTED", "HOST_CONTROLLED"] },
+        "credentials": { "enum": ["NONE", "SANDBOXED", "HOST_SUPPLIED"] }
+      }
+    },
+    "mode": { "enum": ["ADVISORY", "REQUIRED"] },
+    "status": { "enum": ["READY", "BLOCKED"] },
+    "issuedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": "string", "format": "date-time" }
+  }
+}

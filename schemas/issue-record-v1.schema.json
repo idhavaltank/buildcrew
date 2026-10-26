@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "issue-record-v1.schema.json",
+  "title": "Hybrid issue and root-cause record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["issueVersion", "taskId", "symptom", "reproduction", "affectedLayers", "hypotheses", "evidence", "rootCause", "regressionRisk", "acceptanceMapping"],
+  "properties": {
+    "issueVersion": { "const": "issue-record-v1" },
+    "taskId": { "type": "string", "minLength": 1 },
+    "symptom": { "type": "string", "minLength": 1 },
+    "reproduction": { "type": "string", "minLength": 1 },
+    "affectedLayers": { "type": "array", "items": { "type": "string" } },
+    "hypotheses": { "type": "array" },
+    "evidence": { "type": "array" },
+    "rootCause": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["status", "claim", "evidence"],
+      "properties": {
+        "status": { "enum": ["unconfirmed", "confirmed"] },
+        "claim": { "type": "string", "minLength": 1 },
+        "evidence": { "type": "array" }
+      }
+    },
+    "regressionRisk": { "type": "string", "minLength": 1 },
+    "acceptanceMapping": { "type": "array" }
+  }
+}

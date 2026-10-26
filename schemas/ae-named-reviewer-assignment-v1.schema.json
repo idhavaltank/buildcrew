@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ae-named-reviewer-assignment-v1.schema.json",
+  "title": "AE named reviewer assignment v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "assignmentId", "genericAssignmentId", "genericAssignmentDigest",
+    "taskReviewBindingId", "taskReviewBindingDigest", "authorizationEnvelopeId",
+    "authorizationEnvelopeDigest", "taskId", "projectId", "repositoryId", "tenantId",
+    "policyFingerprint", "packetVersion", "planVersion", "waveId", "attempt",
+    "sourceFingerprint", "role", "namedReviewer", "namedRoleProfileFingerprint",
+    "capability", "scope", "overallDiffFingerprint", "shardFingerprint",
+    "configuredModel", "resolvedModel", "configuredReasoningEffort",
+    "resolvedReasoningEffort", "status", "hostId", "issuedAt", "expiresAt"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "ae-named-reviewer-assignment-v1"},
+    "assignmentId": {"type": "string", "minLength": 1},
+    "genericAssignmentId": {"type": "string", "minLength": 1},
+    "genericAssignmentDigest": {"$ref": "#/$defs/fingerprint"},
+    "taskReviewBindingId": {"type": "string", "minLength": 1},
+    "taskReviewBindingDigest": {"$ref": "#/$defs/fingerprint"},
+    "authorizationEnvelopeId": {"type": "string", "minLength": 1},
+    "authorizationEnvelopeDigest": {"$ref": "#/$defs/fingerprint"},
+    "taskId": {"type": "string", "minLength": 1},
+    "projectId": {"type": "string", "minLength": 1},
+    "repositoryId": {"type": "string", "minLength": 1},
+    "tenantId": {"type": ["string", "null"]},
+    "policyFingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "packetVersion": {"type": "string", "minLength": 1},
+    "planVersion": {"type": "string", "minLength": 1},
+    "waveId": {"type": "string", "minLength": 1},
+    "attempt": {"type": "integer", "minimum": 1},
+    "sourceFingerprint": {"type": "string", "minLength": 1},
+    "role": {"enum": ["worker", "final-audit"]},
+    "namedReviewer": {"type": "string", "minLength": 1},
+    "namedRoleProfileFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "capability": {"type": "string", "minLength": 1},
+    "scope": {"$ref": "#/$defs/scope"},
+    "overallDiffFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "shardFingerprint": {"$ref": "#/$defs/fingerprint"},
+    "configuredModel": {"type": "string", "minLength": 1},
+    "resolvedModel": {"type": ["string", "null"]},
+    "configuredReasoningEffort": {"type": "string", "minLength": 1},
+    "resolvedReasoningEffort": {"type": ["string", "null"]},
+    "status": {"enum": ["SELECTED", "FALLBACK_EVIDENCED", "OVERRIDE_EVIDENCED", "CAPABILITY_UNAVAILABLE"]},
+    "hostId": {"type": "string", "minLength": 1},
+    "issuedAt": {"type": "string", "format": "date-time"},
+    "expiresAt": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "scope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scopeId", "paths", "authority"],
+      "properties": {
+        "scopeId": {"type": "string", "minLength": 1},
+        "paths": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "authority": {"enum": ["read", "write"]}
+      }
+    }
+  }
+}

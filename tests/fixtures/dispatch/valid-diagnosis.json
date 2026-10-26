@@ -1,0 +1,18 @@
+{
+  "packetVersion": "diagnosis-packet-v1",
+  "taskId": "fixture-diagnosis-001",
+  "scope": {
+    "repository": "demo",
+    "lane": "lane-1",
+    "files": ["src/sync.py"]
+  },
+  "sourceFingerprint": "fixture-sha-001",
+  "checkpoint": {
+    "phase": "diagnosis",
+    "lastCommand": "pytest",
+    "nextAction": "inspect replay acknowledgement"
+  },
+  "expectedOutput": ["confirmed root cause or bounded hypothesis"],
+  "timeoutSeconds": 60,
+  "stopConditions": ["scope expands beyond sync worker"]
+}

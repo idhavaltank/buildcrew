@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "progress-checklist-v2.schema.json",
+  "title": "AE durable task progress state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "taskId",
+    "status",
+    "createdAt",
+    "updatedAt",
+    "revision",
+    "planFingerprint",
+    "phases",
+    "displayPhases",
+    "lanes",
+    "settings",
+    "events"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "progress-checklist-v2" },
+    "taskId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "status": { "enum": ["IN_PROGRESS", "BLOCKED", "CLOSED"] },
+    "createdAt": { "type": "string", "minLength": 1 },
+    "updatedAt": { "type": "string", "minLength": 1 },
+    "closedAt": { "type": "string", "minLength": 1 },
+    "revision": { "type": "integer", "minimum": 0 },
+    "planFingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "migratedFrom": { "const": "progress-checklist-v1" },
+    "legacyClosure": { "const": true },
+    "completionBlockers": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "phases": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "prefixItems": [
+        { "$ref": "#/$defs/progressItem" },
+        { "$ref": "#/$defs/progressItem" },
+        { "$ref": "#/$defs/progressItem" },
+        { "$ref": "#/$defs/progressItem" },
+        { "$ref": "#/$defs/progressItem" },
+        { "$ref": "#/$defs/progressItem" },
+        { "$ref": "#/$defs/progressItem" },
+        { "$ref": "#/$defs/progressItem" },
+        { "$ref": "#/$defs/progressItem" },
+        { "$ref": "#/$defs/progressItem" }
+      ],
+      "items": false
+    },
+    "displayPhases": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "$ref": "#/$defs/progressItem" }
+    },
+    "lanes": {
+      "type": "array",
+      "maxItems": 4,
+      "items": { "$ref": "#/$defs/lane" }
+    },
+    "settings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fullEvery", "transitionCount", "lastFullTransition"],
+      "properties": {
+        "fullEvery": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "transitionCount": { "type": "integer", "minimum": 0 },
+        "lastFullTransition": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "events": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "required": ["sequence"],
+        "properties": {
+          "sequence": { "type": "integer", "minimum": 1 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "status": {
+      "enum": ["NOT_STARTED", "IN_PROGRESS", "PASS", "BLOCKED", "NOT_REQUIRED"]
+    },
+    "nullableText": {
+      "type": ["string", "null"],
+      "maxLength": 240
+    },
+    "evidenceTier": {
+      "enum": [
+        null,
+        "source",
+        "test",
+        "review",
+        "runtime",
+        "browser",
+        "device",
+        "deployment",
+        "user"
+      ]
+    },
+    "progressItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "status",
+        "detail",
+        "evidence",
+        "evidenceTier",
+        "legacyEvidenceUnverified",
+        "blocker",
+        "checked",
+        "nextAction",
+        "lastCommand"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,63}$"
+        },
+        "label": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "status": { "$ref": "#/$defs/status" },
+        "detail": { "$ref": "#/$defs/nullableText" },
+        "evidence": { "$ref": "#/$defs/nullableText" },
+        "evidenceTier": { "$ref": "#/$defs/evidenceTier" },
+        "legacyEvidenceUnverified": { "type": "boolean" },
+        "blocker": { "$ref": "#/$defs/nullableText" },
+        "checked": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 240 }
+        },
+        "nextAction": { "$ref": "#/$defs/nullableText" },
+        "lastCommand": { "$ref": "#/$defs/nullableText" }
+      }
+    },
+    "lane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "status",
+        "detail",
+        "evidence",
+        "evidenceTier",
+        "legacyEvidenceUnverified",
+        "blocker",
+        "checked",
+        "nextAction",
+        "lastCommand",
+        "purpose",
+        "boundaries",
+        "deliverable",
+        "verification",
+        "preserveUnrelatedChanges"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,63}$"
+        },
+        "label": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "status": { "$ref": "#/$defs/status" },
+        "detail": { "$ref": "#/$defs/nullableText" },
+        "evidence": { "$ref": "#/$defs/nullableText" },
+        "evidenceTier": { "$ref": "#/$defs/evidenceTier" },
+        "legacyEvidenceUnverified": { "type": "boolean" },
+        "blocker": { "$ref": "#/$defs/nullableText" },
+        "checked": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 240 }
+        },
+        "nextAction": { "$ref": "#/$defs/nullableText" },
+        "lastCommand": { "$ref": "#/$defs/nullableText" },
+        "purpose": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "boundaries": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1, "maxLength": 240 }
+        },
+        "deliverable": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "verification": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "preserveUnrelatedChanges": { "const": true }
+      }
+    }
+  }
+}

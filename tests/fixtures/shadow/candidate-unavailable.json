@@ -1,0 +1,12 @@
+{
+  "name": "candidate-unavailable",
+  "request": {
+    "rawText": "Implement the requested behavior with the candidate source unavailable",
+    "requestType": "change"
+  },
+  "expected": {
+    "route": "NEW_TASK",
+    "complexity": "NORMAL",
+    "riskTier": "LOW"
+  }
+}

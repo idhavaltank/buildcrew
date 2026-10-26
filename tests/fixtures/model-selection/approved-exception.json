@@ -1,0 +1,50 @@
+{
+  "taskFacts": {
+    "schemaVersion": "model-selection-task-v1",
+    "route": "NEW_TASK",
+    "taskClass": "security",
+    "taskId": "task-exception-001",
+    "projectId": "project-demo",
+    "repositoryId": "repo-demo",
+    "tenantId": "tenant-demo",
+    "packetVersion": "packet-v1",
+    "planVersion": "plan-v1",
+    "waveId": "wave-exception-1",
+    "attempt": 1,
+    "sourceFingerprint": "source-exception-001",
+    "hostId": "host-exception",
+    "issuedAt": "2026-08-24T08:00:00Z",
+    "expiresAt": "2026-08-24T09:00:00Z",
+    "needsCoordinator": false,
+    "workerScopes": [
+      {
+        "scopeId": "worker-1",
+        "paths": ["src/feature.py"],
+        "authority": "write"
+      }
+    ],
+    "coordinatorScope": null,
+    "validationTime": "2026-08-24T08:30:00Z",
+    "override": {
+      "origin": "explicit_user",
+      "model": "model-balanced",
+      "reasoningEffort": "high",
+      "taskId": "task-exception-001",
+      "scopeId": "worker-1",
+      "evidence": ["advanced_model_unavailable", "bounded_scope_failure", "fallback_policy:high-risk-worker-advanced-to-balanced"],
+      "approvalId": "user-approval-001",
+      "issuedAt": "2026-08-24T08:00:00Z",
+      "expiresAt": "2026-08-24T09:00:00Z",
+    "policyFingerprint": "4a5cfe72db769755ed94de8894fa2ad00f98d7449a228b58cc9173716556da2b"
+    }
+  },
+  "hostCatalog": {
+    "schemaVersion": "host-model-catalog-v1",
+    "hostId": "host-exception",
+    "availableModels": {
+      "model-balanced": ["high"]
+    },
+    "inheritedModel": null,
+    "inheritedReason": null
+  }
+}

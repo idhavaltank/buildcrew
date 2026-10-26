@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qa-adapter-run-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "runId", "adapterId", "packetId", "taskId", "sourceFingerprint", "target", "targetIdentity", "stepIds", "timeoutSeconds", "externalState", "network", "credentials"],
+  "properties": {
+    "schemaVersion": { "const": "qa-adapter-run-v1" },
+    "runId": { "type": "string", "minLength": 1 },
+    "adapterId": { "type": "string", "minLength": 1 },
+    "packetId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "sourceFingerprint": { "type": "string", "minLength": 8 },
+    "target": { "type": "string", "minLength": 1 },
+    "targetIdentity": { "type": "object", "additionalProperties": false, "required": ["name", "version", "build", "environment"], "properties": { "name": { "type": "string", "minLength": 1 }, "version": { "type": "string", "minLength": 1 }, "build": { "type": "string", "minLength": 1 }, "environment": { "type": "string", "minLength": 1 } } },
+    "stepIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "timeoutSeconds": { "type": "integer", "minimum": 1, "maximum": 86400 },
+    "externalState": { "enum": ["NONE", "DISPOSABLE_ONLY", "EXPLICIT_APPROVAL"] },
+    "network": { "enum": ["DISABLED", "ALLOWLISTED", "HOST_CONTROLLED"] },
+    "credentials": { "enum": ["NONE", "SANDBOXED", "HOST_SUPPLIED"] }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "continuity-report-v1.schema.json",
+  "title": "BuildCrew continuity operation report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "outcome", "taskId", "sourceOnly", "executed", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "continuity-report-v1" },
+    "outcome": { "enum": ["STARTED", "RESUMED", "LOOKUP_ONLY", "MEASURED", "CLOSED", "PARTIAL", "NO_MATCH", "CONFLICT", "BLOCKED"] },
+    "taskId": { "type": ["string", "null"], "maxLength": 128 },
+    "sessionPath": { "type": ["string", "null"] },
+    "lookup": { "$ref": "memory-context-lookup-v1.schema.json" },
+    "context": { "type": "string", "maxLength": 14000 },
+    "contextBudget": { "$ref": "context-budget-report-v1.schema.json" },
+    "state": { "type": "object" },
+    "learning": { "type": "object" },
+    "dailyReference": { "type": "object" },
+    "worklog": { "type": "object" },
+    "sourceRevalidationRequired": { "const": true },
+    "sourceOnly": { "const": true },
+    "executed": { "const": false },
+    "errors": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "sideEffects": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  }
+}
