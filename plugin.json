@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "buildcrew",
-  "version": "0.1.0",
-  "description": "You Lead, AI Assists. Global, evidence-driven software engineering workflow for every Codex input.",
+  "version": "0.1.1",
+  "description": "You Lead, AI Assists. A global, human-led, evidence-first software-engineering workflow for every input across projects.",
   "author": {
     "name": "Dhaval Tank",
     "url": "https://github.com/idhavaltank"
@@ -17,7 +17,7 @@
       "interface": {
         "displayName": "BuildCrew",
         "shortDescription": "Evidence-driven AI software engineering workflow",
-        "longDescription": "You Lead, AI Assists. Understand the project, reuse existing patterns, make the smallest safe change, verify evidence, and preserve useful context across sessions.",
+        "longDescription": "You Lead, AI Assists. Route every input through lightweight lookup or a full evidence-first engineering workflow, reuse existing patterns, verify results, and preserve useful context across projects and sessions.",
         "developerName": "Dhaval Tank",
         "category": "Developer Tools",
         "capabilities": ["Instructions"],

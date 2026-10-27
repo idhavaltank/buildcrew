@@ -1,7 +1,7 @@
 {
   "name": "buildcrew",
-  "version": "0.1.0",
-  "description": "Global, human-led, evidence-first AI software engineering workflow for every Codex input.",
+  "version": "0.1.1",
+  "description": "You Lead, AI Assists. A global, human-led, evidence-first software-engineering workflow for every input across projects.",
   "author": {
     "name": "Dhaval Tank",
     "url": "https://github.com/idhavaltank"

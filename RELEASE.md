@@ -6,7 +6,7 @@
 `version` and `CHANGELOG.md` together. Keep the `SKILL.md` frontmatter name,
 source directory name, and plugin name equal to `buildcrew`.
 
-The current public package version is `0.1.0`. The changelog retains the
+The current public package version is `0.1.1`. The changelog retains the
 earlier candidate milestones for traceability. Existing continuity data can be
 reused by setting `BUILDCREW_CONTINUITY_ROOT` to its current directory.
 
@@ -47,7 +47,7 @@ install or activate a plugin.
 
 ## Downloadable ZIP distribution
 
-Pushing a version tag such as `v0.1.0` starts the GitHub Actions release workflow.
+Pushing a version tag such as `v0.1.1` starts the GitHub Actions release workflow.
 It builds and publishes verified ZIP assets to the GitHub Release page:
 
 `https://github.com/idhavaltank/buildcrew/releases/latest`

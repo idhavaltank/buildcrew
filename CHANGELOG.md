@@ -2,9 +2,20 @@
 
 ## Unreleased
 
-- Clarify host runtime configuration, lead-agent fallback, and multi-agent
-  execution requirements across the README, installation guide, and website
-  documentation.
+- Future changes will be listed here.
+
+## 0.1.1 - global activation and host distribution
+
+- Add global BuildCrew activation for every input across projects through
+  Codex instructions and the `UserPromptSubmit` lifecycle hook.
+- Add sanitized universal intake routing for lightweight questions and
+  actionable engineering work.
+- Add reversible global activation, conflict detection, external state storage,
+  and focused security tests.
+- Add verified portable plugin, skill, and Claude Code release packaging with
+  GitHub Actions publication.
+- Document ZIP installation, ready-to-paste host setup, global onboarding, and
+  host runtime limitations.
 
 ## 0.1.0 - initial public release
 

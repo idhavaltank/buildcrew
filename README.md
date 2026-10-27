@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <a href="RELEASE.md"><img src="https://img.shields.io/badge/version-0.1.0-2563eb" alt="Version 0.1.0" /></a>
+  <a href="RELEASE.md"><img src="https://img.shields.io/badge/version-0.1.1-2563eb" alt="Version 0.1.1" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-08a88a.svg" alt="MIT License" /></a>
   <a href="https://idhavaltank.github.io/buildcrew/"><img src="https://img.shields.io/badge/docs-GitHub%20Pages-1746b3" alt="Documentation" /></a>
 </p>
