@@ -13,7 +13,7 @@ from zipfile import BadZipFile, ZipFile
 
 
 PUBLIC_REPOSITORY_TOP_LEVEL = {
-    ".agents", ".codex-plugin", ".github", "docs", ".gitignore", ".nojekyll",
+    ".agents", ".codex-plugin", ".github", "docs", ".claude", ".gitignore", ".nojekyll",
     "AGENTS.md", "CONTRIBUTORS.md", "INSTALL.md", "SECURITY.md", "plugin.json",
     "buildcrew-workflow.html",
 }

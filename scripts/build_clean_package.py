@@ -25,16 +25,16 @@ FORBIDDEN_SUFFIX_NAMES = {
 }
 ALLOWED_TOP_LEVEL = {
     "SKILL.md", "README.md", "LICENSE", "CONTRIBUTING.md", "CHANGELOG.md",
-    "RELEASE.md", "IMPLEMENTATION_REPORT.md", "config", "engine",
+    "RELEASE.md", "IMPLEMENTATION_REPORT.md", "config", "engine", "skills",
     "references", "schemas", "scripts", "tests", "AE-V1-VS-V2-COMPARISON-REPORT.html",
     "AE-V2-SAFE-LAYERS-IMPLEMENTATION-PLAN.md", "AE-V2-HOST-INTEGRATION-IMPLEMENTATION-PLAN.md",
     "AE-V2-PENDING-FEATURES-CHECKLIST.html",
-    ".agents", ".codex-plugin", ".github", "docs", ".gitignore", ".nojekyll",
+    ".agents", ".codex-plugin", ".github", "docs", "hooks", ".claude", ".gitignore", ".nojekyll",
     "AGENTS.md", "CONTRIBUTORS.md", "INSTALL.md", "SECURITY.md", "plugin.json",
     "buildcrew-workflow.html",
 }
 PUBLIC_REPOSITORY_TOP_LEVEL = {
-    ".agents", ".codex-plugin", ".github", "docs", ".gitignore", ".nojekyll",
+    ".agents", ".codex-plugin", ".github", "docs", ".claude", ".gitignore", ".nojekyll",
     "AGENTS.md", "CONTRIBUTORS.md", "INSTALL.md", "SECURITY.md", "plugin.json",
     "buildcrew-workflow.html",
 }

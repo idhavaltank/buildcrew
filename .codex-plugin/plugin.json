@@ -1,7 +1,7 @@
 {
   "name": "buildcrew",
   "version": "0.1.0",
-  "description": "Human-led, evidence-first AI software engineering workflows for daily development.",
+  "description": "Global, human-led, evidence-first AI software engineering workflow for every Codex input.",
   "author": {
     "name": "Dhaval Tank",
     "url": "https://github.com/idhavaltank"
@@ -10,6 +10,7 @@
   "repository": "https://github.com/idhavaltank/buildcrew",
   "keywords": ["software-engineering", "planning", "testing", "code-review", "evidence"],
   "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "BuildCrew",
     "shortDescription": "Your human-led AI software engineering crew",
@@ -19,9 +20,9 @@
     "capabilities": ["Instructions"],
     "websiteURL": "https://idhavaltank.github.io/buildcrew/",
     "defaultPrompt": [
-      "Use BuildCrew to plan this task before implementation.",
-      "Use BuildCrew to build and verify this change.",
-      "Review this change using BuildCrew's evidence-first workflow."
+      "BuildCrew is globally active for every input; classify this request using its lightweight or full evidence-first workflow.",
+      "Use BuildCrew's universal input adapter before responding, then build and verify actionable changes.",
+      "Close completed, blocked, or paused BuildCrew tasks and report evidence."
     ],
     "brandColor": "#58e5d0"
   }

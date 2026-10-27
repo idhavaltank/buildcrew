@@ -1,0 +1,38 @@
+name: Build and publish BuildCrew release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tagged source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create clean source export
+        run: |
+          mkdir -p "$RUNNER_TEMP/buildcrew-source"
+          git archive --format=tar --prefix=buildcrew/ "$GITHUB_REF_NAME" \
+            | tar -xf - -C "$RUNNER_TEMP"
+
+      - name: Build verified release archives
+        run: |
+          python3 -B "$RUNNER_TEMP/buildcrew/scripts/build_release.py" \
+            --source-root "$RUNNER_TEMP/buildcrew" \
+            --output-dir "$GITHUB_WORKSPACE/release"
+
+      - name: Publish release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" release/* \
+            --title "BuildCrew $GITHUB_REF_NAME" \
+            --generate-notes

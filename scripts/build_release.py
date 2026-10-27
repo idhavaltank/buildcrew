@@ -99,7 +99,10 @@ def _skill_files(archive: Path, name: str, expected_hashes: dict[str, str]) -> d
 
 def _plugin_entries(files: dict[str, bytes], manifest: dict, *, claude: bool) -> dict[str, bytes]:
     name = manifest["name"]
-    entries = {f"{name}/skills/{name}/{relative}": content for relative, content in files.items()}
+    # Preserve the source package layout inside the plugin root. In particular,
+    # hooks/ must remain beside plugin.json so lifecycle-hook relative paths
+    # resolve correctly after extraction.
+    entries = {f"{name}/{relative}": content for relative, content in files.items()}
     entries[f"{name}/LICENSE"] = files["LICENSE"]
     entries[f"{name}/README.md"] = files["README.md"]
     if claude:
