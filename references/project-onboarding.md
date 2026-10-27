@@ -1,9 +1,9 @@
 # One-time project onboarding
 
-Project onboarding is a first-interaction gate, not a replacement for the
-normal every-input memory lookup. A host invokes it once after installation
-for each `(installation, host, project)` scope and then uses the normal
-workflow for later inputs.
+Project onboarding is a per-repository context gate, not the global activation
+mechanism and not a replacement for the normal every-input lookup. A host
+configures BuildCrew globally once for each `(installation, host)` scope, then
+invokes project onboarding once for each repository it opens.
 
 ```text
 first input after install
@@ -17,20 +17,20 @@ first input after install
 
 ## User-led activation after installation
 
-The [README setup prompt](../README.md#first-interaction-after-installation)
-gives a developer a one-time way to ask their AI coding tool to register BuildCrew
-for every input in the current project. The prompt itself applies to the
-current conversation. Persistent activation requires a tool-supported project
-instruction or hook; the skill files alone do not install one.
+The [README setup prompt](../README.md#step-2-configure-buildcrew-globally)
+gives a developer a one-time way to ask their AI coding tool to register
+BuildCrew globally. The prompt itself applies to the current conversation.
+Persistent cross-project activation requires a tool-supported global
+instruction or lifecycle hook; skill files alone do not install one.
 
-1. Install the skill using the tool's supported skill or plugin method. In the
-   project, send the README setup prompt once. The host must locate the
+1. Install the skill using the tool's supported skill or plugin method. Send the
+   README setup prompt once at the Codex level. The host must locate the
    installed `SKILL.md` and inspect existing persistent instructions before
    adding an BuildCrew rule. Follow the skill's activation checks, preserve the
    previous configuration for rollback, and verify that one controller owns
    the scope. If another lifecycle controller already owns that scope, report
    the conflict before changing it.
-2. During setup or on the first project input after registration, call `inspect_onboarding`
+2. During setup or on the first input for a new repository, call `inspect_onboarding`
    with a stable installation, host, and project identity plus an approved
    external state root. If it returns `showIntro=true`, introduce the context
    step, classify the project, gather only the needed context, and call
@@ -41,13 +41,14 @@ instruction or hook; the skill files alone do not install one.
    or pauses. Exact task identity lets another session resume it. Keep project
    context current through the ordinary verified learning flow; promote a
    candidate into canonical project memory only after the separate review gate.
-4. After a reload or in a fresh session, send an ordinary project request that
-   does not name BuildCrew. Check the host's loaded project instruction or hook and
-   the onboarding marker. A setup response or installed file by itself is not
-   proof that BuildCrew handled the new request.
+4. After a reload or in a fresh session, open a different repository and send an
+   ordinary request that does not name BuildCrew. Check the host's loaded global
+   instruction or hook and both the global activation receipt and project marker.
+   A setup response or installed file by itself is not proof that BuildCrew
+   handled the new request.
 
-If the host has no persistent project instruction or hook, report that the
-setup applies only to the current conversation and give the developer the
+If the host has no persistent global instruction or hook, report that the setup
+applies only to the current conversation and give the developer the
 host's supported manual invocation step. If the current session does not
 refresh installed skills or instructions, follow that host's reload or new
 session procedure before verification. A host that only discovers skills by
@@ -67,7 +68,7 @@ instead of treating discovery as activation.
 
 ## Persistence and repetition rules
 
-The host must provide:
+The host must provide for project onboarding:
 
 - an explicit external `state_root`;
 - a stable `project_id`;

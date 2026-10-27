@@ -23,7 +23,7 @@
 <p align="center">
   <a href="https://idhavaltank.github.io/buildcrew/">Documentation</a> ·
   <a href="#install">Install</a> ·
-  <a href="#step-2-configure-buildcrew-for-every-user-input">Configure activation</a> ·
+  <a href="#step-2-configure-buildcrew-globally">Configure activation</a> ·
   <a href="CONTRIBUTING.md">Contributing</a> ·
   <a href="SECURITY.md">Security</a>
 </p>
@@ -80,10 +80,30 @@ human in control of scope, approvals, and consequential actions.
 BuildCrew is distributed as an installable plugin package containing a portable
 skill. Choose the installation method supported by your AI coding tool.
 
-Follow the installation steps in order: install BuildCrew, configure the host for
-every-input activation, start a fresh session, and verify the setup.
+Follow the installation steps in order: install BuildCrew, configure global
+Codex-level activation, start a fresh session, and verify the setup.
+
+The Codex plugin includes a `UserPromptSubmit` lifecycle hook. After the user
+reviews and trusts that hook, it routes every Codex input through BuildCrew;
+the global instruction installer remains available for hosts that support
+global `AGENTS.md` instructions but not bundled hooks.
 
 ### Step 1: Install BuildCrew in your AI coding tool
+
+#### Download the plugin ZIP
+
+If you prefer a direct file, download the latest verified
+`buildcrew-v<version>-agent-plugin.zip` from the
+[GitHub Releases page](https://github.com/idhavaltank/buildcrew/releases/latest).
+Extract it and install the contained `buildcrew/` directory through the host's
+local plugin flow. For Codex Desktop, use the local plugin/marketplace flow,
+restart Codex, and review/trust the bundled `UserPromptSubmit` hook. Then run
+the one-time global setup prompt below and start a fresh session.
+
+For a guided installation, paste the ready-to-use ZIP installation prompt in
+[INSTALL.md](INSTALL.md#ready-to-paste-zip-installation-prompt) into the host.
+It tells the host to install BuildCrew globally, preserve project files, verify
+the hook, and report whether persistence was actually established.
 
 #### Codex plugin
 
@@ -119,7 +139,7 @@ supports neither Agent Skills nor `AGENTS.md`, it needs a small host-specific
 adapter. BuildCrew provides the portable workflow and fallback instructions; host
 runtime integrations remain host-owned.
 
-#### Windows PowerShell
+#### Windows PowerShell (Codex)
 
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.codex\skills\buildcrew"
@@ -176,33 +196,34 @@ supports agent execution. Otherwise, the lead AI handles the workflow.
 as Codex, Claude Code, Cursor, Windsurf, or Gemini CLI. Each host requires its
 own configuration for live multi-agent execution.
 
-### Step 2: Configure BuildCrew for every user input
+### Step 2: Configure BuildCrew globally
 
-After installation, open the project in your AI coding tool and send the
-following one-time setup prompt. It asks the host to load BuildCrew for every user
-input, run onboarding, and configure continuity where the host supports it.
-This step is required for smooth continuous use of BuildCrew.
+After installation, send the following one-time setup prompt at the Codex
+level. It asks the host to load BuildCrew for every user input across all
+projects, run per-project onboarding when needed, and configure continuity where
+the host supports it. This step is required for smooth continuous use of
+BuildCrew.
 
 ```text
-I installed BuildCrew for this project. Make BuildCrew the single engineering workflow for every input in this project, including questions, follow-ups, reviews, plans, and coding tasks. Handle simple questions briefly.
+I installed BuildCrew globally. Make BuildCrew the single engineering workflow for every input in every project in this Codex installation, including questions, follow-ups, reviews, plans, and coding tasks. Handle simple questions briefly.
 
-First, locate and validate the installed SKILL.md. Check this tool's persistent project instructions and whether another engineering controller is active. Follow BuildCrew's activation checks and keep a reversible way to restore the prior configuration. Add the smallest supported project instruction or hook to use BuildCrew on each input. Preserve unrelated settings. If another controller already owns this scope, report the conflict before changing it.
+First, locate and validate the installed SKILL.md. Check this tool's global Codex instructions and whether another engineering controller is active. Follow BuildCrew's activation checks and keep a reversible way to restore the prior configuration. Add the smallest supported global instruction or lifecycle hook to use BuildCrew on each input across every project. Preserve unrelated settings. If another controller already owns this scope, report the conflict before changing it.
 
-Run BuildCrew's one-time project onboarding and keep its marker in an approved directory outside the project. On each later input, invoke scripts/context_loop.py auto with a sanitized intake: simple questions use lookup only, while actionable work starts or resumes its exact task. At completed, blocked, or paused closure, invoke scripts/context_loop.py close. Keep one shared BUILDCREW_HOME for tools that should share context.
+Run BuildCrew's one-time global activation and keep its receipt in an approved directory outside all projects. Run per-project onboarding only when a repository is first opened. On every later input, invoke scripts/global_input_adapter.py with a sanitized intake: simple questions use lookup only, while actionable work starts or resumes its exact task. At completed, blocked, or paused closure, invoke scripts/context_loop.py close. Keep one shared BUILDCREW_HOME across projects and sessions.
 
 Report what you configured, where, and the onboarding state. Tell me whether to reload or start a new session, and how to verify BuildCrew with an ordinary project request that does not name it. If this tool cannot make or verify BuildCrew persistent, say so.
 ```
 
-This is a one-time setup prompt for the current installation, host, and project
-scope. Persistent every-input use depends on the host's supported project
-instruction, hook, or equivalent loading mechanism. If the host cannot support
-persistent activation, it must report that limitation rather than claim that
-BuildCrew will trigger automatically.
+This is a one-time setup prompt for the current installation and host scope,
+not a single project. Persistent every-input use depends on the host's supported
+global instruction, lifecycle hook, or equivalent loading mechanism. If the host
+cannot support persistent global activation, it must report that limitation
+rather than claim that BuildCrew will trigger automatically.
 
 ### Step 3: Start a fresh session and verify activation
 
-After configuring the host, reload the project or start a new session. Then
-send an ordinary request without naming BuildCrew:
+After configuring the host, reload Codex or start a new session, open any
+project, and send an ordinary request without naming BuildCrew:
 
 ```text
 Inspect this project and explain the relevant existing patterns before making any changes. Do not edit files yet.
@@ -237,8 +258,9 @@ BuildCrew supports three first-project situations:
    validate it against current source, then implement within the established
    architecture and conventions.
 
-The first-project introduction is shown once per installation, host, and
-project scope. Later inputs use the normal bounded context workflow.
+Global activation is configured once per installation and host. The first
+repository interaction may show a project-context introduction once for that
+repository. Later inputs use the normal bounded context workflow.
 
 ## Memory and session continuity
 

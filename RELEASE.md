@@ -45,6 +45,23 @@ The builder checks plugin-package source parity, plugin layouts, embedded manife
 contents, and hashes before publishing the output directory. It does not
 install or activate a plugin.
 
+## Downloadable ZIP distribution
+
+Pushing a version tag such as `v0.1.0` starts the GitHub Actions release workflow.
+It builds and publishes verified ZIP assets to the GitHub Release page:
+
+`https://github.com/idhavaltank/buildcrew/releases/latest`
+
+Users should download the `buildcrew-v<version>-agent-plugin.zip` asset when the
+host supports the portable plugin format. The release also contains the direct
+skill and Claude Code archives, plus `SHA256SUMS` and `release-report.json`.
+
+The ZIP is a distribution artifact, not a project archive. Extract it to a
+temporary directory, install the extracted `buildcrew/` plugin directory using
+the host's local-plugin workflow, then start a fresh host session. Hosts that
+support lifecycle hooks must review and trust the bundled `hooks/hooks.json`
+before expecting automatic every-input routing.
+
 ## Verify and distribute
 
 ### Archive verification

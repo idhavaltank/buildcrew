@@ -29,7 +29,10 @@ verification.
 
 ## Activation and host integration
 
-This package is standalone. Load this skill before beginning engineering work.
+This package is standalone. After the one-time global host setup, load this
+skill before every input, including lightweight questions and ordinary
+conversation. The global host integration decides whether the input takes the
+lookup-only route or the full engineering workflow.
 For actionable work, build the intake packet and start the task-derived
 checklist before repository mutation or delegated execution. If a host already
 owns classification, worklogs, or another lifecycle boundary, consume only the
@@ -37,10 +40,13 @@ explicit handoff fields the host provides and keep exactly one authoritative
 controller. Do not require a product-specific loader, memory tree, model name,
 or companion skill.
 
-### One-time project onboarding
+### One-time global activation and project onboarding
 
-After installation, the host should call the bounded onboarding adapter for the
-first input in each `(installation, host, project)` scope. Use
+After installation, the host should configure the global Codex instruction or
+lifecycle hook once for each `(installation, host)` scope using
+`scripts/configure_global_codex.py` or its equivalent. The host should then call
+the bounded onboarding adapter for the first input in each repository scope.
+Use
 `engine/project_onboarding.py` or `scripts/project_onboarding.py` to classify
 the project as `NEW_PROJECT`, `EXISTING_WITHOUT_DOCUMENTATION`, or
 `EXISTING_WITH_DOCUMENTATION`. The first inspection returns the professional
@@ -49,8 +55,8 @@ external state root. Once the host has gathered or validated sufficient context,
 `complete_onboarding` stores only sanitized summary, decisions, references, and
 next action, then marks the scope `COMPLETED`.
 
-Later inputs in the same scope must not repeat the introductory message. They
-continue with the normal every-input bounded memory lookup and the ordinary
+Later inputs in the same repository must not repeat the introductory message.
+They continue with the normal every-input bounded memory lookup and the ordinary
 direct, review, plan, or execution route. A `PENDING` marker means context
 gathering is incomplete, not that the introduction should be shown again. If the
 host cannot persist the external marker, report `persistence=unavailable`; only
@@ -79,9 +85,10 @@ host boundary.
 5. Never activate, retire, migrate, delete, or redirect a legacy controller,
    installed skill, hook, receipt store, branch, worktree, or runtime state
    without explicit approval and a separately verified rollout plan.
-6. Installation of this skill must be inert. At most one controller may be
-   authoritative at a time; activation requires an explicit feature switch,
-   parity evidence, and a reversible rollback switch.
+6. Installation of this skill must be inert. The one-time global activation
+   step is explicit and reversible. At most one controller may be authoritative
+   at a time; activation requires conflict checks, a global receipt, and a
+   reversible rollback switch.
 7. Protected roots must come from active host configuration, be canonicalized
    with symlink awareness, and reject overlap with active skills, launchers,
    state, hooks, receipts, worktrees, or other protected runtime paths.
@@ -166,9 +173,10 @@ does not choose a model, bundle credentials, or simulate an absent provider.
 
 ### Automatic day-to-day continuity
 
-For every input after BuildCrew is loaded, call `scripts/context_loop.py auto`
-with a sanitized intake. Informational inputs are lookup only; actionable inputs
-start or resume an exact task. The adapter connects the existing bounded memory
+For every input after BuildCrew is globally loaded, call
+`scripts/global_input_adapter.py` with a sanitized intake. Informational inputs
+are lookup only; actionable inputs start or resume an exact task. The adapter
+connects the existing bounded memory
 lookup, portable task packet, learning store, no-clobber memory queue, and
 date-wise worklog into one loop:
 

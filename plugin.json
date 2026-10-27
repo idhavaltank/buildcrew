@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "buildcrew",
   "version": "0.1.0",
-  "description": "You Lead, AI Assists. Evidence-driven software engineering workflow for AI coding tools.",
+  "description": "You Lead, AI Assists. Global, evidence-driven software engineering workflow for every Codex input.",
   "author": {
     "name": "Dhaval Tank",
     "url": "https://github.com/idhavaltank"
@@ -10,8 +10,10 @@
   "homepage": "https://idhavaltank.github.io/buildcrew/",
   "repository": "https://github.com/idhavaltank/buildcrew",
   "keywords": ["software-engineering", "agentic", "planning", "testing", "code-review", "evidence", "memory"],
+  "skills": "./skills/",
   "extensions": {
     "com.openai": {
+      "hooks": "./hooks/hooks.json",
       "interface": {
         "displayName": "BuildCrew",
         "shortDescription": "Evidence-driven AI software engineering workflow",
@@ -21,9 +23,9 @@
         "capabilities": ["Instructions"],
         "websiteURL": "https://idhavaltank.github.io/buildcrew/",
         "defaultPrompt": [
-          "Use BuildCrew to understand this task before implementation.",
-          "Use BuildCrew to implement and verify this change.",
-          "Review this change using BuildCrew's evidence-driven workflow."
+          "BuildCrew is globally active: classify every input through its lightweight or full evidence-driven workflow.",
+          "Use the universal input adapter before responding and verify actionable changes.",
+          "Close completed, blocked, or paused BuildCrew tasks with evidence."
         ],
         "brandColor": "#2367d1"
       }

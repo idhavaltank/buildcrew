@@ -12,10 +12,7 @@
     <meta name="author" content="Dhaval Tank" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#10213b" />
-    <link
-      rel="canonical"
-      href="https://idhavaltank.github.io/buildcrew/"
-    />
+    <link rel="canonical" href="https://idhavaltank.github.io/buildcrew/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="BuildCrew" />
     <meta property="og:title" content="BuildCrew — Documentation" />
@@ -575,6 +572,17 @@
         border-color: var(--teal);
         background: var(--teal-wash);
       }
+      .zip-option {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        box-sizing: border-box;
+        width: 100%;
+      }
+      .zip-option .button {
+        flex: 0 0 auto;
+      }
       .callout.warning {
         border-color: #d99000;
         background: #fff8e6;
@@ -929,6 +937,23 @@
           flex-direction: column;
           gap: 7px;
         }
+        .hero-actions {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        .hero-actions .button {
+          box-sizing: border-box;
+          width: 100%;
+        }
+        .zip-option {
+          align-items: stretch;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .zip-option .button {
+          width: 100%;
+        }
         th,
         td {
           padding: 9px 7px;
@@ -1010,8 +1035,8 @@
             <a href="#faq">FAQ</a><a href="#contributing">Contributing</a>
           </nav>
           <div class="side-note">
-            <strong>BuildCrew 0.1.0</strong>Provider-neutral release.
-            You Lead, AI Assists.
+            <strong>BuildCrew 0.1.0</strong>Provider-neutral release. You Lead,
+            AI Assists.
           </div>
         </div>
       </aside>
@@ -1029,6 +1054,12 @@
             <a class="button button-primary" href="#get-started">Get started</a
             ><a class="button button-secondary" href="#installation"
               >Install BuildCrew</a
+            ><a
+              class="button button-secondary"
+              href="https://github.com/idhavaltank/buildcrew/releases/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Download ZIP</a
             >
           </div>
           <div class="hero-card">
@@ -1043,8 +1074,8 @@
         <section id="get-started" data-reveal>
           <h2>Get started</h2>
           <p>
-            BuildCrew works best when it can read the repository it is helping with.
-            Open the project in your AI coding tool (host), make sure its
+            BuildCrew works best when it can read the repository it is helping
+            with. Open the project in your AI coding tool (host), make sure its
             existing instructions are available, and have a specific task or
             question ready.
           </p>
@@ -1067,15 +1098,16 @@
             <li>
               <strong>Begin with context</strong
               ><span
-                >Tell BuildCrew the goal, target area, constraints, and how success
-                will be measured. Ask it to inspect before editing.</span
+                >Tell BuildCrew the goal, target area, constraints, and how
+                success will be measured. Ask it to inspect before
+                editing.</span
               >
             </li>
             <li>
               <strong>Review the plan</strong
               ><span
-                >Confirm the scope and approach before asking BuildCrew to implement
-                anything.</span
+                >Confirm the scope and approach before asking BuildCrew to
+                implement anything.</span
               >
             </li>
             <li>
@@ -1101,23 +1133,57 @@
           <p>
             BuildCrew is an installable plugin package containing a portable
             skill. Choose the installation method that matches your AI coding
-            tool.
-            Installation is inert until the host loads BuildCrew and runs the
-            one-time activation and onboarding flow.
+            tool. Installation is inert until the host loads BuildCrew and runs
+            the one-time activation and onboarding flow.
           </p>
           <div class="callout tip">
             <p>
               <strong>Follow these steps in order:</strong> Install BuildCrew,
-              configure the host for every-input activation, start a fresh
-              session, and verify the setup.
+              configure global Codex-level activation, start a fresh session,
+              and verify the setup.
             </p>
           </div>
           <h3>Step 1: Install BuildCrew in your AI coding tool</h3>
+          <h3>Download the plugin ZIP</h3>
+          <div class="callout zip-option">
+            <p>
+              <strong>Download the latest verified plugin archive</strong><br />
+              Download the release, then use the ready-to-paste prompt below.
+            </p>
+            <a
+              class="button button-secondary"
+              href="https://github.com/idhavaltank/buildcrew/releases/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Download ZIP</a
+            >
+          </div>
+          <h4>Ready-to-paste ZIP installation prompt</h4>
+          <p>
+            Paste this prompt into the host where you want BuildCrew installed.
+            Replace <code>[ZIP_FILE_PATH]</code> with the path to the ZIP you
+            already downloaded. It requests a global installation and does not
+            modify a project.
+          </p>
+          <pre><button class="copy">Copy</button><code>I have already downloaded the BuildCrew ZIP file here:
+[ZIP_FILE_PATH]
+
+Install BuildCrew globally for this host, not for only one project. Use the local ZIP file above; do not download another copy.
+
+Extract the ZIP into a temporary location and validate that the extracted buildcrew/ directory contains plugin.json, skills/, and hooks/. Install that extracted buildcrew/ plugin directory using this host's supported global plugin or local-marketplace installation method.
+
+Do not copy files into the current project, do not install the ZIP as a skill directory, and preserve unrelated host settings. If the ZIP path is missing, invalid, or ambiguous, ask me for the exact path before changing anything.
+
+Review the bundled hooks/hooks.json and UserPromptSubmit hook before enabling it. If this host cannot install a local ZIP/plugin globally, explain the exact limitation and give me the host-specific manual location instead of claiming success.
+
+After installation, configure BuildCrew as the global engineering workflow for every input across every project in this host. Run the one-time global activation and keep its receipt outside project folders. Then tell me what was installed, where, whether the hook is trusted and active, and whether I should start a new session.
+
+Do not modify project files. Do not claim that BuildCrew is persistent unless you can verify the global installation and activation.</code></pre>
           <h3>Codex plugin</h3>
           <pre><button class="copy">Copy</button><code>codex plugin marketplace add idhavaltank/buildcrew<br>codex plugin add buildcrew@buildcrew</code></pre>
           <p>
-            Restart Codex or start a new CLI thread. This release is
-            instruction-only and does not require lifecycle hooks.
+            Restart Codex or start a new CLI thread. Then run the global setup
+            prompt and verify activation in a fresh session.
           </p>
           <h3>Claude Code</h3>
           <p>From the BuildCrew repository root:</p>
@@ -1138,8 +1204,8 @@
           <h3>Gemini CLI, Antigravity, OpenCode, and other hosts</h3>
           <p>
             Use the host’s native plugin or skill installer when available and
-            provide the BuildCrew plugin package or skill directory. If the host supports neither
-            the Agent Skills format nor
+            provide the BuildCrew plugin package or skill directory. If the host
+            supports neither the Agent Skills format nor
             <code>AGENTS.md</code>, it needs a small host-specific adapter. This
             repository currently provides the portable plugin package, its
             BuildCrew skill, and fallback instructions, not a native one-command
@@ -1151,35 +1217,54 @@
           <div class="callout tip">
             <p>
               <strong>What does “host” mean?</strong> The host is the AI coding
-              tool that loads and runs BuildCrew—for example, Codex,
-              Claude Code, Cursor, Windsurf, Gemini CLI, or another supported
-              tool.
+              tool that loads and runs BuildCrew—for example, Codex, Claude
+              Code, Cursor, Windsurf, Gemini CLI, or another supported tool.
             </p>
             <p>
-              Installing BuildCrew provides the workflow, agent roles, routing rules,
-              and evidence contracts. It does not automatically create live
-              sub-agents by itself. Real multi-agent execution requires the
+              Installing BuildCrew provides the workflow, agent roles, routing
+              rules, and evidence contracts. It does not automatically create
+              live sub-agents by itself. Real multi-agent execution requires the
               selected host to be configured with a runtime that can start
               agents and return their results.
             </p>
           </div>
           <table>
             <thead>
-              <tr><th>Setup</th><th>What happens</th></tr>
+              <tr>
+                <th>Setup</th>
+                <th>What happens</th>
+              </tr>
             </thead>
             <tbody>
-              <tr><td><strong>Skill installed only</strong></td><td>The host’s lead AI follows the BuildCrew workflow by itself.</td></tr>
-              <tr><td><strong>Host runtime configured</strong></td><td>BuildCrew can select and spawn the required specialist agents automatically.</td></tr>
-              <tr><td><strong>Host runtime unavailable</strong></td><td>BuildCrew continues with the lead AI and reports that separate agent execution is unavailable.</td></tr>
+              <tr>
+                <td><strong>Skill installed only</strong></td>
+                <td>
+                  The host’s lead AI follows the BuildCrew workflow by itself.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Host runtime configured</strong></td>
+                <td>
+                  BuildCrew can select and spawn the required specialist agents
+                  automatically.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Host runtime unavailable</strong></td>
+                <td>
+                  BuildCrew continues with the lead AI and reports that separate
+                  agent execution is unavailable.
+                </td>
+              </tr>
             </tbody>
           </table>
           <p>
             Live multi-agent execution requires an approved native-agent
-            executor (the component that starts an agent), a model provider
-            (the AI model service), a runtime coordinator (the component that
-            manages agent assignments), a project scope, and execution
-            permissions. Configure each AI coding tool separately; installing
-            BuildCrew in one host does not configure it in another. BuildCrew never claims
+            executor (the component that starts an agent), a model provider (the
+            AI model service), a runtime coordinator (the component that manages
+            agent assignments), a project scope, and execution permissions.
+            Configure each AI coding tool separately; installing BuildCrew in
+            one host does not configure it in another. BuildCrew never claims
             that agents ran unless the host returns valid execution evidence.
           </p>
           <div class="callout warning">
@@ -1190,48 +1275,49 @@
               package.
             </p>
           </div>
-          <h3>Step 2: Configure BuildCrew for every user input</h3>
+          <h3>Step 2: Configure BuildCrew globally</h3>
           <p>
-            After installation, send this advanced one-time setup prompt in the
-            project. It asks the host to load BuildCrew for every user input, starts
-            onboarding, and configures continuity where supported. This step is
-            required for smooth continuous use of BuildCrew.
+            After installation, send this advanced one-time setup prompt at the
+            Codex level. It asks the host to load BuildCrew for every input
+            across all projects, starts project onboarding when needed, and
+            configures continuity where supported. This step is required for
+            smooth continuous use of BuildCrew.
           </p>
-          <pre><button class="copy">Copy</button><code>I installed BuildCrew for this project. Make BuildCrew the single engineering workflow for every input in this project, including questions, follow-ups, reviews, plans, and coding tasks. Handle simple questions briefly.
+          <pre><button class="copy">Copy</button><code>I installed BuildCrew globally. Make BuildCrew the single engineering workflow for every input in every project in this Codex installation, including questions, follow-ups, reviews, plans, and coding tasks. Handle simple questions briefly.
 
-First, locate and validate the installed SKILL.md. Check this tool's persistent project instructions and whether another engineering controller is active. Follow BuildCrew's activation checks and keep a reversible way to restore the prior configuration. Add the smallest supported project instruction or hook to use BuildCrew on each input. Preserve unrelated settings. If another controller already owns this scope, report the conflict before changing it.
+First, locate and validate the installed SKILL.md. Check this tool's global Codex instructions and whether another engineering controller is active. Follow BuildCrew's activation checks and keep a reversible way to restore the prior configuration. Add the smallest supported global instruction or lifecycle hook to use BuildCrew on each input across every project. Preserve unrelated settings. If another controller already owns this scope, report the conflict before changing it.
 
-Run BuildCrew's one-time project onboarding and keep its marker in an approved directory outside the project. On each later input, invoke scripts/context_loop.py auto with a sanitized intake: simple questions use lookup only, while actionable work starts or resumes its exact task. At completed, blocked, or paused closure, invoke scripts/context_loop.py close. Keep one shared BUILDCREW_HOME for tools that should share context.
+Run BuildCrew's one-time global activation and keep its receipt in an approved directory outside all projects. Run per-project onboarding only when a repository is first opened. On every later input, invoke scripts/global_input_adapter.py with a sanitized intake: simple questions use lookup only, while actionable work starts or resumes its exact task. At completed, blocked, or paused closure, invoke scripts/context_loop.py close. Keep one shared BUILDCREW_HOME across projects and sessions.
 
 Report what you configured, where, and the onboarding state. Tell me whether to reload or start a new session, and how to verify BuildCrew with an ordinary project request that does not name it. If this tool cannot make or verify BuildCrew persistent, say so.</code></pre>
           <div class="callout tip">
             <p>
-              <strong>One-time setup:</strong> Persistent every-input use depends
-              on the host's supported project instruction, hook, or equivalent
-              loading mechanism. If the host cannot support persistent
-              activation, it must report that limitation instead of claiming
-              that BuildCrew will trigger automatically.
+              <strong>One-time setup:</strong> Persistent every-input use
+              depends on the host's supported global instruction, lifecycle
+              hook, or equivalent loading mechanism. If the host cannot support
+              persistent global activation, it must report that limitation
+              instead of claiming that BuildCrew will trigger automatically.
             </p>
           </div>
           <h3>Step 3: Start a fresh session and verify activation</h3>
           <p>
-            Reload the project or start a new session, then send an ordinary
-            request without naming BuildCrew:
+            Reload Codex or start a new session, open any repository, then send
+            an ordinary request without naming BuildCrew:
           </p>
           <pre><button class="copy">Copy</button><code>Inspect this project and explain the relevant existing patterns before making any changes. Do not edit files yet.</code></pre>
           <p>
-            Verify that the response follows the BuildCrew workflow and reports what
-            it inspected. If the host cannot confirm persistent activation, use
-            BuildCrew explicitly and follow the host-specific limitation it reports.
+            Verify that the response follows the BuildCrew workflow and reports
+            what it inspected. If the host cannot confirm persistent activation,
+            use BuildCrew explicitly and follow the host-specific limitation it
+            reports.
           </p>
         </section>
         <section id="concepts" data-reveal>
           <h2>Core concepts</h2>
           <p>
             BuildCrew is an installable plugin package containing the BuildCrew
-            skill, lifecycle workflow, and set of
-            evidence-bound contracts—rules that connect decisions to verifiable
-            evidence—working together.
+            skill, lifecycle workflow, and set of evidence-bound contracts—rules
+            that connect decisions to verifiable evidence—working together.
           </p>
           <table>
             <thead>
@@ -1261,12 +1347,13 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
           </table>
           <div class="callout tip">
             <p>
-              <strong>Context and memory:</strong> BuildCrew performs a bounded local
-              memory lookup for every input. The first project interaction uses
-            one-time onboarding. Actionable work starts or resumes by exact
-            task identity—the same task, project, and acceptance criteria—and
-            closure stores only sanitized, scoped, evidence-backed learning.
-            Current source remains more authoritative than memory.
+              <strong>Context and memory:</strong> BuildCrew performs a bounded
+              local memory lookup for every input. The first project interaction
+              uses one-time onboarding. Actionable work starts or resumes by
+              exact task identity—the same task, project, and acceptance
+              criteria—and closure stores only sanitized, scoped,
+              evidence-backed learning. Current source remains more
+              authoritative than memory.
             </p>
           </div>
           <div class="grid">
@@ -1306,9 +1393,9 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
           </div>
           <h3>BuildCrew operating modes</h3>
           <p>
-            BuildCrew selects the appropriate mode based on the task’s complexity and
-            risk. You can also request a specific mode when the task requires
-            it.
+            BuildCrew selects the appropriate mode based on the task’s
+            complexity and risk. You can also request a specific mode when the
+            task requires it.
           </p>
           <table>
             <thead>
@@ -1371,9 +1458,9 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
         <section id="workflows" data-reveal>
           <h2>Workflows</h2>
           <p>
-            Choose the BuildCrew route that matches the work. Routine changes stay
-            lightweight; coupled or risky changes receive stronger planning,
-            evidence, and review.
+            Choose the BuildCrew route that matches the work. Routine changes
+            stay lightweight; coupled or risky changes receive stronger
+            planning, evidence, and review.
           </p>
           <h3>Understand and plan</h3>
           <pre><button class="copy">Copy</button><code>Use BuildCrew to inspect the repository, retrieve relevant context, and produce a bounded implementation plan for adding an empty state to the profile screen. Do not edit files.</code></pre>
@@ -1398,26 +1485,40 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
           </div>
           <h3>Multi-agent engineering team</h3>
           <p>
-            When the host runtime supports agent execution, BuildCrew can coordinate
-            specialist agents for larger or higher-risk work. For example, a
-            project architecture request may use the following sequence:
+            When the host runtime supports agent execution, BuildCrew can
+            coordinate specialist agents for larger or higher-risk work. For
+            example, a project architecture request may use the following
+            sequence:
           </p>
           <ol class="steps">
             <li>
               <strong>Understand the request</strong
-              ><span>The Orchestrator and Context Coordinator define the goal, scope, and acceptance criteria.</span>
+              ><span
+                >The Orchestrator and Context Coordinator define the goal,
+                scope, and acceptance criteria.</span
+              >
             </li>
             <li>
               <strong>Research the project</strong
-              ><span>The Knowledge Retriever and Codebase Analyst inspect documentation, source, dependencies, and existing patterns.</span>
+              ><span
+                >The Knowledge Retriever and Codebase Analyst inspect
+                documentation, source, dependencies, and existing
+                patterns.</span
+              >
             </li>
             <li>
               <strong>Design the architecture</strong
-              ><span>The Solution Architect turns the verified findings into a bounded architecture proposal.</span>
+              ><span
+                >The Solution Architect turns the verified findings into a
+                bounded architecture proposal.</span
+              >
             </li>
             <li>
               <strong>Review and validate</strong
-              ><span>The Independent Reviewer checks risks and gaps, then the Final Validator confirms the evidence.</span>
+              ><span
+                >The Independent Reviewer checks risks and gaps, then the Final
+                Validator confirms the evidence.</span
+              >
             </li>
           </ol>
           <p>
@@ -1434,18 +1535,18 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
               <span class="badge">Routine change</span>
               <h3>Small feature</h3>
               <p>
-                Add an empty state to the profile screen. BuildCrew should inspect
-                existing patterns, reuse project components, make the smallest
-                change, and run focused checks.
+                Add an empty state to the profile screen. BuildCrew should
+                inspect existing patterns, reuse project components, make the
+                smallest change, and run focused checks.
               </p>
             </article>
             <article class="card">
               <span class="badge">Regression risk</span>
               <h3>Bug fix</h3>
               <p>
-                Fix a retry loop that duplicates network requests. BuildCrew should
-                trace the path, confirm the root cause, add a regression check,
-                and report runtime risk.
+                Fix a retry loop that duplicates network requests. BuildCrew
+                should trace the path, confirm the root cause, add a regression
+                check, and report runtime risk.
               </p>
             </article>
           </div>
@@ -1467,8 +1568,8 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
         <section id="reference" data-reveal>
           <h2>Prompt and response reference</h2>
           <p>
-            Make BuildCrew’s scope, route, acceptance criteria, and expected output
-            explicit.
+            Make BuildCrew’s scope, route, acceptance criteria, and expected
+            output explicit.
           </p>
           <table>
             <thead>
@@ -1500,8 +1601,8 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
               <tr>
                 <td>Mode</td>
                 <td>
-                  Should BuildCrew answer directly, inspect, plan, implement, review,
-                  verify, or close?
+                  Should BuildCrew answer directly, inspect, plan, implement,
+                  review, verify, or close?
                 </td>
               </tr>
             </tbody>
@@ -1534,8 +1635,8 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
           <h3>Is BuildCrew a plugin or a skill?</h3>
           <p>
             BuildCrew is an installable plugin package that contains the
-            BuildCrew skill. The plugin handles distribution and metadata; the skill
-            contains the provider-neutral engineering workflow.
+            BuildCrew skill. The plugin handles distribution and metadata; the
+            skill contains the provider-neutral engineering workflow.
           </p>
           <h3>Does BuildCrew write code automatically?</h3>
           <p>
@@ -1552,16 +1653,17 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
           <h3>Does installation activate BuildCrew automatically?</h3>
           <p>
             Installation is inert. Persistent every-input use requires the
-            host's supported project instruction, hook, or equivalent loading
-            mechanism. One-time onboarding then prevents the introduction from
-            repeating for the same installation, host, and project scope.
+            host's supported global instruction, lifecycle hook, or equivalent
+            loading mechanism. Global activation is configured once per
+            installation and host; project onboarding prevents the introduction
+            from repeating for each repository.
           </p>
           <h3>Does BuildCrew spawn agents automatically?</h3>
           <p>
-            BuildCrew selects the required roles automatically only when the host
-            runtime supports agent execution. Without that configuration, the
-            lead AI follows the same workflow and reports that separate agent
-            execution is unavailable.
+            BuildCrew selects the required roles automatically only when the
+            host runtime supports agent execution. Without that configuration,
+            the lead AI follows the same workflow and reports that separate
+            agent execution is unavailable.
           </p>
           <h3>What is a host?</h3>
           <p>
@@ -1571,9 +1673,10 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
           </p>
           <h3>What happens when agent execution is unavailable?</h3>
           <p>
-            BuildCrew continues with the lead AI. It can still inspect the project,
-            plan changes, implement approved work, run available checks, and
-            report evidence without pretending that separate agents ran.
+            BuildCrew continues with the lead AI. It can still inspect the
+            project, plan changes, implement approved work, run available
+            checks, and report evidence without pretending that separate agents
+            ran.
           </p>
           <h3>How does BuildCrew handle memory?</h3>
           <p>
@@ -1587,8 +1690,8 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
           <h2>Contributing</h2>
           <p>
             BuildCrew is an open-source plugin package developed and maintained
-            by <strong>Dhaval Tank</strong> for the community. Anyone can use the
-            plugin package, create their own versions, and contribute
+            by <strong>Dhaval Tank</strong> for the community. Anyone can use
+            the plugin package, create their own versions, and contribute
             improvements through pull requests. <strong>Dhaval Tank</strong>
             maintains the official plugin package and its BuildCrew skill, and
             reviews all contributions to ensure quality, consistency, and
@@ -1653,8 +1756,9 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
             <li>
               <strong>Wait for maintainer review</strong
               ><span
-                >Changes are merged into the official <code>main</code> branch
-                only after Dhaval Tank approves them.</span
+                >The maintainer will review your contribution. Once approved,
+                it will be accepted and merged into the protected
+                <code>main</code> branch.</span
               >
             </li>
           </ol>
@@ -1753,10 +1857,7 @@ Report what you configured, where, and the onboarding state. Tell me whether to 
         button.addEventListener("click", () => {
           const dark = !document.body.classList.contains("dark-mode");
           applyTheme(dark);
-          localStorage.setItem(
-            "buildcrew-theme",
-            dark ? "dark" : "light",
-          );
+          localStorage.setItem("buildcrew-theme", dark ? "dark" : "light");
         }),
       );
       const toggle = document.querySelector(".menu-toggle");

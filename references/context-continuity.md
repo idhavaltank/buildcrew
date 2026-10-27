@@ -10,21 +10,26 @@ input -> bounded memory lookup -> compact context -> work -> terminal closure
 
 ## Every-input entrypoint
 
-After the host loads BuildCrew for an input, pass a sanitized, normalized intake to
-`auto`. The host supplies `requestType` and may set `actionable` explicitly.
+After the global host integration loads BuildCrew for an input, pass a sanitized,
+normalized intake to `auto`. The host supplies `requestType` and may set
+`actionable` explicitly. The supported wrapper is
+`scripts/global_input_adapter.py`; it removes raw prompts and authority-bearing
+fields before invoking the continuity loop.
 Informational inputs run bounded memory lookup without creating a session;
 actionable inputs start or resume by exact task identity:
 
 ```bash
-python3 -B scripts/context_loop.py auto \
+python3 -B scripts/global_input_adapter.py \
   --input-json /absolute/path/intake.json
 ```
 
 For continuation, reuse the original `taskId`, objective, acceptance criteria,
 project, repository, and source binding. Put the new request in the current
 workflow, not in those identity fields. A conflicting identity fails closed.
-The `auto` command does not install a host hook or run on its own: configure the
-AI tool's supported persistent instruction or hook to invoke it on each input.
+The adapter and `auto` command do not install a host hook or run on their own:
+configure the AI tool's supported global instruction or lifecycle hook to invoke
+the adapter on each input. Keep `BUILDCREW_HOME` shared across repositories for
+one Codex installation.
 Keep `BUILDCREW_HOME` the same for tools sharing one project.
 
 ## Explicit start or resume

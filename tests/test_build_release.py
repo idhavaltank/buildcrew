@@ -25,6 +25,13 @@ class ReleaseBuildTests(unittest.TestCase):
         for name in ("README.md", "CONTRIBUTING.md", "CHANGELOG.md", "RELEASE.md"):
             (source / name).write_text(f"# {name}\n", encoding="utf-8")
         (source / "LICENSE").write_text("MIT License\n\nCopyright (c) 2026 Dhaval Tank\n", encoding="utf-8")
+        (source / "skills/buildcrew").mkdir(parents=True)
+        (source / "skills/buildcrew/SKILL.md").write_text(
+            "---\nname: buildcrew\ndescription: Packaged test skill.\n---\n",
+            encoding="utf-8",
+        )
+        (source / "hooks").mkdir()
+        (source / "hooks/hooks.json").write_text("{}\n", encoding="utf-8")
         (source / "config/plugin.json").write_text(json.dumps({
             "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
             "name": "buildcrew",
@@ -63,9 +70,10 @@ class ReleaseBuildTests(unittest.TestCase):
                     self.assertIn(manifest_path, names)
                     self.assertIn("buildcrew/LICENSE", names)
                     self.assertEqual(
-                        (source / "SKILL.md").read_bytes(),
+                        (source / "skills/buildcrew/SKILL.md").read_bytes(),
                         package.read("buildcrew/skills/buildcrew/SKILL.md"),
                     )
+                    self.assertIn("buildcrew/hooks/hooks.json", names)
                     self.assertEqual("buildcrew", json.loads(package.read(manifest_path))["name"])
 
     def test_generated_state_blocks_release_without_creating_output(self):
